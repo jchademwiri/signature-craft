@@ -15,9 +15,9 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const Button: React.FC<ButtonProps> = ({ variant = 'default', className = '', children, ...props }) => {
   const baseStyles = 'px-6 py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2';
   const variants: Record<ButtonVariant, string> = {
-    default: 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl',
-    outline: 'border-2 border-gray-300 text-gray-700 hover:border-blue-500 hover:text-blue-600 hover:bg-blue-50',
-    premium: 'bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:from-amber-600 hover:to-orange-600 shadow-lg hover:shadow-xl',
+    default: 'bg-primary text-primary-foreground shadow-xs hover:bg-primary/90',
+    outline: 'border border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground',
+    premium: 'bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-lg hover:from-primary/90 hover:to-accent/90',
   };
   return (
     <button
@@ -32,7 +32,7 @@ const Button: React.FC<ButtonProps> = ({ variant = 'default', className = '', ch
 // Card components
 type CardProps = HTMLAttributes<HTMLDivElement> & { className?: string; children: ReactNode };
 const Card: React.FC<CardProps> = ({ className = '', children, ...props }) => (
-  <div className={`bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 ${className}`} {...props}>
+  <div className={`bg-card text-card-foreground rounded-xl shadow-lg border border-border ${className}`} {...props}>
     {children}
   </div>
 );
@@ -52,12 +52,12 @@ const CardFooter: React.FC<CardProps> = ({ className = '', children, ...props })
   </div>
 );
 const CardTitle: React.FC<CardProps> = ({ className = '', children, ...props }) => (
-  <h3 className={`text-xl font-bold text-gray-900 dark:text-white ${className}`} {...props}>
+  <h3 className={`text-xl font-bold text-foreground ${className}`} {...props}>
     {children}
   </h3>
 );
 const CardDescription: React.FC<CardProps> = ({ className = '', children, ...props }) => (
-  <p className={`text-gray-600 dark:text-gray-400 mt-2 ${className}`} {...props}>
+  <p className={`text-muted-foreground mt-2 ${className}`} {...props}>
     {children}
   </p>
 );
@@ -84,19 +84,19 @@ function PricingCard({ plan, index }: PricingCardProps) {
 
   const getCardIcon = (planName: string) => {
     switch (planName.toLowerCase()) {
-      case 'free': return <Sparkles className="h-5 w-5" />;
-      case 'pro': return <Users className="h-5 w-5" />;
-      case 'team': return <Building className="h-5 w-5" />;
-      default: return <Crown className="h-5 w-5" />;
+      case 'free': return <Sparkles className="h-5 w-5 text-primary" />;
+      case 'pro': return <Users className="h-5 w-5 text-primary" />;
+      case 'team': return <Building className="h-5 w-5 text-primary" />;
+      default: return <Crown className="h-5 w-5 text-primary" />;
     }
   };
 
-  const getGradientBg = (planName: string) => {
+  const getBg = (planName: string) => {
     switch (planName.toLowerCase()) {
-      case 'free': return 'from-blue-500 to-cyan-500';
-      case 'pro': return 'from-purple-500 to-pink-500';
-      case 'team': return 'from-amber-500 to-orange-500';
-      default: return 'from-gray-500 to-gray-600';
+      case 'free': return 'bg-primary/10';
+      case 'pro': return 'bg-accent/20';
+      case 'team': return 'bg-secondary/20';
+      default: return 'bg-muted';
     }
   };
 
@@ -111,17 +111,17 @@ function PricingCard({ plan, index }: PricingCardProps) {
     >
       <Card className={`flex flex-col h-full relative overflow-hidden ${
         plan.popular
-          ? 'border-2 border-purple-500 shadow-2xl ring-4 ring-purple-100 dark:ring-purple-900'
-          : 'hover:border-gray-300 dark:hover:border-gray-600'
+          ? 'border-primary shadow-2xl ring-4 ring-primary/20 dark:ring-primary/40'
+          : 'hover:border-accent/50 dark:hover:border-accent/70'
       } ${isHovered ? 'shadow-2xl' : 'shadow-lg'}`}>
         {/* Popular badge */}
         {plan.popular && (
           <div className="absolute top-0 left-0 right-0">
-            <div className={`bg-gradient-to-r ${getGradientBg(plan.name)} text-white text-sm font-bold py-2 text-center relative`}>
+            <div className="bg-primary text-primary-foreground text-sm font-bold py-2 text-center relative">
               <Crown className="inline h-4 w-4 mr-1" />
               Most Popular
               <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full">
-                <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-purple-500"></div>
+                <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-primary"></div>
               </div>
             </div>
           </div>
@@ -131,7 +131,7 @@ function PricingCard({ plan, index }: PricingCardProps) {
           <CardHeader>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className={`p-2 rounded-lg bg-gradient-to-r ${getGradientBg(plan.name)} text-white`}>
+                <div className={`p-2 rounded-lg ${getBg(plan.name)} text-primary`}>
                   {getCardIcon(plan.name)}
                 </div>
                 <CardTitle>{plan.name}</CardTitle>
@@ -145,11 +145,11 @@ function PricingCard({ plan, index }: PricingCardProps) {
             <CardDescription>{plan.description}</CardDescription>
             {/* Price section */}
             <div className="mt-6 flex items-baseline">
-              <span className="text-4xl font-bold text-gray-900 dark:text-white">
+              <span className="text-4xl font-bold text-foreground">
                 {plan.price}
               </span>
               {plan.period && (
-                <span className="text-gray-600 dark:text-gray-400 ml-1">
+                <span className="text-muted-foreground ml-1">
                   {plan.period}
                 </span>
               )}
@@ -169,10 +169,10 @@ function PricingCard({ plan, index }: PricingCardProps) {
                   className="flex items-start gap-3 group"
                   style={{ animationDelay: `${(index * 150) + (i * 50)}ms` }}
                 >
-                  <div className={`flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-r ${getGradientBg(plan.name)} flex items-center justify-center mt-0.5 group-hover:scale-110 transition-transform duration-200`}>
-                    <Check className="h-3 w-3 text-white" />
+                  <div className={`flex-shrink-0 w-5 h-5 rounded-full bg-primary flex items-center justify-center mt-0.5 group-hover:scale-110 transition-transform duration-200`}>
+                    <Check className="h-3 w-3 text-primary-foreground" />
                   </div>
-                  <span className="text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors duration-200">
+                  <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
                     {feature}
                   </span>
                 </li>
@@ -187,12 +187,12 @@ function PricingCard({ plan, index }: PricingCardProps) {
             >
               <span className="relative z-10">{plan.buttonText}</span>
               {plan.popular && (
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               )}
             </Button>
             {/* Additional info */}
             <div className="mt-3 text-center">
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              <p className="text-xs text-muted-foreground">
                 {plan.name === 'Free' ? 'No credit card required' :
                   plan.name === 'Pro' ? '14-day free trial' :
                     'Custom enterprise solutions'}
@@ -264,44 +264,38 @@ export function PricingSection() {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 relative overflow-hidden">
+    <section className="py-16 md:py-24 bg-muted relative overflow-hidden">
       {/* Background decorations */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-      <div className="absolute top-0 left-0 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-pulse"></div>
-      <div className="absolute bottom-0 right-0 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-pulse animation-delay-2000"></div>
+      <div className="absolute inset-0 pointer-events-none" />
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
             Simple, Transparent
-            <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"> Pricing</span>
+            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"> Pricing</span>
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-8">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
             Choose the perfect plan for your needs. Upgrade or downgrade at any time.
           </p>
           {/* Billing toggle */}
           <div className="flex items-center justify-center gap-4 mb-8">
-            <span className={`text-sm font-medium ${!isAnnual ? 'text-gray-900 dark:text-white' : 'text-gray-500'}`}>
-              Monthly
-            </span>
+            <span className={`text-sm font-medium ${!isAnnual ? 'text-foreground' : 'text-muted-foreground'}`}>Monthly</span>
             <button
               onClick={() => setIsAnnual(!isAnnual)}
-              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 ${
-                isAnnual ? 'bg-purple-600' : 'bg-gray-200 dark:bg-gray-700'
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary ${
+                isAnnual ? 'bg-primary' : 'bg-muted'
               }`}
               aria-label="Toggle annual billing"
               title="Toggle annual billing"
               type="button"
             >
               <span
-                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                className={`inline-block h-4 w-4 transform rounded-full bg-background transition-transform ${
                   isAnnual ? 'translate-x-6' : 'translate-x-1'
                 }`}
               />
             </button>
-            <span className={`text-sm font-medium ${isAnnual ? 'text-gray-900 dark:text-white' : 'text-gray-500'}`}>
-              Annual
-            </span>
+            <span className={`text-sm font-medium ${isAnnual ? 'text-foreground' : 'text-muted-foreground'}`}>Annual</span>
             {isAnnual && (
               <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
                 Save 20%
@@ -317,7 +311,7 @@ export function PricingSection() {
         </div>
         {/* Bottom CTA */}
         <div className="text-center mt-16">
-          <p className="text-gray-600 dark:text-gray-400 mb-4">
+          <p className="text-muted-foreground mb-4">
             Need something custom? We're here to help.
           </p>
           <Button variant="outline" className="mr-4">
