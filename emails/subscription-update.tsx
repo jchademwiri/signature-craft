@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Heading, Section, Text } from '@react-email/components';
+import { Heading, Section, Text, Link } from '@react-email/components';
 import EmailLayout from './components/EmailLayout';
+import { createUrl } from '@/constant';
 
 
 interface SubscriptionUpdateEmailProps {
@@ -16,7 +17,7 @@ export const SubscriptionUpdateEmail = ({
   planName = 'Pro',
   planPrice = 'R99/month',
   billingDate = 'August 15, 2025',
-  accountUrl = 'https://signaturecraft.example.com/account/billing',
+  accountUrl = createUrl('/account/billing'),
 }: SubscriptionUpdateEmailProps) => {
   return (
     <EmailLayout 
@@ -50,12 +51,12 @@ export const SubscriptionUpdateEmail = ({
         </Text>
         
         <Section className="text-center my-8">
-          <Button
+          <Link
             href={accountUrl}
-            className="bg-blue-600 text-white font-bold py-3 px-6 rounded"
+            className="bg-blue-600 text-white font-bold py-3 px-6 rounded no-underline inline-block"
           >
             Manage Subscription
-          </Button>
+          </Link>
         </Section>
         
         <Text className="text-base mt-6">

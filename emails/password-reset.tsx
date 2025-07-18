@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Heading, Section, Text } from '@react-email/components';
+import { Heading, Section, Text, Link } from '@react-email/components';
 import EmailLayout from './components/EmailLayout';
+import { createUrl } from '@/constant';
 
 
 interface PasswordResetEmailProps {
@@ -10,7 +11,7 @@ interface PasswordResetEmailProps {
 
 export const PasswordResetEmail = ({
   name = 'John Doe',
-  resetUrl = 'https://signaturecraft.example.com/reset-password?token=123',
+  resetUrl = createUrl('/reset-password?token=123'),
 }: PasswordResetEmailProps) => {
   return (
     <EmailLayout 
@@ -36,12 +37,12 @@ export const PasswordResetEmail = ({
         </Text>
         
         <Section className="text-center my-8">
-          <Button
+          <Link
             href={resetUrl}
-            className="bg-blue-600 text-white font-bold py-3 px-6 rounded"
+            className="bg-blue-600 text-white font-bold py-3 px-6 rounded no-underline inline-block"
           >
             Reset Password
-          </Button>
+          </Link>
         </Section>
         
         <Text className="text-base">

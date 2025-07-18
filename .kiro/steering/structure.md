@@ -45,7 +45,7 @@ signature-craft/
 - Use TypeScript for all components and utilities
 - Maintain co-location of related files when appropriate
 - Keep configuration files in project root
-- Email templates use shared EmailLayout component for consistent branding
+- Email templates can use either shared EmailLayout component or direct React Email components
 - All email components should be responsive and email-client compatible
 
 ## Documentation

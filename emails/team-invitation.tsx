@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Heading, Section, Text } from '@react-email/components';
+import { Heading, Section, Text, Link } from '@react-email/components';
 import EmailLayout from './components/EmailLayout';
+import { createUrl } from '@/constant';
 
 
 interface TeamInvitationEmailProps {
@@ -14,7 +15,7 @@ export const TeamInvitationEmail = ({
   inviteeEmail = 'colleague@example.com',
   teamName = 'Acme Inc',
   inviterName = 'Jane Smith',
-  invitationUrl = 'https://signaturecraft.example.com/invitations/accept?token=123',
+  invitationUrl = createUrl('/invitations/accept?token=123'),
 }: TeamInvitationEmailProps) => {
   return (
     <EmailLayout
@@ -41,12 +42,12 @@ export const TeamInvitationEmail = ({
         </Text>
         
         <Section className="text-center my-8">
-          <Button
+          <Link
             href={invitationUrl}
-            className="bg-blue-600 text-white font-bold py-3 px-6 rounded"
+            className="bg-blue-600 text-white font-bold py-3 px-6 rounded no-underline inline-block"
           >
             Accept Invitation
-          </Button>
+          </Link>
         </Section>
         
         <Text className="text-base">

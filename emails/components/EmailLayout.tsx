@@ -9,8 +9,9 @@ import {
   Tailwind,
   Text,
   Img,
+  Link,
 } from '@react-email/components';
-import { logoUrl } from '@/constant';
+import { logoUrl, baseUrl } from '@/constant';
 
 interface EmailLayoutProps {
   preview: string;
@@ -44,9 +45,9 @@ export const EmailLayout = ({ preview, children }: EmailLayoutProps) => {
             <Section className="mt-8 text-center text-[#666666] text-xs">
               <Text>© {new Date().getFullYear()} SignatureCraft. All rights reserved.</Text>
               <Text>
-                <a href="https://signaturecraft.example.com" className="text-blue-600 underline">
-                  signaturecraft.example.com
-                </a>
+                <Link href={baseUrl} className="text-blue-600 underline">
+                  {baseUrl.replace(/^https?:\/\//, '')}
+                </Link>
               </Text>
             </Section>
           </Container>

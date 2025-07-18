@@ -40,7 +40,7 @@ pnpm email
 ## Email System
 - **Email Templates**: React Email with TypeScript
 - **Email Components**: Shared components in `/emails/components`
-- **Email Layout**: Standardized EmailLayout component with SignatureCraft branding
+- **Email Structure**: Flexible approach - either using the standardized EmailLayout component or direct React Email components
 - **Email Preview**: Development server on port 3001 for template testing (runs concurrently with Next.js in dev mode)
 - **Email Delivery**: Planned integration with Resend
 
