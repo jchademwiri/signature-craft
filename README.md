@@ -1,24 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SignatureCraft
+
+A web-based SaaS platform for creating, customizing, and deploying professional email signatures. Built with Next.js, React Email, and modern web technologies.
 
 ## Getting Started
 
-First, run the development server:
+### Development Server
+
+Run the Next.js development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Email Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+For developing and previewing email signatures, use the React Email development server:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm email
+```
+
+This runs `npx react-email dev --port 3001` under the hood.
+
+- **Next.js App**: Open [http://localhost:3000](http://localhost:3000) to view the main application
+- **Email Preview**: The email development server will run on [http://localhost:3001](http://localhost:3001) for previewing email signatures
+
+## Available Scripts
+
+- `pnpm dev` - Start the Next.js development server with Turbopack
+- `pnpm build` - Build the application for production with Turbopack
+- `pnpm start` - Start the production server
+- `pnpm lint` - Run ESLint for code quality checks
+- `pnpm email` - Start the React Email development server for email signature previews
+
+## Tech Stack
+
+- **Frontend**: Next.js 15.4.1 with React 19.1.0
+- **Email Templates**: React Email with @react-email/components
+- **Styling**: Tailwind CSS v4
+- **TypeScript**: Strict mode enabled
+- **Package Manager**: pnpm
 
 ## Learn More
 
