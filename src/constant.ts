@@ -1,0 +1,1 @@
+export const logoUrl = 'https://signature-craft-seven.vercel.app/logo.svg'

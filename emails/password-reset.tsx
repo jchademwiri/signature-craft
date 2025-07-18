@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Heading, Section, Text } from '@react-email/components';
 import EmailLayout from './components/EmailLayout';
 
+
 interface PasswordResetEmailProps {
   name: string;
   resetUrl: string;
@@ -11,8 +12,6 @@ export const PasswordResetEmail = ({
   name = 'John Doe',
   resetUrl = 'https://signaturecraft.example.com/reset-password?token=123',
 }: PasswordResetEmailProps) => {
-  
-  
   return (
     <EmailLayout 
       preview="Reset your SignatureCraft password"

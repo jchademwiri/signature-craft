@@ -11,13 +11,11 @@ export const WelcomeEmail = ({
   name = 'John Doe',
   verificationUrl = 'https://signaturecraft.example.com/verify?token=123',
 }: WelcomeEmailProps) => {
-  // Use placehold.co as a fallback for the logo
-  const placeholderLogo = 'https://placehold.co/200x50/3B82F6/FFFFFF?text=SignatureCraft&font=poppins';
   
   return (
     <EmailLayout 
       preview="Welcome to SignatureCraft!"
-      logoUrl="https://placehold.co/200x50/3B82F6/FFFFFF?text=SignatureCraft&font=poppins"
+     
     >
       <Section>
         <Heading className="text-2xl font-bold text-center my-6">

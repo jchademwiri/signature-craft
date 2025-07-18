@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Heading, Section, Text } from '@react-email/components';
 import EmailLayout from './components/EmailLayout';
 
+
 interface TeamInvitationEmailProps {
   inviteeEmail: string;
   teamName: string;
@@ -15,13 +16,10 @@ export const TeamInvitationEmail = ({
   inviterName = 'Jane Smith',
   invitationUrl = 'https://signaturecraft.example.com/invitations/accept?token=123',
 }: TeamInvitationEmailProps) => {
-  // Use placehold.co as a fallback for the logo
-  
-  
   return (
     <EmailLayout
     preview={`You've been invited to join ${teamName} on SignatureCraft`}
-      
+  
     >
       <Section>
         <Heading className="text-2xl font-bold text-center my-6">

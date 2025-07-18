@@ -10,16 +10,16 @@ import {
   Text,
   Img,
 } from '@react-email/components';
+import { logoUrl } from '@/constant';
 
 interface EmailLayoutProps {
   preview: string;
   children: React.ReactNode;
-  logoUrl?: string;
-}
+  }
 
-export const EmailLayout = ({ preview, children, logoUrl }: EmailLayoutProps) => {
+export const EmailLayout = ({ preview, children }: EmailLayoutProps) => {
   // Use the provided logoUrl or fallback to default
-  logoUrl = 'https://signature-craft-seven.vercel.app/logo.svg'
+
   const finalLogoUrl = logoUrl || 'https://placehold.co/200x50/3B82F6/FFFFFF?text=SignatureCraft&font=poppins';
   
   return (

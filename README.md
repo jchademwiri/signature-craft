@@ -58,7 +58,9 @@ SignatureCraft uses React Email for creating and previewing email templates:
 - Email templates are located in the `/emails` directory
 - Shared email components are in the `/emails/components` directory
 - All emails use the `EmailLayout` component for consistent branding and styling
-- The EmailLayout component includes the SignatureCraft logo and standardized footer
+- The logo URL is defined in `src/constant.ts` and imported in each email template
+- The EmailLayout component accepts an optional `logoUrl` prop to override the default logo
+- If no logo URL is provided, a placeholder image is used as fallback
 - The email preview server starts automatically with `pnpm dev` on port 3001
 - Alternatively, you can run just the email preview server with `pnpm email`
 - Visit `http://localhost:3001` to preview email templates

@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Heading, Section, Text } from '@react-email/components';
 import EmailLayout from './components/EmailLayout';
 
+
 interface SubscriptionUpdateEmailProps {
   name: string;
   planName: string;
@@ -17,11 +18,10 @@ export const SubscriptionUpdateEmail = ({
   billingDate = 'August 15, 2025',
   accountUrl = 'https://signaturecraft.example.com/account/billing',
 }: SubscriptionUpdateEmailProps) => {
-  
-  
   return (
     <EmailLayout 
       preview={`Your SignatureCraft ${planName} subscription is active`}
+   
     >
       <Section>
         <Heading className="text-2xl font-bold text-center my-6">
