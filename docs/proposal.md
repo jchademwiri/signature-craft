@@ -32,7 +32,7 @@ Here is your **updated project proposal** for **SignatureCraft**, now reflecting
 
 | Category             | Features                                                                                                                                 |
 | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| 👤 User Features     | - Responsive signature builder<br>- Logo & avatar uploads<br>- Social media buttons<br>- Banner image support<br>- Custom colors & fonts |
+| 👤 User Features     | - Responsive signature builder with drag-and-drop interface<br>- Logo & avatar uploads<br>- Social media integration<br>- Banner image support<br>- Custom colors & fonts |
 | 📤 Export Options    | - One-click HTML export<br>- Copy & paste code<br>- Installation guides for Gmail, Outlook, etc.                                         |
 | 🔐 Auth & Access     | - User sign-up/login<br>- OAuth support<br>- Role-based access (Team, Admin)                                                             |
 | 🧑‍💼 Business Tools | - Team signature templates<br>- Admin panel<br>- Signature standardization across departments                                            |

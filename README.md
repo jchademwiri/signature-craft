@@ -4,9 +4,9 @@ SignatureCraft is a web-based SaaS platform designed to help professionals, team
 
 ## Features
 
-- Responsive signature builder with drag-and-drop interface
-- Logo and avatar uploads with banner support
-- Social media integration and custom branding
+- Responsive signature builder with intuitive drag-and-drop interface
+- Logo and avatar uploads with banner support and custom branding
+- Seamless social media platform integration
 - Multi-user team management and templates
 - Export to popular email clients (Gmail, Outlook, Apple Mail)
 - Analytics and white-label options

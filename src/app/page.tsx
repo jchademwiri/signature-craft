@@ -1,42 +1,44 @@
-import Image from "next/image";
-
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
+import { Container } from "@/components/ui/container";
+import { HeroSection } from "@/components/hero-section";
+import { FeaturesSection } from "@/components/features-section";
+import { PricingSection } from "@/components/pricing-section";
+import { TestimonialsSection } from "@/components/testimonials-section";
+import { FAQSection } from "@/components/faq-section";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-12 bg-white">
-      <main className="flex flex-col items-center w-full flex-1 px-4 sm:px-20 text-center">
-        <div className="mb-8">
-          <Image 
-            src="/logo.svg" 
-            alt="SignatureCraft Logo" 
-            width={300} 
-            height={75} 
-            priority
-          />
-        </div>
-        <h1 className="text-4xl font-bold mb-4">
-          Welcome to <span className="text-blue-600">SignatureCraft</span>
-        </h1>
-        <p className="text-xl mb-8">
-          Create professional email signatures with ease
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
-          <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-            <h2 className="text-2xl font-semibold mb-3">Create Signature</h2>
-            <p className="text-gray-600 mb-4">Design your professional email signature with our easy-to-use builder</p>
-            <button type="button" className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded">
-              Get Started
-            </button>
-          </div>
-          <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-            <h2 className="text-2xl font-semibold mb-3">Team Management</h2>
-            <p className="text-gray-600 mb-4">Manage signatures for your entire team with consistent branding</p>
-            <button type="button" className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded">
-              Learn More
-            </button>
-          </div>
-        </div>
+    <>
+      <Header />
+      <main className="flex flex-col w-full flex-1">
+        <Container>
+          <HeroSection />
+          <FeaturesSection />
+          <TestimonialsSection />
+        </Container>
+        <PricingSection />
+        <Container>
+          <FAQSection />
+          <section className="py-12 md:py-24">
+            <div className="text-center">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-6">Ready to get started?</h2>
+              <p className="text-xl text-muted-foreground mb-8 max-w-[700px] mx-auto">
+                Create your professional email signature in minutes
+              </p>
+              <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#" className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-10 px-6 py-2 bg-primary text-primary-foreground shadow-xs hover:bg-primary/90">
+                  Create Your Signature
+                </a>
+                <a href="#" className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-10 px-6 py-2 border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground">
+                  View Templates
+                </a>
+              </div>
+            </div>
+          </section>
+        </Container>
       </main>
-    </div>
+      <Footer />
+    </>
   );
 }

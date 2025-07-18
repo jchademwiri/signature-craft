@@ -18,11 +18,19 @@ signature-craft/
 │   ├── logo-dark.svg      # Dark theme SignatureCraft logo
 │   └── icon.svg           # SignatureCraft icon/favicon
 ├── src/                   # Source code
-│   └── app/               # Next.js App Router pages and layouts
-│       ├── layout.tsx     # Root layout component
-│       ├── page.tsx       # Home page component
-│       ├── globals.css    # Global styles
-│       └── favicon.ico    # Site favicon
+│   ├── app/               # Next.js App Router pages and layouts
+│   │   ├── layout.tsx     # Root layout component
+│   │   ├── page.tsx       # Home page component
+│   │   ├── globals.css    # Global styles
+│   │   └── favicon.ico    # Site favicon
+│   ├── components/        # React components
+│   │   ├── ui/            # UI components
+│   │   │   ├── container.tsx # Container component for consistent layout
+│   │   │   └── ...        # Other UI components
+│   │   ├── header.tsx     # Header component
+│   │   └── footer.tsx     # Footer component
+│   ├── lib/               # Utility functions and helpers
+│   └── constant.ts        # Application constants
 ├── package.json           # Dependencies and scripts
 ├── next.config.ts         # Next.js configuration
 ├── tsconfig.json          # TypeScript configuration
@@ -39,6 +47,8 @@ signature-craft/
 - **Email Templates**: Use React Email components in `/emails` directory
 - **Email Components**: Shared email components in `/emails/components`
 - **Branding Assets**: Logo variants (light/dark) and icons in `/public`
+- **UI Components**: Reusable UI components in `src/components/ui` directory
+- **Layout Components**: Use Container component for consistent content width and padding
 
 ## Component Organization
 - Follow Next.js App Router file-based routing
