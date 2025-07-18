@@ -8,6 +8,7 @@
     "patterns": [
       "src/**/*.ts",
       "src/**/*.tsx",
+      "emails/**/*.tsx",
       "*.ts",
       "*.tsx",
       "package.json",
@@ -19,6 +20,6 @@
   },
   "then": {
     "type": "askAgent",
-    "prompt": "Source files have been modified in this Next.js TypeScript project. Please review the changes and update the relevant documentation including:\n\n1. README.md - Update setup instructions, features, or usage if needed\n2. docs/ folder contents - Update technical documentation, specifications, or guides\n3. Agent steering docs (tech.md, structure.md, product.md) - Update technology stack, project structure, or product information if the changes affect these areas\n\nFocus on keeping documentation accurate and synchronized with the current codebase state. Consider the project's tech stack (Next.js 15.4.1, React 19.1.0, TypeScript, Tailwind CSS) and the SignatureCraft product requirements when making updates."
+    "prompt": "Source files have been modified in this Next.js TypeScript project. Please review the changes and update the relevant documentation including:\n\n1. README.md - Update setup instructions, features, or usage if needed\n2. docs/ folder contents - Update technical documentation, specifications, or guides\n3. Agent steering docs (tech.md, structure.md, product.md) - Update technology stack, project structure, or product information if the changes affect these areas\n4. .kiro/specs/signaturecraft-saas/requirements.md - Update requirements if implementation details have changed\n5. .kiro/specs/signaturecraft-saas/design.md - Update design specifications if architecture or component designs have evolved\n6. .kiro/specs/signaturecraft-saas/tasks.md - Update implementation tasks, marking completed items and adjusting future tasks\n\nFocus on keeping documentation accurate and synchronized with the current codebase state. Consider the project's tech stack (Next.js 15.4.1, React 19.1.0, TypeScript, Tailwind CSS) and the SignatureCraft product requirements when making updates."
   }
 }
