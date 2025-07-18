@@ -11,6 +11,41 @@ import {
 } from "@/components/ui/card";
 import { Check } from "lucide-react";
 
+function PricingCard({ plan }: { plan: typeof plans[number] }) {
+  return (
+    <Card className={`flex flex-col h-full ${plan.popular ? 'border-primary shadow-lg' : ''}`}>
+      {plan.popular && (
+        <div className="bg-primary text-primary-foreground text-sm font-medium py-1 text-center rounded-t-xl">
+          Most Popular
+        </div>
+      )}
+      <CardHeader>
+        <CardTitle>{plan.name}</CardTitle>
+        <CardDescription>{plan.description}</CardDescription>
+        <div className="mt-4">
+          <span className="text-4xl font-bold">{plan.price}</span>
+          {plan.period && <span className="text-muted-foreground">{plan.period}</span>}
+        </div>
+      </CardHeader>
+      <CardContent className="flex-grow">
+        <ul className="space-y-2">
+          {plan.features.map((feature, i) => (
+            <li key={i} className="flex items-center gap-2">
+              <Check className="h-4 w-4 text-primary" />
+              <span>{feature}</span>
+            </li>
+          ))}
+        </ul>
+      </CardContent>
+      <CardFooter className="mt-auto">
+        <Button variant={plan.buttonVariant} className="w-full">
+          {plan.buttonText}
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+}
+
 export function PricingSection() {
   const plans = [
     {
@@ -72,42 +107,9 @@ export function PricingSection() {
           Choose the plan that's right for you or your team
         </p>
       </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
         {plans.map((plan, index) => (
-          <Card 
-            key={index} 
-            className={`flex flex-col ${plan.popular ? 'border-primary shadow-lg' : ''}`}
-          >
-            {plan.popular && (
-              <div className="bg-primary text-primary-foreground text-sm font-medium py-1 text-center">
-                Most Popular
-              </div>
-            )}
-            <CardHeader>
-              <CardTitle>{plan.name}</CardTitle>
-              <CardDescription>{plan.description}</CardDescription>
-              <div className="mt-4">
-                <span className="text-4xl font-bold">{plan.price}</span>
-                {plan.period && <span className="text-muted-foreground">{plan.period}</span>}
-              </div>
-            </CardHeader>
-            <CardContent className="flex-grow">
-              <ul className="space-y-2">
-                {plan.features.map((feature, i) => (
-                  <li key={i} className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-primary" />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-            <CardFooter>
-              <Button variant={plan.buttonVariant} className="w-full">
-                {plan.buttonText}
-              </Button>
-            </CardFooter>
-          </Card>
+          <PricingCard key={index} plan={plan} />
         ))}
       </div>
     </section>

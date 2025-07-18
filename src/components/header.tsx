@@ -6,7 +6,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 
 export function Header() {
   return (
-    <header className="w-full border-b">
+    <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-background/80 dark:bg-background/70 border-b border-border shadow-sm transition-colors">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
         <Link href="/" className="flex items-center gap-2">
           <Image 
@@ -27,13 +27,13 @@ export function Header() {
           />
         </Link>
         <nav className="flex items-center gap-6">
-          <Link href="#" className="text-sm font-medium hover:underline">
+          <Link href="#features" className="text-sm font-medium hover:underline">
             Features
           </Link>
-          <Link href="#" className="text-sm font-medium hover:underline">
+          <Link href="#pricing" className="text-sm font-medium hover:underline">
             Pricing
           </Link>
-          <Link href="#" className="text-sm font-medium hover:underline">
+          <Link href="#templates" className="text-sm font-medium hover:underline">
             Templates
           </Link>
           <ThemeToggle />

@@ -11,15 +11,25 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="flex flex-col w-full flex-1">
+      <main className="flex flex-col w-full flex-1 pt-16"> {/* pt-16 for header height */}
         <Container>
-          <HeroSection />
-          <FeaturesSection />
-          <TestimonialsSection />
+          <section id="hero">
+            <HeroSection />
+          </section>
+          <section id="features">
+            <FeaturesSection />
+          </section>
+          <section id="testimonials">
+            <TestimonialsSection />
+          </section>
         </Container>
-        <PricingSection />
+        <section id="pricing">
+          <PricingSection />
+        </section>
         <Container>
-          <FAQSection />
+          <section id="faq">
+            <FAQSection />
+          </section>
           <section className="py-12 md:py-24">
             <div className="text-center">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-6">Ready to get started?</h2>
