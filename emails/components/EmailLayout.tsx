@@ -19,6 +19,7 @@ interface EmailLayoutProps {
 
 export const EmailLayout = ({ preview, children, logoUrl }: EmailLayoutProps) => {
   // Use the provided logoUrl or fallback to default
+  logoUrl = 'https://signature-craft-seven.vercel.app/logo.svg'
   const finalLogoUrl = logoUrl || 'https://placehold.co/200x50/3B82F6/FFFFFF?text=SignatureCraft&font=poppins';
   
   return (
