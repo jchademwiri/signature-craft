@@ -28,52 +28,59 @@ graph TB
 - **Rich Text Editor**: TipTap with Notion-style blocks
 - **Payment Processing**: Paystack for ZAR billing
 - **Email Service**: Resend for email delivery
-- **Email Templates**: React Email for branded email templates
+- **Email Templates**: React Email v4.2.3 with @react-email/components v0.3.1
+- **Email Development**: Local React Email preview server on port 3001
 - **Deployment**: Vercel with Turbopack optimization
 - **Package Manager**: pnpm
 
 ### Application Structure
 
 ```
-src/
-├── app/                          # Next.js App Router
-│   ├── (auth)/                   # Authentication routes
-│   │   ├── login/
-│   │   ├── register/
-│   │   └── reset-password/
-│   ├── (dashboard)/              # Protected dashboard routes
-│   │   ├── builder/              # Signature builder
-│   │   ├── signatures/           # Signature management
-│   │   ├── team/                 # Team management
-│   │   └── settings/             # User settings
-│   ├── api/                      # API routes
-│   │   ├── auth/
-│   │   ├── signatures/
-│   │   ├── payments/
-│   │   └── webhooks/
-│   ├── globals.css
-│   ├── layout.tsx
-│   └── page.tsx
-├── components/                   # Reusable UI components
-│   ├── ui/                       # ShadCN UI components
-│   ├── signature/                # Signature-specific components
-│   ├── forms/                    # Form components
-│   └── layout/                   # Layout components
-├── lib/                          # Utility functions and configurations
-│   ├── auth.ts                   # Authentication utilities
-│   ├── db.ts                     # Database configuration
-│   ├── payments.ts               # Paystack integration
-│   ├── storage.ts                # File storage utilities
-│   ├── email.ts                  # Resend email configuration
-│   └── utils.ts                  # General utilities
-├── emails/                       # React Email templates
-│   ├── welcome.tsx               # Welcome email template
-│   ├── password-reset.tsx        # Password reset template
-│   ├── team-invitation.tsx       # Team invitation template
-│   ├── subscription-update.tsx   # Subscription notifications
+signature-craft/
+├── emails/                       # React Email templates (root level)
+│   ├── welcome.tsx               # Welcome email template (implemented)
+│   ├── password-reset.tsx        # Password reset template (implemented)
+│   ├── team-invitation.tsx       # Team invitation template (implemented)
+│   ├── subscription-update.tsx   # Subscription notifications (implemented)
 │   └── components/               # Shared email components
-├── types/                        # TypeScript type definitions
-└── hooks/                        # Custom React hooks
+│       └── EmailLayout.tsx       # Common email layout with branding (implemented)
+├── src/
+│   ├── app/                      # Next.js App Router
+│   │   ├── (auth)/               # Authentication routes
+│   │   │   ├── login/
+│   │   │   ├── register/
+│   │   │   └── reset-password/
+│   │   ├── (dashboard)/          # Protected dashboard routes
+│   │   │   ├── builder/          # Signature builder
+│   │   │   ├── signatures/       # Signature management
+│   │   │   ├── team/             # Team management
+│   │   │   └── settings/         # User settings
+│   │   ├── api/                  # API routes
+│   │   │   ├── auth/
+│   │   │   ├── signatures/
+│   │   │   ├── payments/
+│   │   │   └── webhooks/
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── components/               # Reusable UI components
+│   │   ├── ui/                   # ShadCN UI components
+│   │   ├── signature/            # Signature-specific components
+│   │   ├── forms/                # Form components
+│   │   └── layout/               # Layout components
+│   ├── lib/                      # Utility functions and configurations
+│   │   ├── auth.ts               # Authentication utilities
+│   │   ├── db.ts                 # Database configuration
+│   │   ├── payments.ts           # Paystack integration
+│   │   ├── storage.ts            # File storage utilities
+│   │   ├── email.ts              # Resend email configuration
+│   │   └── utils.ts              # General utilities
+│   ├── types/                    # TypeScript type definitions
+│   └── hooks/                    # Custom React hooks
+├── .env.example                  # Environment variables template (implemented)
+├── package.json                  # Dependencies with React Email setup (implemented)
+├── tsconfig.json                 # TypeScript config with email path alias (implemented)
+└── README.md                     # Project documentation (implemented)
 ```
 
 ## Components and Interfaces
@@ -112,11 +119,11 @@ src/
 - **BillingHistory**: Transaction history and invoice management
 
 #### 6. Email Templates (`/emails/`)
-- **WelcomeEmail**: Branded welcome email with React Email
-- **PasswordResetEmail**: Secure password reset with branded styling
-- **TeamInvitationEmail**: Professional team invitation template
-- **SubscriptionUpdateEmail**: Billing and subscription notifications
-- **EmailLayout**: Shared layout component for consistent branding
+- **WelcomeEmail**: Branded welcome email with email verification button
+- **PasswordResetEmail**: Secure password reset with token-based authentication
+- **TeamInvitationEmail**: Team invitation with accept invitation button
+- **SubscriptionUpdateEmail**: Subscription confirmation with plan details
+- **EmailLayout**: Shared layout component with header, footer and consistent styling
 
 ### Database Schema (Supabase/PostgreSQL)
 
@@ -263,6 +270,32 @@ interface SendEmailRequest {
   data: Record<string, any>;
 }
 
+// Email template props interfaces
+interface WelcomeEmailProps {
+  name: string;
+  verificationUrl: string;
+}
+
+interface PasswordResetEmailProps {
+  name: string;
+  resetUrl: string;
+}
+
+interface TeamInvitationEmailProps {
+  inviteeEmail: string;
+  teamName: string;
+  inviterName: string;
+  invitationUrl: string;
+}
+
+interface SubscriptionUpdateEmailProps {
+  name: string;
+  planName: string;
+  planPrice: string;
+  billingDate: string;
+  accountUrl: string;
+}
+
 // Email service configuration
 interface EmailConfig {
   resendApiKey: string;
@@ -382,6 +415,7 @@ class GlobalErrorBoundary extends Component<Props, ErrorBoundaryState> {
 - **Authentication Flow**: End-to-end auth testing with Supabase
 - **Payment Integration**: Paystack webhook testing with mock events
 - **Email Integration**: Resend email delivery testing with React Email templates
+- **Email Preview**: Local testing with React Email preview server (port 3001)
 - **Signature Generation**: HTML output validation across email clients
 - **File Upload**: Image processing and storage testing
 

@@ -1,0 +1,27 @@
+<svg width="200" height="50" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="200" height="50" rx="8" fill="#1F2937"/>
+  
+  <!-- Icon - Stylized signature/pen -->
+  <g transform="translate(12, 12)">
+    <!-- Pen body -->
+    <path d="M2 20L18 4L22 8L6 24L2 20Z" fill="#60A5FA" stroke="#3B82F6" stroke-width="1"/>
+    <!-- Pen tip -->
+    <path d="M18 4L20 2C20.5 1.5 21.5 1.5 22 2C22.5 2.5 22.5 3.5 22 4L20 6L18 4Z" fill="#3B82F6"/>
+    <!-- Signature line -->
+    <path d="M4 22C8 20 12 22 16 20C20 18 24 20 26 18" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" fill="none"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="45" y="20" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="#F9FAFB">
+    Signature
+  </text>
+  <text x="45" y="35" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="#60A5FA">
+    Craft
+  </text>
+  
+  <!-- Decorative elements -->
+  <circle cx="175" cy="15" r="2" fill="#60A5FA" opacity="0.3"/>
+  <circle cx="185" cy="20" r="1.5" fill="#60A5FA" opacity="0.5"/>
+  <circle cx="180" cy="30" r="1" fill="#60A5FA" opacity="0.4"/>
+</svg>

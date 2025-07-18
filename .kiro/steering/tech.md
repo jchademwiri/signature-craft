@@ -14,7 +14,7 @@
 
 ## Common Commands
 ```bash
-# Development server with Turbopack
+# Development server with Turbopack and email preview server (concurrent)
 pnpm dev
 
 # Production build with Turbopack
@@ -25,6 +25,9 @@ pnpm start
 
 # Run linting
 pnpm lint
+
+# Email development server only
+pnpm email
 ```
 
 ## Development Standards
@@ -33,6 +36,13 @@ pnpm lint
 - Utilize path aliases (`@/*` maps to `./src/*`)
 - Maintain ESLint compliance
 - Use pnpm for package management (not npm/yarn)
+
+## Email System
+- **Email Templates**: React Email with TypeScript
+- **Email Components**: Shared components in `/emails/components`
+- **Email Layout**: Standardized EmailLayout component with SignatureCraft branding
+- **Email Preview**: Development server on port 3001 for template testing (runs concurrently with Next.js in dev mode)
+- **Email Delivery**: Planned integration with Resend
 
 ## Planned Integrations
 - **Backend**: Supabase (PostgreSQL, Auth)
