@@ -312,7 +312,7 @@ export function PricingSection() {
         {/* Bottom CTA */}
         <div className="text-center mt-16">
           <p className="text-muted-foreground mb-4">
-            Need something custom? We're here to help.
+            Need something custom? We&apos;re here to help.
           </p>
           <Button variant="outline" className="mr-4">
             Schedule a Demo

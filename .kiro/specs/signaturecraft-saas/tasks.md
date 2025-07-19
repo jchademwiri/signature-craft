@@ -32,11 +32,11 @@
   - _Requirements: 7.1_
 
 - [x] 6. Implement database schema
-  - ✅ Create users table compatible with Better Auth (TEXT id, name, email, emailVerified)
-  - ✅ Create Better Auth tables (sessions, accounts, verifications)
-  - ✅ Create signatures table with user relationship and signature data (UUID id, TEXT user_id reference)
-  - ✅ Add proper indexes for performance
-  - ✅ Schema properly references users.id from signatures.userId
+  - Create users table compatible with Better Auth (TEXT id, name, email, emailVerified)
+  - Create Better Auth tables (sessions, accounts, verifications)
+  - Create signatures table with user relationship and signature data (UUID id, TEXT user_id reference)
+  - Add proper indexes for performance
+  - Schema properly references users.id from signatures.userId
   - _Requirements: 1.1, 1.2, 7.1_
 
 - [x] 7. Configure Better Auth authentication
@@ -47,7 +47,9 @@
   - Add environment variables for auth secrets
   - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7_
 
-- [-] 8. Build authentication pages
+- [x] 8. Build authentication pages
+
+
   - Create (auth) route group with login, register, and reset-password pages
   - Build LoginForm component with email/password validation
   - Create RegisterForm component with name, email, password fields

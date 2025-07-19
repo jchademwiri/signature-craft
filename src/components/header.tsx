@@ -8,6 +8,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Menu } from "lucide-react";
@@ -34,6 +35,7 @@ export function Header() {
             className="hidden dark:block"
           />
         </Link>
+        
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6">
           <Link href="#features" className="text-sm font-medium hover:underline">
@@ -46,9 +48,21 @@ export function Header() {
             Templates
           </Link>
           <ThemeToggle />
+          <div className="flex items-center gap-2 ml-4">
+            <Button variant="ghost" size="sm" asChild>
+              <Link href="/login">Sign In</Link>
+            </Button>
+            <Button size="sm" asChild>
+              <Link href="/register">Get Started</Link>
+            </Button>
+          </div>
         </nav>
+        
         {/* Mobile nav */}
-        <div className="md:hidden flex items-center">
+        <div className="md:hidden flex items-center gap-2">
+          <Button variant="ghost" size="sm" asChild>
+            <Link href="/login">Sign In</Link>
+          </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="icon" aria-label="Open menu">
@@ -56,6 +70,10 @@ export function Header() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
+              <DropdownMenuItem asChild>
+                <Link href="/register">Get Started</Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
                 <Link href="#features">Features</Link>
               </DropdownMenuItem>
@@ -65,6 +83,7 @@ export function Header() {
               <DropdownMenuItem asChild>
                 <Link href="#templates">Templates</Link>
               </DropdownMenuItem>
+              <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
                 <div className="w-full flex justify-center py-2">
                   <ThemeToggle />

@@ -4,7 +4,7 @@
   "description": "Automatically formats spec documents, steering files, and other Kiro documentation to follow recommended standards",
   "version": "1",
   "when": {
-    "type": "fileEdited",
+    "type": "userTriggered",
     "patterns": [
       ".kiro/specs/**/*.md",
       ".kiro/steering/*.md",

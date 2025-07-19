@@ -1,10 +1,10 @@
 {
-  "enabled": true,
+  "enabled": false,
   "name": "Spec Workflow Formatter",
   "description": "Ensures spec documents maintain proper formatting during the requirements → design → tasks workflow",
   "version": "1",
   "when": {
-    "type": "fileEdited",
+    "type": "userTriggered",
     "patterns": [
       ".kiro/specs/**/requirements.md",
       ".kiro/specs/**/design.md",

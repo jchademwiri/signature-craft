@@ -1,10 +1,10 @@
 {
-  "enabled": true,
+  "enabled": false,
   "name": "Steering Documents Sync",
   "description": "Analyzes changed files and updates only the relevant steering documents in .kiro/steering/ based on the type of changes detected. Updates tech.md for stack/architecture changes, structure.md for organization changes, product.md for business requirement changes, and ui-standards.md for UI pattern changes.",
   "version": "1",
   "when": {
-    "type": "fileEdited",
+    "type": "userTriggered",
     "patterns": [
       "package.json",
       "tsconfig.json",

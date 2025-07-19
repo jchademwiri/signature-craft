@@ -17,10 +17,16 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: false, // MVP: Skip verification
+    sendResetPassword: async ({ user, url, token }) => {
+      // TODO: Implement email sending in future iterations
+      // For MVP, we'll log the reset URL (in production, send actual email)
+      console.log(`Password reset for ${user.email}: ${url}`);
+      console.log(`Reset token: ${token}`);
+    },
   },
   session: {
     expiresIn: 60 * 60 * 24 * 7, // 7 days
   },
-  secret: process.env.BETTER_AUTH_SECRET || "your-secret-key-here",
+  secret: process.env.BETTER_AUTH_SECRET!,
   baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
 });
