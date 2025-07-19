@@ -25,23 +25,26 @@
   - Implement responsive design for all devices
   - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5, 6.6_
 
-- [-] 5. Set up NeonDB PostgreSQL database
+- [x] 5. Set up NeonDB PostgreSQL database
   - Create NeonDB account and database instance
   - Configure database connection string
   - Set up Drizzle ORM with PostgreSQL adapter
   - _Requirements: 7.1_
 
-- [-] 6. Implement database schema
-  - Create users table with email, password_hash, name fields
-  - Create signatures table with user relationship and signature data
-  - Add proper indexes for performance
+- [x] 6. Implement database schema
+  - ✅ Create users table compatible with Better Auth (TEXT id, name, email, emailVerified)
+  - ✅ Create Better Auth tables (sessions, accounts, verifications)
+  - ✅ Create signatures table with user relationship and signature data (UUID id, TEXT user_id reference)
+  - ✅ Add proper indexes for performance
+  - ✅ Schema properly references users.id from signatures.userId
   - _Requirements: 1.1, 1.2, 7.1_
 
-- [-] 7. Configure Better Auth authentication
+- [x] 7. Configure Better Auth authentication
   - Install and configure Better Auth with Drizzle adapter
   - Set up email/password authentication
   - Configure session management (7-day expiry)
-  - Implement password reset functionality
+  - Create client-side auth configuration
+  - Add environment variables for auth secrets
   - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7_
 
 - [-] 8. Build authentication pages

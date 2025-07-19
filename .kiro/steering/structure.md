@@ -54,7 +54,8 @@ signaturecraft-mvp/
 │   │       ├── Footer.tsx
 │   │       └── Container.tsx
 │   ├── lib/                 # Utilities and configuration
-│   │   ├── auth.ts          # Better Auth configuration
+│   │   ├── auth/            # Authentication configuration
+│   │   │   └── auth.ts      # Better Auth server configuration
 │   │   ├── db.ts            # Database connection
 │   │   ├── schema.ts        # Drizzle schema
 │   │   ├── auth-client.ts   # Client-side auth
@@ -82,7 +83,7 @@ signaturecraft-mvp/
 - **Absolute Imports**: Always use `@/` alias for src directory
 - **Component Imports**: `import { Button } from "@/components/ui/button"`
 - **Utility Imports**: `import { cn } from "@/lib/utils"`
-- **Auth Imports**: `import { auth } from "@/lib/auth"`
+- **Auth Imports**: `import { auth } from "@/lib/auth/auth"`
 - **Constants**: `import { TEMPLATES } from "@/constants"`
 
 ## Component Organization Principles
@@ -115,20 +116,29 @@ export function SignatureBuilder() {
 
 ### Database Schema Location
 ```typescript
-// src/lib/schema.ts - Drizzle schema
-import { pgTable, uuid, varchar, text } from 'drizzle-orm/pg-core'
+// src/lib/schema.ts - Drizzle schema with Better Auth integration
+import { pgTable, uuid, varchar, text, timestamp, boolean } from 'drizzle-orm/pg-core'
 
 export const users = pgTable('users', {
+  id: text('id').primaryKey(),
+  name: text('name').notNull(),
+  email: text('email').notNull().unique(),
+  emailVerified: boolean('email_verified').$defaultFn(() => false).notNull(),
+  // ... other Better Auth fields
+})
+
+export const signatures = pgTable('signatures', {
   id: uuid('id').primaryKey().defaultRandom(),
-  email: varchar('email', { length: 255 }).notNull().unique(),
-  // ... other fields
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  name: varchar('name', { length: 100 }).notNull(),
+  // ... other signature fields
 })
 ```
 
 ## API Route Structure
 ```typescript
 // src/app/api/signatures/route.ts
-import { auth } from "@/lib/auth"
+import { auth } from "@/lib/auth/auth"
 import { NextRequest } from "next/server"
 
 export async function GET(request: NextRequest) {

@@ -201,29 +201,66 @@ app/
 
 #### **Database Schema (NeonDB PostgreSQL)**
 ```sql
--- Users table
+-- Users table (Better Auth compatible)
 CREATE TABLE users (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    email_verified BOOLEAN DEFAULT FALSE NOT NULL,
+    image TEXT,
+    created_at TIMESTAMP DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMP DEFAULT NOW() NOT NULL
+);
+
+-- Sessions table (Better Auth)
+CREATE TABLE sessions (
+    id TEXT PRIMARY KEY,
+    expires_at TIMESTAMP NOT NULL,
+    token TEXT UNIQUE NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL,
+    ip_address TEXT,
+    user_agent TEXT,
+    user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Accounts table (Better Auth)
+CREATE TABLE accounts (
+    id TEXT PRIMARY KEY,
+    account_id TEXT NOT NULL,
+    provider_id TEXT NOT NULL,
+    user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    access_token TEXT,
+    refresh_token TEXT,
+    id_token TEXT,
+    access_token_expires_at TIMESTAMP,
+    refresh_token_expires_at TIMESTAMP,
+    scope TEXT,
+    password TEXT,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL
+);
+
+-- Verifications table (Better Auth)
+CREATE TABLE verifications (
+    id TEXT PRIMARY KEY,
+    identifier TEXT NOT NULL,
+    value TEXT NOT NULL,
+    expires_at TIMESTAMP NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW(),
-    email_verified BOOLEAN DEFAULT FALSE
+    updated_at TIMESTAMP DEFAULT NOW()
 );
 
 -- Signatures table
 CREATE TABLE signatures (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     name VARCHAR(100) NOT NULL,
     title VARCHAR(100),
     company VARCHAR(100),
     email VARCHAR(255) NOT NULL,
     phone VARCHAR(50),
     website VARCHAR(255),
-    department VARCHAR(100),
-    mobile VARCHAR(50),
-    address TEXT,
     logo_data TEXT, -- Base64 encoded logo
     template_id VARCHAR(20) DEFAULT 'classic',
     created_at TIMESTAMP DEFAULT NOW(),

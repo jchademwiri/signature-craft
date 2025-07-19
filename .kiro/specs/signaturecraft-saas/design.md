@@ -195,35 +195,74 @@ components/
 
 ### Database Schema (NeonDB PostgreSQL)
 
-#### Users Table
+#### Users Table (Better Auth Compatible)
 ```sql
 CREATE TABLE users (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    name VARCHAR(100) NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW(),
-    email_verified BOOLEAN DEFAULT FALSE
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    email_verified BOOLEAN DEFAULT FALSE NOT NULL,
+    image TEXT,
+    created_at TIMESTAMP DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMP DEFAULT NOW() NOT NULL
 );
 
 CREATE INDEX idx_users_email ON users(email);
+```
+
+#### Better Auth Tables
+```sql
+-- Sessions table
+CREATE TABLE sessions (
+    id TEXT PRIMARY KEY,
+    expires_at TIMESTAMP NOT NULL,
+    token TEXT UNIQUE NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL,
+    ip_address TEXT,
+    user_agent TEXT,
+    user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Accounts table
+CREATE TABLE accounts (
+    id TEXT PRIMARY KEY,
+    account_id TEXT NOT NULL,
+    provider_id TEXT NOT NULL,
+    user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    access_token TEXT,
+    refresh_token TEXT,
+    id_token TEXT,
+    access_token_expires_at TIMESTAMP,
+    refresh_token_expires_at TIMESTAMP,
+    scope TEXT,
+    password TEXT,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL
+);
+
+-- Verifications table
+CREATE TABLE verifications (
+    id TEXT PRIMARY KEY,
+    identifier TEXT NOT NULL,
+    value TEXT NOT NULL,
+    expires_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
 ```
 
 #### Signatures Table
 ```sql
 CREATE TABLE signatures (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     name VARCHAR(100) NOT NULL,
     title VARCHAR(100),
     company VARCHAR(100),
     email VARCHAR(255) NOT NULL,
     phone VARCHAR(50),
     website VARCHAR(255),
-    department VARCHAR(100),
-    mobile VARCHAR(50),
-    address TEXT,
     logo_data TEXT, -- Base64 encoded logo
     template_id VARCHAR(20) DEFAULT 'classic',
     created_at TIMESTAMP DEFAULT NOW(),
@@ -257,32 +296,65 @@ CREATE INDEX idx_signatures_user_id ON signatures(user_id);
 ### Data Models (Drizzle ORM)
 
 ```typescript
-// db/schema.ts
+// src/lib/schema.ts - Better Auth compatible schema
 import { pgTable, uuid, varchar, text, boolean, timestamp } from 'drizzle-orm/pg-core'
 
 export const users = pgTable('users', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  email: varchar('email', { length: 255 }).notNull().unique(),
-  passwordHash: varchar('password_hash', { length: 255 }).notNull(),
-  name: varchar('name', { length: 100 }).notNull(),
-  createdAt: timestamp('created_at').defaultNow(),
-  updatedAt: timestamp('updated_at').defaultNow(),
-  emailVerified: boolean('email_verified').default(false),
+  id: text('id').primaryKey(),
+  name: text('name').notNull(),
+  email: text('email').notNull().unique(),
+  emailVerified: boolean('email_verified').$defaultFn(() => false).notNull(),
+  image: text('image'),
+  createdAt: timestamp('created_at').$defaultFn(() => new Date()).notNull(),
+  updatedAt: timestamp('updated_at').$defaultFn(() => new Date()).notNull(),
+})
+
+export const sessions = pgTable('sessions', {
+  id: text('id').primaryKey(),
+  expiresAt: timestamp('expires_at').notNull(),
+  token: text('token').notNull().unique(),
+  createdAt: timestamp('created_at').notNull(),
+  updatedAt: timestamp('updated_at').notNull(),
+  ipAddress: text('ip_address'),
+  userAgent: text('user_agent'),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+})
+
+export const accounts = pgTable('accounts', {
+  id: text('id').primaryKey(),
+  accountId: text('account_id').notNull(),
+  providerId: text('provider_id').notNull(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  accessToken: text('access_token'),
+  refreshToken: text('refresh_token'),
+  idToken: text('id_token'),
+  accessTokenExpiresAt: timestamp('access_token_expires_at'),
+  refreshTokenExpiresAt: timestamp('refresh_token_expires_at'),
+  scope: text('scope'),
+  password: text('password'),
+  createdAt: timestamp('created_at').notNull(),
+  updatedAt: timestamp('updated_at').notNull(),
+})
+
+export const verifications = pgTable('verifications', {
+  id: text('id').primaryKey(),
+  identifier: text('identifier').notNull(),
+  value: text('value').notNull(),
+  expiresAt: timestamp('expires_at').notNull(),
+  createdAt: timestamp('created_at').$defaultFn(() => new Date()),
+  updatedAt: timestamp('updated_at').$defaultFn(() => new Date()),
 })
 
 export const signatures = pgTable('signatures', {
   id: uuid('id').primaryKey().defaultRandom(),
-  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
   name: varchar('name', { length: 100 }).notNull(),
   title: varchar('title', { length: 100 }),
   company: varchar('company', { length: 100 }),
   email: varchar('email', { length: 255 }).notNull(),
   phone: varchar('phone', { length: 50 }),
   website: varchar('website', { length: 255 }),
-  department: varchar('department', { length: 100 }),
-  mobile: varchar('mobile', { length: 50 }),
-  address: text('address'),
-  logoData: text('logo_data'),
+  logoData: text('logo_data'), // Base64 encoded
   templateId: varchar('template_id', { length: 20 }).default('classic'),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),

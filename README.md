@@ -58,9 +58,11 @@ SignatureCraft is a lean, focused MVP for creating professional email signatures
 
 4. Set up the database
    ```bash
-   npx @better-auth/cli generate
-   npx @better-auth/cli migrate
+   pnpm db:generate
+   pnpm db:push
    ```
+   
+   The database schema includes Better Auth tables for authentication and a signatures table for user data.
 
 5. Start the development server
    ```bash
@@ -83,10 +85,16 @@ pnpm start
 pnpm lint
 
 # Generate database schema
-npx @better-auth/cli generate
+pnpm db:generate
+
+# Push database schema
+pnpm db:push
 
 # Run database migrations
-npx @better-auth/cli migrate
+pnpm db:migrate
+
+# Open Drizzle Studio
+pnpm db:studio
 ```
 
 ## Project Structure
