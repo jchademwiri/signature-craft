@@ -3,6 +3,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Menu } from "lucide-react";
 
 export function Header() {
   return (
@@ -26,7 +34,8 @@ export function Header() {
             className="hidden dark:block"
           />
         </Link>
-        <nav className="flex items-center gap-6">
+        {/* Desktop nav */}
+        <nav className="hidden md:flex items-center gap-6">
           <Link href="#features" className="text-sm font-medium hover:underline">
             Features
           </Link>
@@ -38,6 +47,32 @@ export function Header() {
           </Link>
           <ThemeToggle />
         </nav>
+        {/* Mobile nav */}
+        <div className="md:hidden flex items-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="icon" aria-label="Open menu">
+                <Menu className="h-6 w-6" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem asChild>
+                <Link href="#features">Features</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="#pricing">Pricing</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="#templates">Templates</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <div className="w-full flex justify-center py-2">
+                  <ThemeToggle />
+                </div>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
     </header>
   );
