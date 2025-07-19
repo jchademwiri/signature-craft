@@ -1,0 +1,35 @@
+You are maintaining steering documents for SignatureCraft MVP. Analyze the changed files and update only the relevant steering documents in .kiro/steering/:
+
+**tech.md**: Update if there are changes to:
+- Tech stack or dependencies (package.json changes)
+- Architecture decisions (spec changes)
+- Development tools or configuration
+- Database or authentication setup (NeonDB, Better Auth, Drizzle)
+
+**structure.md**: Update if there are changes to:
+- Project file organization
+- Component structure patterns
+- Import conventions or path aliases
+- Directory layout requirements
+
+**product.md**: Update if there are changes to:
+- Business requirements or MVP scope
+- User journey definitions (3-click signature creation)
+- Success metrics or validation goals
+- Market focus (South African professionals/SMBs)
+
+**ui-standards.md**: Update if there are changes to:
+- UI component patterns or ShadCN usage
+- Design system requirements
+- Responsive design standards
+- SignatureCraft-specific component guidelines
+
+Be selective - only update steering documents that are actually affected by the specific changes. After updating, provide a brief summary of what was changed and why.
+
+Focus on maintaining consistency between the project specifications and the steering documents that guide SignatureCraft MVP development.
+
+Key context for updates:
+- This is an MVP focused on simplicity (3-click signature creation)
+- Tech stack: Next.js 15 + NeonDB + Better Auth + Drizzle + Tailwind + ShadCN
+- Target: South African professionals needing email signatures
+- Core features: Simple builder, 3 templates, copy-paste export for Gmail/Outlook

@@ -1,30 +1,35 @@
-# SignatureCraft
+# SignatureCraft MVP
 
-SignatureCraft is a web-based SaaS platform designed to help professionals, teams, and businesses easily create, customize, and deploy professional email signatures.
+SignatureCraft is a lean, focused MVP for creating professional email signatures in under 5 minutes. The platform targets South African professionals and SMBs who need branded email signatures without complex design tools.
 
-## Features
+**Core Value Proposition**: "Professional email signatures in 3 clicks - no design skills required"
 
-- Responsive signature builder with intuitive drag-and-drop interface
-- Logo and avatar uploads with banner support and custom branding
-- Seamless social media platform integration
-- Multi-user team management and templates
-- Export to popular email clients (Gmail, Outlook, Apple Mail)
-- Analytics and white-label options
+## MVP Features
+
+- Simple signature builder with form-based interface
+- 3 professional templates (Classic, Modern, Minimal)
+- Logo upload with automatic optimization
+- Contact info fields (name, title, company, email, phone, website)
+- HTML export with copy-paste for Gmail and Outlook
+- Installation guides with screenshots
+- Responsive design (mobile/tablet/desktop)
 
 ## Tech Stack
 
-- **Frontend**: Next.js 15.4.1 with React 19.1.0
-- **Styling**: Tailwind CSS v4 with ShadCN UI components
-- **Backend**: Supabase (PostgreSQL, Auth, Storage)
-- **Email**: React Email with Resend
-- **Payments**: Paystack (ZAR billing)
+- **Frontend**: Next.js 15 with React 19.1.0 and TypeScript
+- **Styling**: Tailwind CSS with ShadCN UI components
+- **Database**: NeonDB PostgreSQL (serverless)
+- **Authentication**: Better Auth with Drizzle adapter
+- **ORM**: Drizzle ORM for type-safe database operations
+- **Hosting**: Vercel (frontend + serverless functions)
+- **Package Manager**: pnpm (never use npm or yarn)
 
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js 18+
-- pnpm 10+
+- pnpm (package manager)
 
 ### Installation
 
@@ -39,37 +44,71 @@ SignatureCraft is a web-based SaaS platform designed to help professionals, team
    pnpm install
    ```
 
-3. Create a `.env.local` file based on `.env.example`
+3. Set up environment variables
    ```bash
    cp .env.example .env.local
    ```
+   
+   Add your database URL and authentication secrets:
+   ```env
+   DATABASE_URL=postgresql://...
+   BETTER_AUTH_SECRET=your-secret-key
+   BETTER_AUTH_URL=http://localhost:3000
+   ```
 
-4. Start the development server and email preview server concurrently
+4. Set up the database
+   ```bash
+   npx @better-auth/cli generate
+   npx @better-auth/cli migrate
+   ```
+
+5. Start the development server
    ```bash
    pnpm dev
    ```
 
-   This will start both the Next.js development server and the email preview server in parallel.
+## Development Commands
 
-## Email Development
+```bash
+# Start development server
+pnpm dev
 
-SignatureCraft uses React Email for creating and previewing email templates:
+# Build for production
+pnpm build
 
-- Email templates are located in the `/emails` directory
-- Shared email components are in the `/emails/components` directory
-- Email templates can be built with or without the `EmailLayout` component
-- When using direct React Email components, import them from `@react-email/components`
-- The logo URL is defined in `src/constant.ts` and can be imported in email templates
-- The email preview server starts automatically with `pnpm dev` on port 3001
-- Alternatively, you can run just the email preview server with `pnpm email`
-- Visit `http://localhost:3001` to preview email templates
+# Preview production build
+pnpm start
 
-### Email Branding
+# Run linting
+pnpm lint
 
-All email templates automatically include:
-- SignatureCraft logo header for brand consistency
-- Standardized footer with copyright and website link
-- Responsive design optimized for email clients
+# Generate database schema
+npx @better-auth/cli generate
+
+# Run database migrations
+npx @better-auth/cli migrate
+```
+
+## Project Structure
+
+```
+signaturecraft-mvp/
+├── src/
+│   ├── app/                  # Next.js App Router pages
+│   │   ├── (auth)/          # Authentication pages group
+│   │   ├── dashboard/       # User dashboard
+│   │   ├── builder/         # Signature builder
+│   │   ├── export/          # Export and installation
+│   │   └── api/             # API routes
+│   ├── components/          # React components
+│   │   ├── ui/             # ShadCN UI components
+│   │   ├── auth/           # Authentication components
+│   │   ├── signature/      # Signature builder components
+│   │   └── export/         # Export components
+│   └── lib/                # Utilities and configuration
+├── emails/                 # Email templates (React Email)
+└── docs/                   # Project documentation
+```
 
 ## License
 

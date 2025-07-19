@@ -1,219 +1,475 @@
-# SignatureCraft Design Specification
+# SignatureCraft MVP Design
 
-## Architecture Overview
+## Overview
 
-SignatureCraft follows a modern web application architecture using Next.js with the App Router pattern. The application is structured to provide a seamless user experience while maintaining separation of concerns and code organization.
+SignatureCraft MVP is designed as a lean, focused application that enables professionals to create email signatures in under 5 minutes. The architecture prioritizes simplicity, reliability, and fast development over complex features.
+
+**Design Principles:**
+- Simplicity over complexity
+- Fast user workflows (3-click signature creation)
+- Email client compatibility first
+- Mobile-responsive design
+- Minimal external dependencies
 
 ### High-Level Architecture
 
+```mermaid
+graph TB
+    User[👤 User] --> Browser[🌐 Browser]
+    Browser --> NextJS[⚡ Next.js App Router]
+    
+    NextJS --> Auth[🔐 Better Auth]
+    NextJS --> DB[(🗄️ NeonDB PostgreSQL)]
+    NextJS --> Vercel[☁️ Vercel Functions]
+    
+    Auth --> DB
+    
+    subgraph "Client-Side Processing"
+        Canvas[🖼️ Canvas API<br/>Image Processing]
+        Forms[📝 React Hook Form<br/>Validation]
+        Preview[👁️ Real-time Preview]
+    end
+    
+    Browser --> Canvas
+    Browser --> Forms
+    Browser --> Preview
+    
+    subgraph "Data Storage"
+        UserTable[👥 Users Table]
+        SigTable[✍️ Signatures Table]
+        Base64[📷 Base64 Images]
+    end
+    
+    DB --> UserTable
+    DB --> SigTable
+    DB --> Base64
+    
+    subgraph "Export Formats"
+        Gmail[📧 Gmail HTML]
+        Outlook[📨 Outlook RTF]
+        HTM[📄 .htm File]
+    end
+    
+    NextJS --> Gmail
+    NextJS --> Outlook
+    NextJS --> HTM
+    
+    style NextJS fill:#0070f3,stroke:#fff,color:#fff
+    style NeonDB fill:#00d9ff,stroke:#fff,color:#000
+    style Auth fill:#ff6b6b,stroke:#fff,color:#fff
+    style Vercel fill:#000,stroke:#fff,color:#fff
 ```
-Client (Browser) <-> Next.js App Router <-> Supabase (Auth, Database, Storage)
-                                        <-> Paystack (Payments)
-                                        <-> Resend (Email Delivery)
-```
+
+**Key Architectural Decisions:**
+- Base64 image storage in database (no separate file storage)
+- No email service integration (users copy/paste)
+- No real-time features (simple form-based workflow)
+- Single-user focus (no team management)
+- Client-side image processing to reduce server load
 
 ## Frontend Design
 
 ### UI Framework
-- Next.js 15.4.1 with App Router
+- Next.js 15 with App Router
 - React 19.1.0
 - TypeScript with strict mode
-- Tailwind CSS v4 for styling
-- ShadCN UI for component library
-- Custom UI components for layout consistency
+- Tailwind CSS + ShadCN UI components
+- React Hook Form + Zod for form validation
+- Client-side image processing with Canvas API
 
 ### Page Structure
 
-#### Home Page (`src/app/page.tsx`)
-- Hero section with logo and tagline
-- Feature highlights with cards
-- Call-to-action buttons
-- Key features section with three main value propositions:
-  - Drag & Drop interface
-  - Branding capabilities
-  - Social Media integration
+#### Landing Page (`src/app/page.tsx`)
+- Hero section: "Professional email signatures in 3 clicks"
+- Value proposition highlighting speed and simplicity
+- Feature cards: Simple Builder, 3 Templates, Logo Upload
+- Clear call-to-action: "Create Your Signature"
+- Social proof and testimonials section
 
 #### Authentication Pages
-- Sign up
-- Sign in
-- Password reset
-- Email verification
+- `/login` - Simple email/password form
+- `/register` - Email, password, name fields
+- `/reset-password` - Password reset flow
+- Auto-redirect to dashboard after successful auth
 
-#### Dashboard
-- User signature management
-- Team management (for team accounts)
-- Settings and profile
+#### Dashboard (`/dashboard`)
+- Welcome message for new users
+- "Create New Signature" primary CTA
+- Existing signature preview (if any)
+- Account settings link
+- Simple, clean interface
 
-#### Signature Builder
-- Canvas area for signature design
-- Component toolbar
-- Property editor
-- Preview panel
-- Export options
+#### Signature Builder (`/builder`)
+- Left panel: Form fields (name, title, company, email, phone, website)
+- Center panel: Real-time signature preview
+- Right panel: Template selector (3 options)
+- Logo upload area with drag-and-drop
+- Export button leading to export page
 
-### Component Design
+#### Export Page (`/export`)
+- Generated HTML code in copyable text area
+- **Gmail Copy-Paste**: Direct HTML copy button with Gmail-specific instructions
+- **Outlook Copy-Paste**: Rich text copy button that works with Outlook's paste functionality
+- Installation guides for Gmail, Outlook (web/desktop), Apple Mail
+- Download .htm file option for Outlook desktop users
+- "Create Another Signature" CTA
 
-#### UI Components
-- Leveraging ShadCN UI components for consistent design
-- Custom components built on top of ShadCN UI
-- Container component for consistent content width and padding
-- Responsive design for all screen sizes
+### Component Architecture
 
-#### Layout Components
-- Root layout with navigation and footer
-- Container component for consistent content width and padding
-- Authentication layout
-- Dashboard layout
-- Builder layout
+#### Core Components
+```typescript
+components/
+├── ui/                    // ShadCN UI components
+│   ├── button.tsx
+│   ├── input.tsx
+│   ├── card.tsx
+│   └── container.tsx
+├── auth/
+│   ├── LoginForm.tsx
+│   ├── RegisterForm.tsx
+│   └── ResetPasswordForm.tsx
+├── signature/
+│   ├── SignatureBuilder.tsx    // Main builder interface
+│   ├── SignaturePreview.tsx    // Real-time preview
+│   ├── TemplateSelector.tsx    // 3 template options
+│   ├── FormFields.tsx          // Contact info form
+│   └── LogoUpload.tsx          // Image upload component
+├── export/
+│   ├── ExportPanel.tsx         // HTML code display
+│   └── InstallationGuide.tsx   // Email client guides
+└── layout/
+    ├── Header.tsx
+    ├── Footer.tsx
+    └── Container.tsx
+```
+
+#### Template Designs
+
+**Template 1: Classic**
+```html
+<table>
+  <tr>
+    <td>[Name] | [Title]</td>
+  </tr>
+  <tr>
+    <td>[Company]</td>
+  </tr>
+  <tr>
+    <td>📧 [Email] | 📞 [Phone]</td>
+  </tr>
+  <tr>
+    <td>🌐 [Website]</td>
+  </tr>
+  <tr>
+    <td><img src="[Logo]" alt="Logo" /></td>
+  </tr>
+</table>
+```
+
+**Template 2: Modern**
+```html
+<table>
+  <tr>
+    <td><img src="[Logo]" alt="Logo" /></td>
+    <td>
+      <div>[Name]</div>
+      <div>[Title] at [Company]</div>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">📧 [Email] | 📞 [Phone] | 🌐 [Website]</td>
+  </tr>
+</table>
+```
+
+**Template 3: Minimal**
+```html
+<div>
+  <div>[Name]</div>
+  <div>[Title], [Company]</div>
+  <div>[Email] | [Phone]</div>
+</div>
+```
 
 ## Backend Design
 
-### Database Schema
+### Database Schema (NeonDB PostgreSQL)
 
 #### Users Table
-- id (primary key)
-- email
-- name
-- created_at
-- updated_at
-- subscription_tier
-- subscription_status
+```sql
+CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW(),
+    email_verified BOOLEAN DEFAULT FALSE
+);
 
-#### Teams Table
-- id (primary key)
-- name
-- owner_id (foreign key to users)
-- created_at
-- updated_at
-
-#### Team Members Table
-- id (primary key)
-- team_id (foreign key to teams)
-- user_id (foreign key to users)
-- role (enum: admin, member)
-- created_at
-- updated_at
+CREATE INDEX idx_users_email ON users(email);
+```
 
 #### Signatures Table
-- id (primary key)
-- user_id (foreign key to users)
-- team_id (foreign key to teams, nullable)
-- name
-- content (JSON)
-- created_at
-- updated_at
+```sql
+CREATE TABLE signatures (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    name VARCHAR(100) NOT NULL,
+    title VARCHAR(100),
+    company VARCHAR(100),
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(50),
+    website VARCHAR(255),
+    department VARCHAR(100),
+    mobile VARCHAR(50),
+    address TEXT,
+    logo_data TEXT, -- Base64 encoded logo
+    template_id VARCHAR(20) DEFAULT 'classic',
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
 
-#### Templates Table
-- id (primary key)
-- user_id (foreign key to users)
-- team_id (foreign key to teams, nullable)
-- name
-- content (JSON)
-- is_public (boolean)
-- created_at
-- updated_at
+CREATE INDEX idx_signatures_user_id ON signatures(user_id);
+```
 
 ### API Design
 
-#### Authentication Endpoints
-- POST /api/auth/signup
-- POST /api/auth/signin
-- POST /api/auth/signout
-- POST /api/auth/reset-password
-- POST /api/auth/verify-email
+#### Authentication (Better Auth)
+- POST `/api/auth/sign-up` - User registration
+- POST `/api/auth/sign-in` - User login
+- POST `/api/auth/sign-out` - User logout
+- POST `/api/auth/reset-password` - Password reset request
+- GET `/api/auth/session` - Get current session
 
-#### Signature Endpoints
-- GET /api/signatures
-- GET /api/signatures/:id
-- POST /api/signatures
-- PUT /api/signatures/:id
-- DELETE /api/signatures/:id
-- POST /api/signatures/:id/export
+#### Signature Management
+- GET `/api/signatures` - Get user's signatures
+- POST `/api/signatures` - Create new signature
+- PUT `/api/signatures/:id` - Update signature
+- DELETE `/api/signatures/:id` - Delete signature
 
-#### Team Endpoints
-- GET /api/teams
-- GET /api/teams/:id
-- POST /api/teams
-- PUT /api/teams/:id
-- DELETE /api/teams/:id
-- GET /api/teams/:id/members
-- POST /api/teams/:id/members
-- DELETE /api/teams/:id/members/:userId
+#### Export
+- GET `/api/export/:id/html` - Get HTML export for Gmail copy-paste
+- GET `/api/export/:id/outlook` - Get Outlook-compatible rich text format
+- GET `/api/export/:id/text` - Get plain text fallback
+- GET `/api/export/:id/download` - Download .htm file for Outlook desktop
 
-#### Template Endpoints
-- GET /api/templates
-- GET /api/templates/:id
-- POST /api/templates
-- PUT /api/templates/:id
-- DELETE /api/templates/:id
+### Data Models (Drizzle ORM)
 
-## Email System Design
+```typescript
+// db/schema.ts
+import { pgTable, uuid, varchar, text, boolean, timestamp } from 'drizzle-orm/pg-core'
 
-### Email Templates
-- Welcome email
-- Password reset email
-- Team invitation email
-- Subscription update email
+export const users = pgTable('users', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  email: varchar('email', { length: 255 }).notNull().unique(),
+  passwordHash: varchar('password_hash', { length: 255 }).notNull(),
+  name: varchar('name', { length: 100 }).notNull(),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+  emailVerified: boolean('email_verified').default(false),
+})
 
-### Email Components
-- EmailLayout component for consistent branding
-- Header with logo
-- Footer with legal information and links
-- Button component for CTAs
-- Text components for consistent styling
+export const signatures = pgTable('signatures', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }),
+  name: varchar('name', { length: 100 }).notNull(),
+  title: varchar('title', { length: 100 }),
+  company: varchar('company', { length: 100 }),
+  email: varchar('email', { length: 255 }).notNull(),
+  phone: varchar('phone', { length: 50 }),
+  website: varchar('website', { length: 255 }),
+  department: varchar('department', { length: 100 }),
+  mobile: varchar('mobile', { length: 50 }),
+  address: text('address'),
+  logoData: text('logo_data'),
+  templateId: varchar('template_id', { length: 20 }).default('classic'),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+})
+```
 
-## Payment System Design
+## HTML Generation Engine
 
-### Subscription Tiers
-- Free: Basic features, limited to 1 signature
-- Pro: Full features for individual users
-- Team: Team management capabilities
+### Email-Compatible HTML Design
+- Table-based layouts for maximum email client compatibility
+- Inline CSS styles (no external stylesheets)
+- Fallback fonts and colors
+- Mobile-responsive design using media queries
+- Base64 encoded images for logo embedding
 
-### Payment Flow
-1. User selects subscription tier
-2. User redirected to Paystack checkout
-3. On successful payment, subscription status updated
-4. User redirected to dashboard with new capabilities
+### Template Engine
+```typescript
+interface SignatureData {
+  name: string
+  title?: string
+  company?: string
+  email: string
+  phone?: string
+  website?: string
+  department?: string
+  mobile?: string
+  address?: string
+  logoData?: string // Base64 encoded
+  templateId: 'classic' | 'modern' | 'minimal'
+}
+
+class SignatureGenerator {
+  generate(data: SignatureData): string {
+    switch (data.templateId) {
+      case 'classic':
+        return this.generateClassicTemplate(data)
+      case 'modern':
+        return this.generateModernTemplate(data)
+      case 'minimal':
+        return this.generateMinimalTemplate(data)
+    }
+  }
+}
+```
+
+### Cross-Client Testing Strategy
+- Gmail (web, mobile app)
+- Outlook (desktop 2016+, web, mobile)
+- Apple Mail (macOS, iOS)
+- Thunderbird
+- Yahoo Mail
+- HTML validation using W3C validator
+
+## Image Processing System
+
+### Logo Upload Flow
+1. User selects image file (PNG, JPG, SVG)
+2. Client-side validation (file type, size <2MB)
+3. Canvas API resizes image to max 150px width
+4. Convert to base64 string
+5. Store in database with signature record
+
+### Image Optimization
+```typescript
+class ImageProcessor {
+  async processLogo(file: File): Promise<string> {
+    // Validate file type and size
+    if (!this.isValidImageType(file)) {
+      throw new Error('Invalid file type')
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      throw new Error('File too large')
+    }
+    
+    // Resize and convert to base64
+    const canvas = document.createElement('canvas')
+    const ctx = canvas.getContext('2d')
+    const img = new Image()
+    
+    return new Promise((resolve) => {
+      img.onload = () => {
+        // Resize logic
+        const maxWidth = 150
+        const ratio = Math.min(maxWidth / img.width, maxWidth / img.height)
+        canvas.width = img.width * ratio
+        canvas.height = img.height * ratio
+        
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+        resolve(canvas.toDataURL('image/png'))
+      }
+      img.src = URL.createObjectURL(file)
+    })
+  }
+}
+```
+
+## Authentication Design (Better Auth)
+
+### Configuration
+```typescript
+// auth.config.ts
+import { betterAuth } from "better-auth"
+import { drizzleAdapter } from "better-auth/adapters/drizzle"
+import { database } from "./db"
+
+export const auth = betterAuth({
+  database: drizzleAdapter(database, {
+    provider: "pg",
+  }),
+  emailAndPassword: {
+    enabled: true,
+    requireEmailVerification: false, // MVP: Skip verification
+    minPasswordLength: 8,
+    maxPasswordLength: 128,
+  },
+  session: {
+    expiresIn: 60 * 60 * 24 * 7, // 7 days
+  },
+})
+```
+
+### Security Measures
+- Secure password hashing with scrypt
+- HTTPOnly cookies for session management
+- CSRF protection built-in
+- Input validation and sanitization
+- SQL injection prevention via parameterized queries
 
 ## Deployment Architecture
 
-### Vercel Deployment
-- Production environment
-- Preview environments for pull requests
-- Environment variables for configuration
+### Vercel Configuration
+- Next.js app with serverless functions
+- Automatic deployments from GitHub
+- Environment variables for secrets
+- Edge caching for static assets
+- Custom domain with SSL certificate
 
-### CI/CD Pipeline
-- Automated testing on pull requests
-- Automated deployment on merge to main branch
-- Environment-specific configuration
+### Environment Setup
+```env
+# Production Environment Variables
+DATABASE_URL=postgresql://...
+BETTER_AUTH_SECRET=...
+BETTER_AUTH_URL=https://signaturecraft.co.za
+NODE_ENV=production
+```
 
-## Security Design
+### Monitoring & Analytics
+- Vercel Analytics for performance monitoring
+- Error tracking with built-in Vercel monitoring
+- Core Web Vitals tracking
+- Basic uptime monitoring
 
-### Authentication Security
-- Email/password authentication with Supabase Auth
-- JWT token-based session management
-- Password reset flow with secure tokens
+## Error Handling Strategy
 
-### Data Security
-- Row-level security in Supabase
-- Input validation on all API endpoints
-- CSRF protection
-- XSS prevention
+### Frontend Error Handling
+- Form validation with inline error messages
+- Loading states for all async operations
+- Graceful degradation for network failures
+- User-friendly error messages
+- Retry mechanisms for failed requests
 
-### File Upload Security
-- File type validation
-- File size limits
-- Secure storage in Supabase Storage
+### Backend Error Handling
+- Structured error responses
+- Proper HTTP status codes
+- Error logging for debugging
+- Graceful database connection handling
+- Input validation at API level
 
-## Performance Considerations
+## Performance Optimization
 
 ### Frontend Performance
-- Static generation for public pages
+- Static generation for landing page
 - Server components for dynamic content
 - Image optimization with Next.js Image component
 - Code splitting and lazy loading
+- Minimal JavaScript bundle size
 
 ### Backend Performance
-- Efficient database queries with indexes
-- Caching strategies for frequently accessed data
-- Rate limiting for API endpoints
+- Database query optimization with indexes
+- Connection pooling with NeonDB
+- Efficient base64 storage (temporary MVP solution)
+- Caching of static assets via Vercel CDN
+- Rate limiting to prevent abuse
+
+### Target Performance Metrics
+- Page load time: <3 seconds
+- Time to First Contentful Paint: <1.5 seconds
+- Signature generation: <500ms
+- Image processing: <2 seconds
+- Database queries: <100ms average

@@ -1,0 +1,20 @@
+{
+  "enabled": true,
+  "name": "Format Kiro Documents",
+  "description": "Automatically formats spec documents, steering files, and other Kiro documentation to follow recommended standards",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      ".kiro/specs/**/*.md",
+      ".kiro/steering/*.md",
+      ".kiro/hooks/*.md",
+      "docs/*.md",
+      "README.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Kiro documentation files have been modified. Please review and format these documents according to Kiro best practices:\n\n## Formatting Standards:\n\n### For tasks.md files:\n- Use flat numbered list format: `- [x]` for completed, `- [-]` for not started\n- Sequential numbering (1, 2, 3, etc.) without hierarchical sections\n- Include clear task descriptions with implementation details\n- Add requirement references: `_Requirements: X.X, Y.Y_`\n- Ensure tasks are actionable and specific\n\n### For requirements.md files:\n- Use EARS format for acceptance criteria\n- Structure: Introduction → Requirements (with User Stories) → Acceptance Criteria\n- Number requirements hierarchically (1.1, 1.2, etc.)\n- Include clear user stories: \"As a [role], I want [feature], so that [benefit]\"\n\n### For design.md files:\n- Include architecture diagrams using Mermaid when appropriate\n- Structure: Overview → Architecture → Components → Data Models → API Design\n- Use code blocks for technical specifications\n- Include decision rationales\n\n### For steering files:\n- Use clear headings and bullet points\n- Include practical examples and code snippets\n- Keep content actionable and specific to the project\n- Use consistent formatting for commands, file paths, and code\n\n### General formatting:\n- Use proper markdown syntax\n- Consistent heading hierarchy\n- Clear bullet points and numbered lists\n- Code blocks with appropriate language tags\n- Proper line spacing and readability\n\nPlease format the modified documents while preserving all content and ensuring they follow these Kiro standards for optimal integration with the IDE features."
+  }
+}
