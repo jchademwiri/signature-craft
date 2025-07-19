@@ -30,6 +30,7 @@ SignatureCraft is a lean, focused MVP for creating professional email signatures
 
 - Node.js 18+
 - pnpm (package manager)
+- NeonDB PostgreSQL database
 
 ### Installation
 
@@ -51,9 +52,10 @@ SignatureCraft is a lean, focused MVP for creating professional email signatures
    
    Add your database URL and authentication secrets:
    ```env
-   DATABASE_URL=postgresql://...
-   BETTER_AUTH_SECRET=your-secret-key
+   DATABASE_URL=postgresql://your-neon-db-url
+   BETTER_AUTH_SECRET=your-secret-key-here
    BETTER_AUTH_URL=http://localhost:3000
+   NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:3000
    ```
 
 4. Set up the database
@@ -62,12 +64,14 @@ SignatureCraft is a lean, focused MVP for creating professional email signatures
    pnpm db:push
    ```
    
-   The database schema includes Better Auth tables for authentication and a signatures table for user data.
+   The database schema includes Better Auth tables (users, sessions, accounts, verifications) and a signatures table for user signature data.
 
 5. Start the development server
    ```bash
    pnpm dev
    ```
+
+The application will be available at `http://localhost:3000`.
 
 ## Development Commands
 
@@ -97,24 +101,53 @@ pnpm db:migrate
 pnpm db:studio
 ```
 
+## Current Implementation Status
+
+### ✅ Completed Features
+- **Project Setup**: Next.js 15 with TypeScript and App Router
+- **Styling**: Tailwind CSS with ShadCN UI components configured
+- **Database**: NeonDB PostgreSQL with Drizzle ORM setup
+- **Authentication**: Better Auth with email/password authentication
+- **Landing Page**: Professional landing page with hero section, features, pricing, and testimonials
+- **Auth Pages**: Login, register, and password reset pages with form validation
+- **Middleware**: Route protection for authenticated pages
+- **Email Templates**: React Email setup for future email functionality
+
+### 🚧 In Progress
+- User dashboard implementation
+- Signature builder interface
+- Template system development
+
+### 📋 Upcoming Features
+- Real-time signature preview
+- Logo upload functionality
+- Export system with email client compatibility
+- Installation guides
+
 ## Project Structure
 
 ```
 signaturecraft-mvp/
 ├── src/
 │   ├── app/                  # Next.js App Router pages
-│   │   ├── (auth)/          # Authentication pages group
-│   │   ├── dashboard/       # User dashboard
-│   │   ├── builder/         # Signature builder
-│   │   ├── export/          # Export and installation
-│   │   └── api/             # API routes
+│   │   ├── (auth)/          # Authentication pages (login, register, reset-password)
+│   │   ├── api/auth/        # Better Auth API routes
+│   │   ├── layout.tsx       # Root layout with theme provider
+│   │   └── page.tsx         # Landing page
 │   ├── components/          # React components
-│   │   ├── ui/             # ShadCN UI components
-│   │   ├── auth/           # Authentication components
-│   │   ├── signature/      # Signature builder components
-│   │   └── export/         # Export components
+│   │   ├── ui/             # ShadCN UI components (button, card, input, etc.)
+│   │   ├── auth/           # Authentication forms (LoginForm, RegisterForm, etc.)
+│   │   ├── hero-section.tsx # Landing page hero
+│   │   ├── features-section.tsx # Features showcase
+│   │   ├── pricing-section.tsx # Pricing display
+│   │   └── theme-provider.tsx # Dark/light theme support
 │   └── lib/                # Utilities and configuration
-├── emails/                 # Email templates (React Email)
+│       ├── auth.ts         # Better Auth server configuration
+│       ├── auth-client.ts  # Better Auth client configuration
+│       ├── db.ts           # Database connection
+│       └── schema.ts       # Drizzle database schema
+├── emails/                 # React Email templates
+├── migrations/             # Database migrations
 └── docs/                   # Project documentation
 ```
 

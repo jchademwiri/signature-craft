@@ -36,89 +36,116 @@ pnpm lint
 - **Payment**: Validation phase only (no payment processing)
 - **Analytics**: Basic only (focus on core functionality)
 
-## Authentication Setup (Better Auth)
+## Authentication Setup (Better Auth) - ✅ IMPLEMENTED
 ```typescript
-// Required Better Auth configuration
-import { betterAuth } from "better-auth"
-import { drizzleAdapter } from "better-auth/adapters/drizzle"
+// Current Better Auth configuration in src/lib/auth.ts
+import { betterAuth } from "better-auth";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { db } from "./db";
+import * as schema from "./schema";
 
 export const auth = betterAuth({
-  database: drizzleAdapter(db, { provider: "pg" }),
-  emailAndPassword: { 
+  database: drizzleAdapter(db, {
+    provider: "pg",
+    usePlural: true,
+    schema: {
+      user: schema.users,
+      session: schema.sessions,
+      account: schema.accounts,
+      verification: schema.verifications,
+    },
+  }),
+  emailAndPassword: {
     enabled: true,
-    requireEmailVerification: false // MVP: Skip verification
+    requireEmailVerification: false, // MVP: Skip verification
   },
-  session: { expiresIn: 60 * 60 * 24 * 7 } // 7 days
-})
+  session: {
+    expiresIn: 60 * 60 * 24 * 7, // 7 days
+  },
+  secret: process.env.BETTER_AUTH_SECRET!,
+  baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
+});
 ```
 
-## Database Schema (Required)
-```sql
--- Users table (Better Auth compatible)
-CREATE TABLE users (
-    id TEXT PRIMARY KEY,
-    name TEXT NOT NULL,
-    email TEXT UNIQUE NOT NULL,
-    email_verified BOOLEAN DEFAULT FALSE NOT NULL,
-    image TEXT,
-    created_at TIMESTAMP DEFAULT NOW() NOT NULL,
-    updated_at TIMESTAMP DEFAULT NOW() NOT NULL
-);
+## Database Schema (✅ IMPLEMENTED)
+Current Drizzle schema in `src/lib/schema.ts`:
 
--- Sessions table (Better Auth)
-CREATE TABLE sessions (
-    id TEXT PRIMARY KEY,
-    expires_at TIMESTAMP NOT NULL,
-    token TEXT UNIQUE NOT NULL,
-    created_at TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP NOT NULL,
-    ip_address TEXT,
-    user_agent TEXT,
-    user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE
-);
+```typescript
+// Users table (Better Auth compatible)
+export const users = pgTable("users", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull().unique(),
+  emailVerified: boolean("email_verified")
+    .$defaultFn(() => false)
+    .notNull(),
+  image: text("image"),
+  createdAt: timestamp("created_at")
+    .$defaultFn(() => new Date())
+    .notNull(),
+  updatedAt: timestamp("updated_at")
+    .$defaultFn(() => new Date())
+    .notNull(),
+});
 
--- Accounts table (Better Auth)
-CREATE TABLE accounts (
-    id TEXT PRIMARY KEY,
-    account_id TEXT NOT NULL,
-    provider_id TEXT NOT NULL,
-    user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    access_token TEXT,
-    refresh_token TEXT,
-    id_token TEXT,
-    access_token_expires_at TIMESTAMP,
-    refresh_token_expires_at TIMESTAMP,
-    scope TEXT,
-    password TEXT,
-    created_at TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP NOT NULL
-);
+// Sessions table (Better Auth)
+export const sessions = pgTable("sessions", {
+  id: text("id").primaryKey(),
+  expiresAt: timestamp("expires_at").notNull(),
+  token: text("token").notNull().unique(),
+  createdAt: timestamp("created_at").notNull(),
+  updatedAt: timestamp("updated_at").notNull(),
+  ipAddress: text("ip_address"),
+  userAgent: text("user_agent"),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+});
 
--- Verifications table (Better Auth)
-CREATE TABLE verifications (
-    id TEXT PRIMARY KEY,
-    identifier TEXT NOT NULL,
-    value TEXT NOT NULL,
-    expires_at TIMESTAMP NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW()
-);
+// Accounts table (Better Auth)
+export const accounts = pgTable("accounts", {
+  id: text("id").primaryKey(),
+  accountId: text("account_id").notNull(),
+  providerId: text("provider_id").notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  accessToken: text("access_token"),
+  refreshToken: text("refresh_token"),
+  idToken: text("id_token"),
+  accessTokenExpiresAt: timestamp("access_token_expires_at"),
+  refreshTokenExpiresAt: timestamp("refresh_token_expires_at"),
+  scope: text("scope"),
+  password: text("password"),
+  createdAt: timestamp("created_at").notNull(),
+  updatedAt: timestamp("updated_at").notNull(),
+});
 
--- Signatures table  
-CREATE TABLE signatures (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    name VARCHAR(100) NOT NULL,
-    title VARCHAR(100),
-    company VARCHAR(100),
-    email VARCHAR(255) NOT NULL,
-    phone VARCHAR(50),
-    website VARCHAR(255),
-    logo_data TEXT, -- Base64 encoded
-    template_id VARCHAR(20) DEFAULT 'classic',
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW()
-);
+// Verifications table (Better Auth)
+export const verifications = pgTable("verifications", {
+  id: text("id").primaryKey(),
+  identifier: text("identifier").notNull(),
+  value: text("value").notNull(),
+  expiresAt: timestamp("expires_at").notNull(),
+  createdAt: timestamp("created_at").$defaultFn(() => new Date()),
+  updatedAt: timestamp("updated_at").$defaultFn(() => new Date()),
+});
+
+// Signatures table  
+export const signatures = pgTable("signatures", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  name: varchar("name", { length: 100 }).notNull(),
+  title: varchar("title", { length: 100 }),
+  company: varchar("company", { length: 100 }),
+  email: varchar("email", { length: 255 }).notNull(),
+  phone: varchar("phone", { length: 50 }),
+  website: varchar("website", { length: 255 }),
+  logoData: text("logo_data"), // Base64 encoded
+  templateId: varchar("template_id", { length: 20 }).default("classic"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
 ```
 
 ## Form Handling Standards
