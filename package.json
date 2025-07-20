@@ -12,7 +12,7 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "db:drop": "node drop-tables.mjs",
-    "db:reset": "node drop-tables.mjs && pnpm db:push"
+    "db:reset": "node db-reset.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",

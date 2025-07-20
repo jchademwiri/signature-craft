@@ -28,11 +28,16 @@ pnpm db:studio
 # Drop all tables (automatically synced with schema)
 pnpm db:drop
 
-# Complete reset: drop tables + recreate from schema
+# Complete reset: drop tables + recreate from schema (with summary)
 pnpm db:reset
 ```
 
-**✅ Working Status**: Both commands are fully functional and tested!
+**✅ Enhanced Features**:
+- ✅ Shows dropped tables count and names
+- ✅ Shows created tables count and names  
+- ✅ Step-by-step progress with clear sections
+- ✅ Beautiful summary with before/after comparison
+- ✅ Verification of successful table creation
 
 ## Schema Management
 
@@ -170,3 +175,42 @@ BETTER_AUTH_URL=http://localhost:3000
 ❌ **Don't skip migration generation** in production
 ❌ **Don't use db:push** in production
 ❌ **Don't ignore foreign key constraints**
+
+## Enhanced Reset Output
+
+The `pnpm db:reset` command now provides comprehensive feedback:
+
+```
+🚀 SignatureCraft Database Complete Reset
+📍 Database: your-database-host
+⚠️  This will drop ALL tables and recreate them!
+
+🗑️  STEP 1: Dropping existing tables...
+📋 Tables to drop: [ 'signatures', 'accounts', 'sessions', 'verifications', 'users' ]
+  🗑️  Dropping: signatures
+  🗑️  Dropping: accounts
+  🗑️  Dropping: sessions
+  🗑️  Dropping: verifications
+  🗑️  Dropping: users
+✅ Drop completed!
+
+🏗️  STEP 2: Creating tables from schema...
+[Drizzle Kit output...]
+
+🔍 STEP 3: Verifying created tables...
+🎉 DATABASE RESET COMPLETE!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 SUMMARY:
+  🗑️  Dropped: 5 tables
+     └─ signatures, accounts, sessions, verifications, users
+  🏗️  Created: 5 tables
+     └─ accounts, sessions, signatures, users, verifications
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✨ Your database is ready for development!
+```
+
+This enhanced output provides:
+- ✅ **Step-by-step progress** with clear visual separation
+- ✅ **Before/after comparison** showing exactly what changed
+- ✅ **Table counts** for quick verification
+- ✅ **Success confirmation** with encouraging message
