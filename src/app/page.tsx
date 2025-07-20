@@ -25,17 +25,6 @@ export default function Home() {
           <section id="hero">
             <HeroSection />
           </section>
-          {/* Trusted By Bar */}
-          <section className="py-4 flex flex-col items-center">
-            <div className="text-xs uppercase tracking-wider text-muted-foreground mb-2">Trusted by teams at</div>
-            <div className="flex flex-wrap justify-center gap-6 opacity-80">
-              <Image src={trustedGoogle} alt="Google" width={72} height={24} />
-              <Image src={trustedMicrosoft} alt="Microsoft" width={90} height={24} />
-              <Image src={trustedAws} alt="AWS" width={70} height={24} />
-              <Image src={trustedMeta} alt="Meta" width={70} height={24} />
-              <Image src={trustedShopify} alt="Shopify" width={90} height={24} />
-            </div>
-          </section>
         </Container>
         {/* Features Section */}
         <section className="bg-muted/40 border-t border-b border-border">

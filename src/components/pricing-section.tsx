@@ -97,7 +97,7 @@ function PricingCard({ plan, index }: PricingCardProps) {
         {/* Popular badge */}
         {plan.popular && (
           <div className="absolute top-0 left-0 right-0">
-            <div className="bg-primary text-primary-foreground text-sm font-bold py-2 text-center relative">
+            <div className="bg-primary text-sm font-bold py-2 text-center relative">
               <Crown className="inline h-4 w-4 mr-1" />
               Most Popular
               <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full">
@@ -163,7 +163,7 @@ function PricingCard({ plan, index }: PricingCardProps) {
               asChild
               variant={plan.popular ? 'default' : plan.buttonVariant}
               className={`w-full text-center relative overflow-hidden group h-12 transition-colors duration-200 ${
-                plan.popular ? 'bg-primary text-primary-foreground hover:bg-primary/90' : ''
+                plan.popular ? 'text-white' : ''
               }`}
               aria-label={plan.buttonText}
             >
@@ -199,7 +199,7 @@ export function PricingSection() {
       price: "R0",
       features: [
         "1 professional email signature",
-        "5 beautiful templates",
+        "3 beautiful templates",
         "Logo upload & customization",
         "Social media links",
         "Export to Gmail & Outlook",
@@ -215,7 +215,7 @@ export function PricingSection() {
       period: "/month",
       features: [
         "5 email signatures",
-        "50+ premium templates",
+        "5+ premium templates",
         "Logo & banner uploads",
         "Advanced social media integration",
         "Real-time analytics dashboard",
@@ -264,7 +264,7 @@ export function PricingSection() {
           {/* Billing toggle */}
           <div className="flex items-center justify-center gap-4 mb-8">
             <span className={`text-sm font-medium ${!isAnnual ? 'text-foreground' : 'text-muted-foreground'}`}>Monthly</span>
-            <button
+            <Button
               onClick={() => setIsAnnual(!isAnnual)}
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary ${
                 isAnnual ? 'bg-primary' : 'bg-muted'
@@ -278,7 +278,7 @@ export function PricingSection() {
                   isAnnual ? 'translate-x-6' : 'translate-x-1'
                 }`}
               />
-            </button>
+            </Button>
             <span className={`text-sm font-medium ${isAnnual ? 'text-foreground' : 'text-muted-foreground'}`}>Annual</span>
             {isAnnual && (
               <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
@@ -301,7 +301,7 @@ export function PricingSection() {
           <Button variant="outline" className="mr-4 h-12 transition-colors duration-200">
             Schedule a Demo
           </Button>
-          <Button variant="default" className="h-12 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-200">
+          <Button variant="default" className="h-12 text-white transition-colors duration-200">
             Contact Sales
           </Button>
         </div>
