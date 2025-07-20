@@ -70,7 +70,13 @@
   - Include account settings and logout functionality
   - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5_
 
-- [ ] 10. Create signature builder page and layout
+- [x] 10. Create signature builder page and layout
+
+
+
+
+
+
   - Create /builder page with protected route
   - Implement 3-column grid layout (form, preview, templates)
   - Create SignatureBuilder main component
@@ -194,7 +200,22 @@
   - Set up uptime monitoring and health checks
   - _Requirements: Performance and reliability requirements_
 
-- [ ] 27. Prepare launch materials and documentation
+- [ ] 27. Implement user profile management
+  - Create API endpoint for updating user profile (name, email)
+  - Add email uniqueness validation and conflict handling
+  - Build edit profile form with real-time validation
+  - Implement profile update success/error handling
+  - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7_
+
+- [ ] 28. Implement password change functionality
+  - Create API endpoint for password updates with current password verification
+  - Add password strength validation (min 6, max 128 characters)
+  - Build change password form with confirmation field
+  - Implement secure password hashing using Better Auth context
+  - Add proper error handling for invalid current passwords
+  - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7_
+
+- [ ] 29. Prepare launch materials and documentation
   - Create user onboarding flow and help documentation
   - Build FAQ section with common questions
   - Prepare marketing landing page content

@@ -1,0 +1,456 @@
+"use client";
+
+import { SignatureData } from "./SignatureBuilder";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Monitor, Smartphone } from "lucide-react";
+
+interface SignaturePreviewProps {
+  data: SignatureData;
+  onSave?: () => void;
+  isSaving?: boolean;
+}
+
+export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewProps) {
+  const generateSignatureHTML = (isMobile: boolean = false) => {
+    const { name, title, company, email, phone, mobile, website, address, department, logoData, templateId, primaryColor, secondaryColor } = data;
+    
+    // Base styles for email compatibility
+    const baseStyles = {
+      fontFamily: "Arial, sans-serif",
+      fontSize: isMobile ? "14px" : "16px",
+      lineHeight: "1.4",
+      color: "#333333",
+    };
+
+    const linkStyles = {
+      color: primaryColor || "#0066cc",
+      textDecoration: "none",
+    };
+
+    const secondaryTextStyles = {
+      color: secondaryColor || "#004499",
+    };
+
+    switch (templateId) {
+      case "classic":
+        return (
+          <div style={baseStyles}>
+            <table cellPadding="0" cellSpacing="0" style={{ borderCollapse: "collapse" }}>
+              <tbody>
+                <tr>
+                  <td style={{ paddingBottom: "8px" }}>
+                    <strong style={{ fontSize: isMobile ? "16px" : "18px" }}>{name || "Your Name"}</strong>
+                    {title && <span> | {title}</span>}
+                  </td>
+                </tr>
+                {company && (
+                  <tr>
+                    <td style={{ paddingBottom: "4px" }}>
+                      <strong>{company}</strong>
+                      {department && <span> - {department}</span>}
+                    </td>
+                  </tr>
+                )}
+                <tr>
+                  <td style={{ paddingBottom: "4px" }}>
+                    📧 <a href={`mailto:${email || "email@company.com"}`} style={linkStyles}>
+                      {email || "email@company.com"}
+                    </a>
+                    {phone && (
+                      <>
+                        {" | "}📞 <a href={`tel:${phone}`} style={linkStyles}>{phone}</a>
+                      </>
+                    )}
+                  </td>
+                </tr>
+                {mobile && (
+                  <tr>
+                    <td style={{ paddingBottom: "4px" }}>
+                      📱 <a href={`tel:${mobile}`} style={linkStyles}>{mobile}</a>
+                    </td>
+                  </tr>
+                )}
+                {website && (
+                  <tr>
+                    <td style={{ paddingBottom: "8px" }}>
+                      🌐 <a href={website} style={linkStyles}>{website}</a>
+                    </td>
+                  </tr>
+                )}
+                {address && (
+                  <tr>
+                    <td style={{ paddingBottom: "8px", fontSize: "14px", color: "#666666" }}>
+                      📍 {address}
+                    </td>
+                  </tr>
+                )}
+                {logoData && (
+                  <tr>
+                    <td style={{ paddingTop: "8px" }}>
+                      <img 
+                        src={logoData} 
+                        alt="Company Logo" 
+                        style={{ 
+                          maxWidth: isMobile ? "120px" : "150px", 
+                          height: "auto",
+                          display: "block"
+                        }} 
+                      />
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        );
+
+      case "modern":
+        return (
+          <div style={baseStyles}>
+            <table cellPadding="0" cellSpacing="0" style={{ borderCollapse: "collapse" }}>
+              <tbody>
+                <tr>
+                  <td style={{ verticalAlign: "top", paddingRight: logoData ? "16px" : "0" }}>
+                    {logoData && (
+                      <img 
+                        src={logoData} 
+                        alt="Company Logo" 
+                        style={{ 
+                          maxWidth: isMobile ? "60px" : "80px", 
+                          height: "auto",
+                          display: "block",
+                          marginBottom: "8px"
+                        }} 
+                      />
+                    )}
+                  </td>
+                  <td style={{ verticalAlign: "top" }}>
+                    <div style={{ marginBottom: "4px" }}>
+                      <strong style={{ fontSize: isMobile ? "16px" : "18px" }}>{name || "Your Name"}</strong>
+                    </div>
+                    {(title || company) && (
+                      <div style={{ marginBottom: "8px", ...secondaryTextStyles }}>
+                        {title && <span>{title}</span>}
+                        {title && company && <span> at </span>}
+                        {company && <strong>{company}</strong>}
+                        {department && <span> - {department}</span>}
+                      </div>
+                    )}
+                  </td>
+                </tr>
+                <tr>
+                  <td colSpan={2} style={{ paddingTop: "8px", borderTop: "1px solid #e0e0e0" }}>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", alignItems: "center" }}>
+                      📧 <a href={`mailto:${email || "email@company.com"}`} style={linkStyles}>
+                        {email || "email@company.com"}
+                      </a>
+                      {phone && (
+                        <>
+                          <span style={{ color: "#ccc" }}>|</span>
+                          📞 <a href={`tel:${phone}`} style={linkStyles}>{phone}</a>
+                        </>
+                      )}
+                      {mobile && (
+                        <>
+                          <span style={{ color: "#ccc" }}>|</span>
+                          📱 <a href={`tel:${mobile}`} style={linkStyles}>{mobile}</a>
+                        </>
+                      )}
+                      {website && (
+                        <>
+                          <span style={{ color: "#ccc" }}>|</span>
+                          🌐 <a href={website} style={linkStyles}>{website}</a>
+                        </>
+                      )}
+                    </div>
+                    {address && (
+                      <div style={{ marginTop: "4px", fontSize: "14px", color: "#666666" }}>
+                        📍 {address}
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        );
+
+      case "minimal":
+        return (
+          <div style={baseStyles}>
+            <div style={{ marginBottom: "4px" }}>
+              <strong style={{ fontSize: isMobile ? "16px" : "18px" }}>{name || "Your Name"}</strong>
+            </div>
+            {(title || company) && (
+              <div style={{ marginBottom: "4px", ...secondaryTextStyles }}>
+                {title && <span>{title}</span>}
+                {title && company && <span>, </span>}
+                {company && <span>{company}</span>}
+                {department && <span> - {department}</span>}
+              </div>
+            )}
+            <div style={{ marginBottom: "4px" }}>
+              <a href={`mailto:${email || "email@company.com"}`} style={linkStyles}>
+                {email || "email@company.com"}
+              </a>
+              {phone && (
+                <>
+                  {" | "}
+                  <a href={`tel:${phone}`} style={linkStyles}>{phone}</a>
+                </>
+              )}
+              {mobile && (
+                <>
+                  {" | "}
+                  <a href={`tel:${mobile}`} style={linkStyles}>{mobile}</a>
+                </>
+              )}
+            </div>
+            {website && (
+              <div style={{ marginBottom: "4px" }}>
+                <a href={website} style={linkStyles}>{website}</a>
+              </div>
+            )}
+            {address && (
+              <div style={{ fontSize: "14px", color: "#666666", marginBottom: "8px" }}>
+                {address}
+              </div>
+            )}
+            {logoData && (
+              <div style={{ marginTop: "8px" }}>
+                <img 
+                  src={logoData} 
+                  alt="Company Logo" 
+                  style={{ 
+                    maxWidth: isMobile ? "100px" : "120px", 
+                    height: "auto",
+                    display: "block"
+                  }} 
+                />
+              </div>
+            )}
+          </div>
+        );
+
+      default:
+        return <div>Select a template to preview your signature</div>;
+    }
+  };
+
+  const copyToClipboard = async (content: string, format: string) => {
+    try {
+      await navigator.clipboard.writeText(content);
+      // TODO: Add toast notification for success
+      console.log(`${format} signature copied to clipboard`);
+    } catch (error) {
+      console.error('Failed to copy to clipboard:', error);
+      // TODO: Add toast notification for error
+    }
+  };
+
+  const generateHTMLForExport = () => {
+    const { name, title, company, email, phone, mobile, website, address, department, logoData, templateId, primaryColor, secondaryColor } = data;
+    
+    // Generate clean HTML for email clients
+    const baseStyles = `
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.4;
+      color: #333333;
+    `;
+
+    switch (templateId) {
+      case "classic":
+        return `<div style="${baseStyles}">
+          <table cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+            <tbody>
+              <tr><td style="padding-bottom: 8px;"><strong style="font-size: 18px;">${name || "Your Name"}</strong>${title ? ` | ${title}` : ""}</td></tr>
+              ${company ? `<tr><td style="padding-bottom: 4px;"><strong>${company}</strong>${department ? ` - ${department}` : ""}</td></tr>` : ""}
+              <tr><td style="padding-bottom: 4px;">📧 <a href="mailto:${email || "email@company.com"}" style="color: ${primaryColor || "#0066cc"}; text-decoration: none;">${email || "email@company.com"}</a>${phone ? ` | 📞 <a href="tel:${phone}" style="color: ${primaryColor || "#0066cc"}; text-decoration: none;">${phone}</a>` : ""}</td></tr>
+              ${mobile ? `<tr><td style="padding-bottom: 4px;">📱 <a href="tel:${mobile}" style="color: ${primaryColor || "#0066cc"}; text-decoration: none;">${mobile}</a></td></tr>` : ""}
+              ${website ? `<tr><td style="padding-bottom: 8px;">🌐 <a href="${website}" style="color: ${primaryColor || "#0066cc"}; text-decoration: none;">${website}</a></td></tr>` : ""}
+              ${address ? `<tr><td style="padding-bottom: 8px; font-size: 14px; color: #666666;">📍 ${address}</td></tr>` : ""}
+              ${logoData ? `<tr><td style="padding-top: 8px;"><img src="${logoData}" alt="Company Logo" style="max-width: 150px; height: auto; display: block;" /></td></tr>` : ""}
+            </tbody>
+          </table>
+        </div>`;
+
+      case "modern":
+        return `<div style="${baseStyles}">
+          <table cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+            <tbody>
+              <tr>
+                <td style="vertical-align: top; padding-right: ${logoData ? "16px" : "0"};">
+                  ${logoData ? `<img src="${logoData}" alt="Company Logo" style="max-width: 80px; height: auto; display: block; margin-bottom: 8px;" />` : ""}
+                </td>
+                <td style="vertical-align: top;">
+                  <div style="margin-bottom: 4px;"><strong style="font-size: 18px;">${name || "Your Name"}</strong></div>
+                  ${(title || company) ? `<div style="margin-bottom: 8px; color: ${secondaryColor || "#004499"};">${title ? title : ""}${title && company ? " at " : ""}${company ? `<strong>${company}</strong>` : ""}${department ? ` - ${department}` : ""}</div>` : ""}
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" style="padding-top: 8px; border-top: 1px solid #e0e0e0;">
+                  <div>📧 <a href="mailto:${email || "email@company.com"}" style="color: ${primaryColor || "#0066cc"}; text-decoration: none;">${email || "email@company.com"}</a>${phone ? ` <span style="color: #ccc;">|</span> 📞 <a href="tel:${phone}" style="color: ${primaryColor || "#0066cc"}; text-decoration: none;">${phone}</a>` : ""}${mobile ? ` <span style="color: #ccc;">|</span> 📱 <a href="tel:${mobile}" style="color: ${primaryColor || "#0066cc"}; text-decoration: none;">${mobile}</a>` : ""}${website ? ` <span style="color: #ccc;">|</span> 🌐 <a href="${website}" style="color: ${primaryColor || "#0066cc"}; text-decoration: none;">${website}</a>` : ""}</div>
+                  ${address ? `<div style="margin-top: 4px; font-size: 14px; color: #666666;">📍 ${address}</div>` : ""}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>`;
+
+      case "minimal":
+        return `<div style="${baseStyles}">
+          <div style="margin-bottom: 4px;"><strong style="font-size: 18px;">${name || "Your Name"}</strong></div>
+          ${(title || company) ? `<div style="margin-bottom: 4px; color: ${secondaryColor || "#004499"};">${title ? title : ""}${title && company ? ", " : ""}${company ? company : ""}${department ? ` - ${department}` : ""}</div>` : ""}
+          <div style="margin-bottom: 4px;"><a href="mailto:${email || "email@company.com"}" style="color: ${primaryColor || "#0066cc"}; text-decoration: none;">${email || "email@company.com"}</a>${phone ? ` | <a href="tel:${phone}" style="color: ${primaryColor || "#0066cc"}; text-decoration: none;">${phone}</a>` : ""}${mobile ? ` | <a href="tel:${mobile}" style="color: ${primaryColor || "#0066cc"}; text-decoration: none;">${mobile}</a>` : ""}</div>
+          ${website ? `<div style="margin-bottom: 4px;"><a href="${website}" style="color: ${primaryColor || "#0066cc"}; text-decoration: none;">${website}</a></div>` : ""}
+          ${address ? `<div style="font-size: 14px; color: #666666; margin-bottom: 8px;">${address}</div>` : ""}
+          ${logoData ? `<div style="margin-top: 8px;"><img src="${logoData}" alt="Company Logo" style="max-width: 120px; height: auto; display: block;" /></div>` : ""}
+        </div>`;
+
+      default:
+        return "";
+    }
+  };
+
+  const handleCopyForOutlook = () => {
+    const htmlContent = generateHTMLForExport();
+    copyToClipboard(htmlContent, "Outlook");
+  };
+
+  const handleCopyForGmail = () => {
+    const htmlContent = generateHTMLForExport();
+    copyToClipboard(htmlContent, "Gmail");
+  };
+
+  const handleCopyHTML = () => {
+    const htmlContent = generateHTMLForExport();
+    copyToClipboard(htmlContent, "HTML");
+  };
+
+  const handleDownloadPNG = () => {
+    // TODO: Implement PNG download functionality
+    console.log("Download PNG functionality to be implemented");
+  };
+
+  return (
+    <div className="space-y-6">
+      <Tabs defaultValue="desktop" className="w-full">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="desktop" className="flex items-center gap-2">
+            <Monitor className="h-4 w-4" />
+            Desktop
+          </TabsTrigger>
+          <TabsTrigger value="mobile" className="flex items-center gap-2">
+            <Smartphone className="h-4 w-4" />
+            Mobile
+          </TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="desktop" className="mt-4">
+          <Card className="p-4 bg-white border-2 border-dashed border-gray-200">
+            <div className="min-h-[200px]">
+              {generateSignatureHTML(false)}
+            </div>
+          </Card>
+        </TabsContent>
+        
+        <TabsContent value="mobile" className="mt-4">
+          <Card className="p-4 bg-white border-2 border-dashed border-gray-200 max-w-sm mx-auto">
+            <div className="min-h-[200px]">
+              {generateSignatureHTML(true)}
+            </div>
+          </Card>
+        </TabsContent>
+      </Tabs>
+
+      {/* Save Section */}
+      {onSave && (
+        <div className="space-y-4">
+          <Button 
+            onClick={onSave}
+            disabled={isSaving || !data.name || !data.email}
+            className="w-full bg-primary hover:bg-primary/90"
+            size="lg"
+          >
+            {isSaving ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                Saving...
+              </>
+            ) : (
+              <>
+                💾 Save Signature
+              </>
+            )}
+          </Button>
+          {(!data.name || !data.email) && (
+            <p className="text-xs text-muted-foreground text-center">
+              Please fill in your name and email to save
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* Export Section */}
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold">Export Your Signature</h3>
+        
+        {/* Export Buttons Grid */}
+        <div className="grid grid-cols-2 gap-3">
+          <Button 
+            onClick={handleCopyForOutlook}
+            className="w-full bg-slate-900 hover:bg-slate-800 text-white"
+          >
+            📧 Copy for Outlook
+          </Button>
+          <Button 
+            onClick={handleCopyForGmail}
+            variant="outline"
+            className="w-full"
+          >
+            📧 Copy for Gmail
+          </Button>
+          <Button 
+            onClick={handleCopyHTML}
+            variant="outline"
+            className="w-full"
+          >
+            📋 Copy HTML
+          </Button>
+          <Button 
+            onClick={handleDownloadPNG}
+            variant="outline"
+            className="w-full"
+          >
+            📥 Download PNG
+          </Button>
+        </div>
+
+        {/* Quick Setup Instructions */}
+        <Card className="bg-blue-50 border-blue-200">
+          <CardContent className="p-4">
+            <h4 className="font-medium text-blue-900 mb-3">Quick Setup:</h4>
+            <div className="space-y-2 text-sm text-blue-800">
+              <div>
+                <strong>• Outlook:</strong> Copy for Outlook → Paste in Settings → Mail → Signatures
+              </div>
+              <div>
+                <strong>• Gmail:</strong> Copy for Gmail → Paste in Settings → General → Signature
+              </div>
+              <div>
+                <strong>• Apple Mail:</strong> Use Copy for Gmail → Paste in Preferences → Signatures
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+      
+      <p className="text-xs text-muted-foreground text-center">
+        This preview shows how your signature will appear in email clients
+      </p>
+    </div>
+  );
+}

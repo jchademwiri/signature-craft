@@ -79,6 +79,12 @@ export default function DashboardPage() {
               <span className="text-sm text-muted-foreground">
                 Welcome, {session.user.name}
               </span>
+              <Button variant="ghost" size="sm" asChild>
+                <Link href="/settings" className="flex items-center gap-2">
+                  <Settings className="h-4 w-4" />
+                  Settings
+                </Link>
+              </Button>
               <Button
                 variant="ghost"
                 size="sm"
@@ -202,50 +208,7 @@ export default function DashboardPage() {
               </Card>
             )}
 
-            <Separator />
 
-            {/* Account Settings */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Settings className="h-5 w-5" />
-                  Account Settings
-                </CardTitle>
-                <CardDescription>
-                  Manage your account information and preferences
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center justify-between py-2">
-                  <div className="space-y-1">
-                    <p className="text-sm font-medium">Name</p>
-                    <p className="text-sm text-muted-foreground">{session.user.name}</p>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between py-2">
-                  <div className="space-y-1">
-                    <p className="text-sm font-medium">Email</p>
-                    <p className="text-sm text-muted-foreground">{session.user.email}</p>
-                  </div>
-                </div>
-                <Separator />
-                <div className="flex items-center justify-between py-2">
-                  <div className="space-y-1">
-                    <p className="text-sm font-medium">Account Actions</p>
-                    <p className="text-sm text-muted-foreground">Manage your account</p>
-                  </div>
-                  <Button
-                    variant="destructive"
-                    size="sm"
-                    onClick={handleLogout}
-                    className="flex items-center gap-2"
-                  >
-                    <LogOut className="h-4 w-4" />
-                    Sign Out
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </Container>
       </main>

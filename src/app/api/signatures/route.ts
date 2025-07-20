@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { signatures } from "@/lib/schema";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
+import { randomUUID } from "crypto";
 
 export async function GET(request: NextRequest) {
   try {
@@ -55,9 +56,14 @@ export async function POST(request: NextRequest) {
       company,
       email,
       phone,
+      mobile,
       website,
+      department,
+      address,
       logoData,
       templateId = "classic",
+      primaryColor,
+      secondaryColor,
     } = body;
 
     // Basic validation
@@ -71,12 +77,13 @@ export async function POST(request: NextRequest) {
     const newSignature = await db
       .insert(signatures)
       .values({
+        id: randomUUID(),
         userId: session.user.id,
         name,
         title,
         company,
         email,
-        phone,
+        phone: phone || mobile, // Use phone or mobile as fallback
         website,
         logoData,
         templateId,
