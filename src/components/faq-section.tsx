@@ -6,6 +6,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { HelpCircle } from "lucide-react";
 
 export function FAQSection() {
   const faqs = [
@@ -36,9 +39,9 @@ export function FAQSection() {
   ];
 
   return (
-    <section className="py-12 md:py-24">
+    <section className="py-12 md:py-24" aria-labelledby="faq-heading">
       <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Frequently Asked Questions</h2>
+        <h2 id="faq-heading" className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Frequently Asked Questions</h2>
         <p className="text-muted-foreground mt-4 max-w-[700px] mx-auto">
           Everything you need to know about SignatureCraft
         </p>
@@ -48,11 +51,19 @@ export function FAQSection() {
         <Accordion type="single" collapsible className="w-full">
           {faqs.map((faq, index) => (
             <AccordionItem key={index} value={`item-${index}`}>
-              <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+              <AccordionTrigger className="text-left flex items-center gap-2">
+                <HelpCircle className="h-5 w-5 text-primary" />
+                {faq.question}
+              </AccordionTrigger>
               <AccordionContent>{faq.answer}</AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>
+        <div className="text-center mt-8">
+          <Button asChild variant="outline">
+            <Link href="/contact">Contact Support</Link>
+          </Button>
+        </div>
       </div>
     </section>
   );

@@ -341,12 +341,12 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
   return (
     <div className="space-y-6">
       <Tabs defaultValue="desktop" className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="desktop" className="flex items-center gap-2">
+        <TabsList className="grid w-full grid-cols-2 h-12 lg:h-10">
+          <TabsTrigger value="desktop" className="flex items-center gap-2 text-xs lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
             <Monitor className="h-4 w-4" />
             Desktop
           </TabsTrigger>
-          <TabsTrigger value="mobile" className="flex items-center gap-2">
+          <TabsTrigger value="mobile" className="flex items-center gap-2 text-xs lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
             <Smartphone className="h-4 w-4" />
             Mobile
           </TabsTrigger>
@@ -375,8 +375,9 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
           <Button 
             onClick={onSave}
             disabled={isSaving || !data.name || !data.email}
-            className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-12 lg:h-11 transition-colors duration-200"
+            className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-12 lg:h-11 transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             size="lg"
+            aria-label="Save your email signature"
           >
             {isSaving ? (
               <>
@@ -405,28 +406,32 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
         <div className="grid grid-cols-2 gap-3">
           <Button 
             onClick={handleCopyForOutlook}
-            className="w-full bg-slate-900 hover:bg-slate-800 text-white h-12 lg:h-10 transition-colors duration-200"
+            className="w-full bg-slate-900 hover:bg-slate-800 text-white h-12 lg:h-10 transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            aria-label="Copy signature for Microsoft Outlook"
           >
             📧 Copy for Outlook
           </Button>
           <Button 
             onClick={handleCopyForGmail}
             variant="outline"
-            className="w-full h-12 lg:h-10 transition-colors duration-200"
+            className="w-full h-12 lg:h-10 transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            aria-label="Copy signature for Gmail"
           >
             📧 Copy for Gmail
           </Button>
           <Button 
             onClick={handleCopyHTML}
             variant="outline"
-            className="w-full h-12 lg:h-10 transition-colors duration-200"
+            className="w-full h-12 lg:h-10 transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            aria-label="Copy signature as HTML code"
           >
             📋 Copy HTML
           </Button>
           <Button 
             onClick={handleDownloadPNG}
             variant="outline"
-            className="w-full h-12 lg:h-10 transition-colors duration-200"
+            className="w-full h-12 lg:h-10 transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            aria-label="Download signature as PNG image"
           >
             📥 Download PNG
           </Button>

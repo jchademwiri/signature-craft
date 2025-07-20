@@ -46,14 +46,16 @@ export function BrandColors({ data, onChange }: BrandColorsProps) {
                 type="color"
                 value={data.primaryColor || "#0066cc"}
                 onChange={(e) => onChange("primaryColor", e.target.value)}
-                className="w-16 h-10 p-1 border rounded"
+                className="w-16 h-12 lg:h-10 p-1 border rounded cursor-pointer focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                aria-label="Select primary brand color"
               />
               <Input
                 type="text"
                 value={data.primaryColor || "#0066cc"}
                 onChange={(e) => onChange("primaryColor", e.target.value)}
                 placeholder="#0066cc"
-                className="flex-1"
+                className="flex-1 h-12 lg:h-10 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                aria-label="Enter primary color hex code"
               />
             </div>
           </div>
@@ -66,14 +68,16 @@ export function BrandColors({ data, onChange }: BrandColorsProps) {
                 type="color"
                 value={data.secondaryColor || "#004499"}
                 onChange={(e) => onChange("secondaryColor", e.target.value)}
-                className="w-16 h-10 p-1 border rounded"
+                className="w-16 h-12 lg:h-10 p-1 border rounded cursor-pointer focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                aria-label="Select secondary brand color"
               />
               <Input
                 type="text"
                 value={data.secondaryColor || "#004499"}
                 onChange={(e) => onChange("secondaryColor", e.target.value)}
                 placeholder="#004499"
-                className="flex-1"
+                className="flex-1 h-12 lg:h-10 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                aria-label="Enter secondary color hex code"
               />
             </div>
           </div>
@@ -83,7 +87,8 @@ export function BrandColors({ data, onChange }: BrandColorsProps) {
           variant="outline"
           size="sm"
           onClick={handleReset}
-          className="w-full"
+          className="w-full h-12 lg:h-10 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
+          aria-label="Reset colors to default corporate blue theme"
         >
           <RotateCcw className="h-4 w-4 mr-2" />
           Reset to Default
@@ -100,24 +105,35 @@ export function BrandColors({ data, onChange }: BrandColorsProps) {
           {presetColors.map((preset, index) => (
             <Card 
               key={index}
-              className="cursor-pointer hover:shadow-md transition-all border hover:border-primary/50"
+              role="button"
+              tabIndex={0}
+              aria-label={`Select ${preset.name} color preset`}
+              className="cursor-pointer hover:shadow-lg hover:border-primary/50 hover:scale-[1.02] transition-all duration-200 group"
               onClick={() => handlePresetSelect(preset)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handlePresetSelect(preset);
+                }
+              }}
             >
               <CardContent className="p-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="flex gap-1">
                       <div 
-                        className="w-6 h-6 rounded border"
+                        className="w-6 h-6 rounded border shadow-sm"
                         style={{ backgroundColor: preset.primary }}
+                        aria-label={`Primary color: ${preset.primary}`}
                       />
                       <div 
-                        className="w-6 h-6 rounded border"
+                        className="w-6 h-6 rounded border shadow-sm"
                         style={{ backgroundColor: preset.secondary }}
+                        aria-label={`Secondary color: ${preset.secondary}`}
                       />
                     </div>
                     <div>
-                      <p className="text-sm font-medium">{preset.name}</p>
+                      <p className="text-sm font-medium group-hover:text-primary transition-colors duration-200">{preset.name}</p>
                       <p className="text-xs text-muted-foreground">
                         {preset.primary} • {preset.secondary}
                       </p>
@@ -126,10 +142,12 @@ export function BrandColors({ data, onChange }: BrandColorsProps) {
                   <Button
                     variant="ghost"
                     size="sm"
+                    className="h-10 w-10 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                     onClick={(e) => {
                       e.stopPropagation();
                       handlePresetSelect(preset);
                     }}
+                    aria-label={`Apply ${preset.name} color preset`}
                   >
                     <Palette className="h-4 w-4" />
                   </Button>

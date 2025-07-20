@@ -95,12 +95,13 @@ signaturecraft-mvp/
 │   ├── LogoUpload.tsx             # ✅ Logo upload with drag-and-drop
 │   └── BrandColors.tsx            # ✅ Color customization
 
-## 🚧 PENDING IMPLEMENTATION
-├── src/app/export/page.tsx         # Export page with installation guides
-├── src/app/api/export/[id]/route.ts # Export API endpoints
+## 🚧 PENDING IMPLEMENTATION (PHASE 3)
+├── src/app/export/page.tsx         # Dedicated export page with comprehensive guides
+├── src/app/api/export/[id]/route.ts # Export API endpoints (HTML, Outlook, text, download)
+├── src/app/api/signatures/[id]/route.ts # Update and delete signature endpoints
 └── src/components/export/          # Export components
-    ├── ExportPanel.tsx
-    └── InstallationGuide.tsx
+    ├── ExportPanel.tsx             # Enhanced export panel with advanced options
+    └── InstallationGuide.tsx       # Step-by-step installation guides with screenshots
 ```
 
 ## File Naming Conventions

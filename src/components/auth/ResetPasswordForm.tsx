@@ -213,7 +213,7 @@ function ResetPasswordFormContent() {
             </div>
           )}
 
-          <Button type="submit" className="w-full h-12 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-200" disabled={isLoading}>
+          <Button type="submit" className="w-full h-12 text-white transition-colors duration-200" disabled={isLoading}>
             {isLoading ? "Sending..." : "Send Reset Email"}
           </Button>
         </form>

@@ -28,7 +28,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             placeholder="John Smith"
             value={data.name}
             onChange={(e) => onChange("name", e.target.value)}
-            className="h-12 lg:h-10 text-base lg:text-sm"
+            className="h-12 lg:h-10 text-base lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
             aria-required="true"
             aria-describedby={data.name ? undefined : "name-help"}
             required
@@ -48,7 +48,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             placeholder="john@company.com"
             value={data.email}
             onChange={(e) => onChange("email", e.target.value)}
-            className="h-12 lg:h-10 text-base lg:text-sm"
+            className="h-12 lg:h-10 text-base lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
             aria-required="true"
             aria-describedby={data.email ? undefined : "email-help"}
             required
@@ -77,7 +77,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             placeholder="Marketing Manager"
             value={data.title}
             onChange={(e) => onChange("title", e.target.value)}
-            className="h-12 lg:h-10 text-base lg:text-sm"
+            className="h-12 lg:h-10 text-base lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
           />
         </div>
 
@@ -89,7 +89,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             placeholder="Acme Corporation"
             value={data.company}
             onChange={(e) => onChange("company", e.target.value)}
-            className="h-12 lg:h-10 text-base lg:text-sm"
+            className="h-12 lg:h-10 text-base lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
           />
         </div>
 
@@ -101,7 +101,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             placeholder="Marketing"
             value={data.department}
             onChange={(e) => onChange("department", e.target.value)}
-            className="h-12 lg:h-10 text-base lg:text-sm"
+            className="h-12 lg:h-10 text-base lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
           />
         </div>
       </div>
@@ -122,7 +122,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             placeholder="+27 11 123 4567"
             value={data.phone}
             onChange={(e) => onChange("phone", e.target.value)}
-            className="h-12 lg:h-10 text-base lg:text-sm"
+            className="h-12 lg:h-10 text-base lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
           />
         </div>
 
@@ -134,7 +134,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             placeholder="+27 82 123 4567"
             value={data.mobile}
             onChange={(e) => onChange("mobile", e.target.value)}
-            className="h-12 lg:h-10 text-base lg:text-sm"
+            className="h-12 lg:h-10 text-base lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
           />
         </div>
 
@@ -146,7 +146,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             placeholder="https://www.company.com"
             value={data.website}
             onChange={(e) => onChange("website", e.target.value)}
-            className="h-12 lg:h-10 text-base lg:text-sm"
+            className="h-12 lg:h-10 text-base lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
           />
         </div>
 
@@ -158,7 +158,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             placeholder="123 Business Street, Cape Town"
             value={data.address}
             onChange={(e) => onChange("address", e.target.value)}
-            className="h-12 lg:h-10 text-base lg:text-sm"
+            className="h-12 lg:h-10 text-base lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
           />
         </div>
       </div>

@@ -3,6 +3,7 @@
 import React, { useState, ReactNode, HTMLAttributes } from 'react';
 import { Check, Sparkles, Users, Building, Crown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Link from "next/link";
 
 // Card components
 type CardProps = HTMLAttributes<HTMLDivElement> & { className?: string; children: ReactNode };
@@ -75,14 +76,18 @@ function PricingCard({ plan, index }: PricingCardProps) {
     }
   };
 
+  // Determine CTA link based on plan
+  let ctaHref = "/register";
+  if (plan.name.toLowerCase() === "pro") ctaHref = "/checkout";
+  if (plan.name.toLowerCase() === "team") ctaHref = "/contact";
+
   return (
-    <div
+    <section
       className={`relative transition-all duration-500 transform ${
         isHovered ? 'scale-105 z-10' : 'scale-100'
-      } ${plan.popular ? 'md:-translate-y-4' : ''}`}
+      } ${plan.popular ? 'md:-translate-y-4' : ''} [animation-delay:${index * 150}ms]`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      style={{ animationDelay: `${index * 150}ms` }}
     >
       <Card className={`flex flex-col h-full relative overflow-hidden ${
         plan.popular
@@ -141,8 +146,7 @@ function PricingCard({ plan, index }: PricingCardProps) {
               {plan.features.map((feature: string, i: number) => (
                 <li
                   key={i}
-                  className="flex items-start gap-3 group"
-                  style={{ animationDelay: `${(index * 150) + (i * 50)}ms` }}
+                  className={`flex items-start gap-3 group [animation-delay:${(index * 150) + (i * 50)}ms]`}
                 >
                   <div className={`flex-shrink-0 w-5 h-5 rounded-full bg-primary flex items-center justify-center mt-0.5 group-hover:scale-110 transition-transform duration-200`}>
                     <Check className="h-3 w-3 text-primary-foreground" />
@@ -156,16 +160,19 @@ function PricingCard({ plan, index }: PricingCardProps) {
           </CardContent>
           <CardFooter className="mt-auto">
             <Button
+              asChild
               variant={plan.popular ? 'default' : plan.buttonVariant}
               className={`w-full text-center relative overflow-hidden group h-12 transition-colors duration-200 ${
                 plan.popular ? 'bg-primary text-primary-foreground hover:bg-primary/90' : ''
               }`}
               aria-label={plan.buttonText}
             >
-              <span className="relative z-10">{plan.buttonText}</span>
-              {plan.popular && (
-                <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              )}
+              <Link href={ctaHref}>
+                <span className="relative z-10">{plan.buttonText}</span>
+                {plan.popular && (
+                  <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                )}
+              </Link>
             </Button>
             {/* Additional info */}
             <div className="mt-3 text-center">
@@ -178,7 +185,7 @@ function PricingCard({ plan, index }: PricingCardProps) {
           </CardFooter>
         </div>
       </Card>
-    </div>
+    </section>
   );
 }
 
@@ -241,7 +248,7 @@ export function PricingSection() {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-muted relative overflow-hidden">
+    <section className="py-16 md:py-24 relative overflow-hidden">
       {/* Background decorations */}
       <div className="absolute inset-0 pointer-events-none" />
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

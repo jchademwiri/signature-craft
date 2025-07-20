@@ -231,14 +231,23 @@
   - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8_
 
 - [x] 31. Build comprehensive signature preview system
-  - Implement desktop and mobile preview modes
+  - Implement desktop and mobile preview modes with tabs
   - Create HTML generation engine for all three templates
-  - Add export functionality with copy-to-clipboard
+  - Add export functionality with copy-to-clipboard for Gmail, Outlook, and HTML
   - Include quick setup instructions for email clients
-  - Generate email-compatible HTML with inline styles
+  - Generate email-compatible HTML with inline styles and table-based layouts
+  - Add success notifications for copy actions with user feedback
   - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8_
 
-- [ ] 32. Implement UI/UX improvements and accessibility compliance
+- [x] 32. Complete signature management API implementation
+  - Implement GET /api/signatures endpoint with user authentication
+  - Build POST /api/signatures endpoint with data validation
+  - Add proper error handling and HTTP status codes
+  - Integrate with Better Auth session management
+  - Support all signature fields including logo data and brand colors
+  - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7_
+
+- [ ] 33. Implement UI/UX improvements and accessibility compliance
   - Add cursor pointer states to all interactive elements
   - Implement proper hover states and visual feedback
   - Optimize mobile responsiveness for signature builder
@@ -248,7 +257,7 @@
   - Optimize touch targets for mobile devices (min 44px)
   - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5, 6.6_
 
-- [ ] 33. Enhance cross-browser and email client compatibility
+- [ ] 34. Enhance cross-browser and email client compatibility
   - Test signature rendering across email clients (Gmail, Outlook, Apple Mail)
   - Verify cross-browser compatibility (Chrome, Firefox, Safari, Edge)
   - Optimize HTML generation for email client compatibility
@@ -256,7 +265,7 @@
   - Implement fallback styles for unsupported CSS features
   - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8_
 
-- [ ] 34. Implement performance optimizations
+- [ ] 35. Implement performance optimizations
   - Optimize image processing performance for logo uploads
   - Add React.memo to prevent unnecessary re-renders
   - Implement progressive loading for better perceived performance
@@ -264,9 +273,27 @@
   - Add proper error boundaries and loading states
   - _Requirements: Performance and scalability requirements_
 
-- [ ] 35. Prepare launch materials and documentation
+- [ ] 36. Create dedicated export page and enhanced installation guides
+  - Build /export page with comprehensive signature display
+  - Create InstallationGuide component with step-by-step instructions
+  - Add Gmail copy-paste instructions with screenshots
+  - Include Outlook installation guides (web and desktop versions)
+  - Implement Apple Mail setup instructions with visual guides
+  - Add troubleshooting section for common copy-paste issues
+  - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 5.7_
+
+- [ ] 37. Implement remaining API endpoints
+  - Add PUT /api/signatures/:id for signature updates
+  - Create DELETE /api/signatures/:id for signature removal
+  - Build GET /api/export/:id/html for Gmail-compatible HTML
+  - Implement GET /api/export/:id/outlook for Outlook rich text format
+  - Add GET /api/export/:id/text for plain text fallback
+  - Create GET /api/export/:id/download for .htm file generation
+  - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8_
+
+- [ ] 38. Prepare launch materials and documentation
   - Create user onboarding flow and help documentation
-  - Build FAQ section with common questions
-  - Prepare marketing landing page content
+  - Build comprehensive FAQ section with common questions
+  - Prepare marketing landing page content finalization
   - Set up support processes and contact methods
   - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 5.7_

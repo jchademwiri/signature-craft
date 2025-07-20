@@ -99,3 +99,30 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+    if (!id) {
+      return NextResponse.json({ error: "Signature ID is required" }, { status: 400 });
+    }
+    // Only delete if the signature belongs to the user
+    const deleted = await db.delete(signatures)
+      .where(eq(signatures.id, id), eq(signatures.userId, session.user.id))
+      .returning();
+    if (!deleted.length) {
+      return NextResponse.json({ error: "Signature not found or not authorized" }, { status: 404 });
+    }
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Error deleting signature:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
+}

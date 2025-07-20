@@ -9,20 +9,20 @@ export function HeroSection() {
   return (
     <section className="py-12 md:py-24">
       <div className="flex flex-col items-center text-center space-y-8">
-        <div className="mb-4">
+        <div className="mb-4 relative">
           <Image 
-            src="/logo.svg" 
-            alt="SignatureCraft Logo" 
-            width={300} 
-            height={75} 
+            src="/logo.svg"
+            alt="SignatureCraft Logo"
+            width={300}
+            height={75}
             priority
             className="dark:hidden"
           />
           <Image 
-            src="/logo-dark.svg" 
-            alt="SignatureCraft Logo" 
-            width={300} 
-            height={75} 
+            src="/logo-dark.svg"
+            alt="SignatureCraft Logo (Dark)"
+            width={300}
+            height={75}
             priority
             className="hidden dark:block"
           />
@@ -38,7 +38,7 @@ export function HeroSection() {
         </div>
         
         <div className="flex flex-col sm:flex-row gap-4 mt-8">
-          <Button size="lg" asChild>
+          <Button size="lg"  asChild className="text-white">
             <Link href="/register">Create Your Signature</Link>
           </Button>
           <Button size="lg" variant="outline" asChild>
