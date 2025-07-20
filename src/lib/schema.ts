@@ -1,4 +1,4 @@
-import { pgTable, uuid, varchar, text, timestamp, boolean } from "drizzle-orm/pg-core";
+import { pgTable, varchar, text, timestamp, boolean } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
   id: text("id").primaryKey(),
@@ -9,10 +9,10 @@ export const users = pgTable("users", {
     .notNull(),
   image: text("image"),
   createdAt: timestamp("created_at")
-    .$defaultFn(() => /* @__PURE__ */ new Date())
+    .$defaultFn(() => new Date())
     .notNull(),
   updatedAt: timestamp("updated_at")
-    .$defaultFn(() => /* @__PURE__ */ new Date())
+    .$defaultFn(() => new Date())
     .notNull(),
 });
 
@@ -52,16 +52,12 @@ export const verifications = pgTable("verifications", {
   identifier: text("identifier").notNull(),
   value: text("value").notNull(),
   expiresAt: timestamp("expires_at").notNull(),
-  createdAt: timestamp("created_at").$defaultFn(
-    () => /* @__PURE__ */ new Date(),
-  ),
-  updatedAt: timestamp("updated_at").$defaultFn(
-    () => /* @__PURE__ */ new Date(),
-  ),
+  createdAt: timestamp("created_at").$defaultFn(() => new Date()),
+  updatedAt: timestamp("updated_at").$defaultFn(() => new Date()),
 });
 
 export const signatures = pgTable("signatures", {
-  id: uuid("id").primaryKey().defaultRandom(),
+  id: text("id").primaryKey(),
   userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
   name: varchar("name", { length: 100 }).notNull(),
   title: varchar("title", { length: 100 }),
@@ -69,7 +65,7 @@ export const signatures = pgTable("signatures", {
   email: varchar("email", { length: 255 }).notNull(),
   phone: varchar("phone", { length: 50 }),
   website: varchar("website", { length: 255 }),
-  logoData: text("logo_data"), // Base64 encoded
+  logoData: text("logo_data"),
   templateId: varchar("template_id", { length: 20 }).default("classic"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),

@@ -8,12 +8,13 @@ export const auth = betterAuth({
     provider: "pg",
     usePlural: true,
     schema: {
-      user: schema.users,
-      session: schema.sessions,
-      account: schema.accounts,
-      verification: schema.verifications,
+      users: schema.users,
+      sessions: schema.sessions,
+      accounts: schema.accounts,
+      verifications: schema.verifications,
     },
   }),
+
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: false, // MVP: Skip verification

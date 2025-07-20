@@ -7,11 +7,12 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "next lint",
-    "email": "email dev --port 3001",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "db:drop": "node drop-tables.mjs",
+    "db:reset": "node drop-tables.mjs && pnpm db:push"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
