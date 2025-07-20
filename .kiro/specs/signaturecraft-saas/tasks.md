@@ -147,8 +147,8 @@
 - [x] 19. Create signature management API endpoints
   - Build GET /api/signatures endpoint to retrieve user signatures
   - Implement POST /api/signatures to create new signatures
-  - Add PUT /api/signatures/:id for signature updates
-  - Create DELETE /api/signatures/:id for signature removal
+  - Implement DELETE /api/signatures endpoint for signature removal
+  - Add proper error handling and HTTP status codes
   - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7_
 
 - [ ] 20. Develop export API endpoints
@@ -242,6 +242,7 @@
 - [x] 32. Complete signature management API implementation
   - Implement GET /api/signatures endpoint with user authentication
   - Build POST /api/signatures endpoint with data validation
+  - Implement DELETE /api/signatures endpoint with proper authorization
   - Add proper error handling and HTTP status codes
   - Integrate with Better Auth session management
   - Support all signature fields including logo data and brand colors
@@ -284,7 +285,6 @@
 
 - [ ] 37. Implement remaining API endpoints
   - Add PUT /api/signatures/:id for signature updates
-  - Create DELETE /api/signatures/:id for signature removal
   - Build GET /api/export/:id/html for Gmail-compatible HTML
   - Implement GET /api/export/:id/outlook for Outlook rich text format
   - Add GET /api/export/:id/text for plain text fallback
