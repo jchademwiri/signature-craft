@@ -28,8 +28,16 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             placeholder="John Smith"
             value={data.name}
             onChange={(e) => onChange("name", e.target.value)}
+            className="h-12 lg:h-10 text-base lg:text-sm"
+            aria-required="true"
+            aria-describedby={data.name ? undefined : "name-help"}
             required
           />
+          {!data.name && (
+            <p id="name-help" className="text-xs text-muted-foreground mt-1">
+              Enter your full name as you want it to appear in your signature
+            </p>
+          )}
         </div>
 
         <div className="space-y-2">
@@ -40,8 +48,16 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             placeholder="john@company.com"
             value={data.email}
             onChange={(e) => onChange("email", e.target.value)}
+            className="h-12 lg:h-10 text-base lg:text-sm"
+            aria-required="true"
+            aria-describedby={data.email ? undefined : "email-help"}
             required
           />
+          {!data.email && (
+            <p id="email-help" className="text-xs text-muted-foreground mt-1">
+              Enter your professional email address
+            </p>
+          )}
         </div>
       </div>
 
@@ -61,6 +77,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             placeholder="Marketing Manager"
             value={data.title}
             onChange={(e) => onChange("title", e.target.value)}
+            className="h-12 lg:h-10 text-base lg:text-sm"
           />
         </div>
 
@@ -72,6 +89,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             placeholder="Acme Corporation"
             value={data.company}
             onChange={(e) => onChange("company", e.target.value)}
+            className="h-12 lg:h-10 text-base lg:text-sm"
           />
         </div>
 
@@ -83,6 +101,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             placeholder="Marketing"
             value={data.department}
             onChange={(e) => onChange("department", e.target.value)}
+            className="h-12 lg:h-10 text-base lg:text-sm"
           />
         </div>
       </div>
@@ -103,6 +122,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             placeholder="+27 11 123 4567"
             value={data.phone}
             onChange={(e) => onChange("phone", e.target.value)}
+            className="h-12 lg:h-10 text-base lg:text-sm"
           />
         </div>
 
@@ -114,6 +134,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             placeholder="+27 82 123 4567"
             value={data.mobile}
             onChange={(e) => onChange("mobile", e.target.value)}
+            className="h-12 lg:h-10 text-base lg:text-sm"
           />
         </div>
 
@@ -125,6 +146,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             placeholder="https://www.company.com"
             value={data.website}
             onChange={(e) => onChange("website", e.target.value)}
+            className="h-12 lg:h-10 text-base lg:text-sm"
           />
         </div>
 
@@ -136,6 +158,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             placeholder="123 Business Street, Cape Town"
             value={data.address}
             onChange={(e) => onChange("address", e.target.value)}
+            className="h-12 lg:h-10 text-base lg:text-sm"
           />
         </div>
       </div>

@@ -69,12 +69,22 @@ export function TemplateSelector({ selectedTemplate, onTemplateChange }: Templat
         {templates.map((template) => (
           <Card 
             key={template.id}
-            className={`cursor-pointer transition-all hover:shadow-md ${
+            role="button"
+            tabIndex={0}
+            aria-label={`Select ${template.name} template - ${template.description}`}
+            aria-pressed={selectedTemplate === template.id}
+            className={`cursor-pointer transition-all duration-200 hover:shadow-md hover:scale-[1.02] ${
               selectedTemplate === template.id 
-                ? "ring-2 ring-primary border-primary" 
+                ? "ring-2 ring-primary border-primary shadow-lg" 
                 : "border-border hover:border-primary/50"
             }`}
             onClick={() => onTemplateChange(template.id)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onTemplateChange(template.id);
+              }
+            }}
           >
             <CardContent className="p-4">
               <div className="flex items-start justify-between mb-3">
@@ -98,7 +108,7 @@ export function TemplateSelector({ selectedTemplate, onTemplateChange }: Templat
               <Button
                 variant={selectedTemplate === template.id ? "default" : "outline"}
                 size="sm"
-                className="w-full mt-3"
+                className="w-full mt-3 transition-colors duration-200 h-10 lg:h-9"
                 onClick={(e) => {
                   e.stopPropagation();
                   onTemplateChange(template.id);

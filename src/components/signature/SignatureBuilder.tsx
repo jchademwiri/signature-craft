@@ -84,17 +84,17 @@ export function SignatureBuilder() {
   };
 
   return (
-    <div className="h-[calc(100vh-8rem)] flex gap-6">
+    <div className="h-[calc(100vh-8rem)] flex flex-col lg:flex-row gap-4 lg:gap-6">
       {/* Left Column: Form Fields (Scrollable) */}
-      <div className="flex-1">
+      <div className="flex-1 lg:max-w-md">
         <Card className="h-full">
           <CardContent className="p-0 h-full">
             <Tabs defaultValue="contact" className="h-full flex flex-col">
               <div className="border-b px-6 pt-6 flex-shrink-0">
-                <TabsList className="grid w-full grid-cols-3">
-                  <TabsTrigger value="contact">Contact Info</TabsTrigger>
-                  <TabsTrigger value="colors">Brand Colors</TabsTrigger>
-                  <TabsTrigger value="template">Template</TabsTrigger>
+                <TabsList className="grid w-full grid-cols-3 h-12 lg:h-10">
+                  <TabsTrigger value="contact" className="text-xs lg:text-sm px-2 lg:px-4">Contact Info</TabsTrigger>
+                  <TabsTrigger value="colors" className="text-xs lg:text-sm px-2 lg:px-4">Brand Colors</TabsTrigger>
+                  <TabsTrigger value="template" className="text-xs lg:text-sm px-2 lg:px-4">Template</TabsTrigger>
                 </TabsList>
               </div>
               
@@ -128,7 +128,7 @@ export function SignatureBuilder() {
       </div>
 
       {/* Right Column: Preview (Sticky) */}
-      <div className="flex-1">
+      <div className="flex-1 lg:max-w-lg">
         <Card className="h-[calc(100vh-8rem)] flex flex-col">
           <CardHeader className="flex-shrink-0">
             <CardTitle>Live Preview</CardTitle>

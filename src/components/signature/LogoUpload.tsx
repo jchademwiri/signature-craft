@@ -145,7 +145,8 @@ export function LogoUpload({ logoData, onLogoChange }: LogoUploadProps) {
                 variant="ghost"
                 size="sm"
                 onClick={handleRemoveLogo}
-                className="text-destructive hover:text-destructive"
+                className="text-destructive hover:text-destructive hover:bg-destructive/10 transition-colors duration-200 cursor-pointer"
+                aria-label="Remove uploaded logo"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -154,15 +155,24 @@ export function LogoUpload({ logoData, onLogoChange }: LogoUploadProps) {
         </Card>
       ) : (
         <Card
-          className={`border-2 border-dashed transition-colors cursor-pointer ${
+          role="button"
+          tabIndex={0}
+          aria-label="Upload company logo - drag and drop or click to select file"
+          className={`border-2 border-dashed transition-all duration-200 cursor-pointer ${
             isDragging 
-              ? "border-primary bg-primary/5" 
-              : "border-muted-foreground/25 hover:border-primary/50"
+              ? "border-primary bg-primary/5 scale-[1.02]" 
+              : "border-muted-foreground/25 hover:border-primary/50 hover:bg-primary/2"
           }`}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
           onClick={() => fileInputRef.current?.click()}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              fileInputRef.current?.click();
+            }
+          }}
         >
           <CardContent className="p-6 text-center">
             <div className="space-y-4">
@@ -190,6 +200,7 @@ export function LogoUpload({ logoData, onLogoChange }: LogoUploadProps) {
                 variant="outline" 
                 size="sm" 
                 disabled={isProcessing}
+                className="transition-colors duration-200 h-10"
                 onClick={(e) => {
                   e.stopPropagation();
                   fileInputRef.current?.click();

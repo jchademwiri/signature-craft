@@ -1,33 +1,8 @@
 "use client";
 
-import React, { useState, ReactNode, ButtonHTMLAttributes, HTMLAttributes } from 'react';
+import React, { useState, ReactNode, HTMLAttributes } from 'react';
 import { Check, Sparkles, Users, Building, Crown } from 'lucide-react';
-
-// Button
-
-type ButtonVariant = 'default' | 'outline' | 'premium';
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: ButtonVariant;
-  className?: string;
-  children: ReactNode;
-}
-
-const Button: React.FC<ButtonProps> = ({ variant = 'default', className = '', children, ...props }) => {
-  const baseStyles = 'px-6 py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2';
-  const variants: Record<ButtonVariant, string> = {
-    default: 'bg-primary text-primary-foreground shadow-xs hover:bg-primary/90',
-    outline: 'border border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground',
-    premium: 'bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-lg hover:from-primary/90 hover:to-accent/90',
-  };
-  return (
-    <button
-      className={`${baseStyles} ${variants[variant] || variants.default} ${className}`}
-      {...props}
-    >
-      {children}
-    </button>
-  );
-};
+import { Button } from '@/components/ui/button';
 
 // Card components
 type CardProps = HTMLAttributes<HTMLDivElement> & { className?: string; children: ReactNode };
@@ -70,7 +45,7 @@ type Plan = {
   period?: string;
   features: string[];
   buttonText: string;
-  buttonVariant: ButtonVariant;
+  buttonVariant: "default" | "outline" | "secondary" | "ghost" | "link" | "destructive";
   popular?: boolean;
 };
 
@@ -181,8 +156,10 @@ function PricingCard({ plan, index }: PricingCardProps) {
           </CardContent>
           <CardFooter className="mt-auto">
             <Button
-              variant={plan.popular ? 'premium' : plan.buttonVariant}
-              className="w-full text-center relative overflow-hidden group"
+              variant={plan.popular ? 'default' : plan.buttonVariant}
+              className={`w-full text-center relative overflow-hidden group h-12 transition-colors duration-200 ${
+                plan.popular ? 'bg-primary text-primary-foreground hover:bg-primary/90' : ''
+              }`}
               aria-label={plan.buttonText}
             >
               <span className="relative z-10">{plan.buttonText}</span>
@@ -314,10 +291,10 @@ export function PricingSection() {
           <p className="text-muted-foreground mb-4">
             Need something custom? We&apos;re here to help.
           </p>
-          <Button variant="outline" className="mr-4">
+          <Button variant="outline" className="mr-4 h-12 transition-colors duration-200">
             Schedule a Demo
           </Button>
-          <Button variant="default">
+          <Button variant="default" className="h-12 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-200">
             Contact Sales
           </Button>
         </div>

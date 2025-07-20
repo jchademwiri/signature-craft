@@ -124,7 +124,7 @@ export default function DashboardPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="text-center">
-                <Button size="lg" asChild className="w-full sm:w-auto">
+                <Button size="lg" asChild className="w-full sm:w-auto h-12 lg:h-11 transition-colors duration-200 bg-primary text-primary-foreground hover:bg-primary/90">
                   <Link href="/builder">
                     <Plus className="h-4 w-4 mr-2" />
                     Create New Signature
@@ -150,7 +150,7 @@ export default function DashboardPage() {
                 </div>
                 <div className="grid gap-4">
                   {signatures.map((signature) => (
-                    <Card key={signature.id} className="hover:shadow-md transition-shadow">
+                    <Card key={signature.id} className="hover:shadow-md hover:border-primary/20 transition-all duration-200 cursor-pointer">
                       <CardContent className="p-6">
                         <div className="flex items-start justify-between">
                           <div className="space-y-1">
@@ -171,12 +171,12 @@ export default function DashboardPage() {
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
-                            <Button variant="outline" size="sm" asChild>
+                            <Button variant="outline" size="sm" className="hover:bg-primary hover:text-primary-foreground transition-colors duration-200 h-10" asChild>
                               <Link href={`/builder?edit=${signature.id}`}>
                                 Edit
                               </Link>
                             </Button>
-                            <Button variant="outline" size="sm" asChild>
+                            <Button variant="outline" size="sm" className="hover:bg-primary hover:text-primary-foreground transition-colors duration-200 h-10" asChild>
                               <Link href={`/export?id=${signature.id}`}>
                                 Export
                               </Link>
@@ -198,7 +198,7 @@ export default function DashboardPage() {
                   <p className="text-muted-foreground mb-6">
                     Create your first professional email signature to get started
                   </p>
-                  <Button asChild>
+                  <Button asChild className="h-12 lg:h-10 transition-colors duration-200 bg-primary text-primary-foreground hover:bg-primary/90">
                     <Link href="/builder">
                       <Plus className="h-4 w-4 mr-2" />
                       Create Your First Signature

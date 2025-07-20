@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { SignatureData } from "./SignatureBuilder";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,7 @@ interface SignaturePreviewProps {
 }
 
 export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewProps) {
+  const [copyFeedback, setCopyFeedback] = useState<string | null>(null);
   const generateSignatureHTML = (isMobile: boolean = false) => {
     const { name, title, company, email, phone, mobile, website, address, department, logoData, templateId, primaryColor, secondaryColor } = data;
     
@@ -242,11 +244,12 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
   const copyToClipboard = async (content: string, format: string) => {
     try {
       await navigator.clipboard.writeText(content);
-      // TODO: Add toast notification for success
-      console.log(`${format} signature copied to clipboard`);
+      setCopyFeedback(`${format} signature copied to clipboard!`);
+      setTimeout(() => setCopyFeedback(null), 3000);
     } catch (error) {
       console.error('Failed to copy to clipboard:', error);
-      // TODO: Add toast notification for error
+      setCopyFeedback(`Failed to copy ${format} signature. Please try again.`);
+      setTimeout(() => setCopyFeedback(null), 3000);
     }
   };
 
@@ -372,7 +375,7 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
           <Button 
             onClick={onSave}
             disabled={isSaving || !data.name || !data.email}
-            className="w-full bg-primary hover:bg-primary/90"
+            className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-12 lg:h-11 transition-colors duration-200"
             size="lg"
           >
             {isSaving ? (
@@ -402,38 +405,38 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
         <div className="grid grid-cols-2 gap-3">
           <Button 
             onClick={handleCopyForOutlook}
-            className="w-full bg-slate-900 hover:bg-slate-800 text-white"
+            className="w-full bg-slate-900 hover:bg-slate-800 text-white h-12 lg:h-10 transition-colors duration-200"
           >
             📧 Copy for Outlook
           </Button>
           <Button 
             onClick={handleCopyForGmail}
             variant="outline"
-            className="w-full"
+            className="w-full h-12 lg:h-10 transition-colors duration-200"
           >
             📧 Copy for Gmail
           </Button>
           <Button 
             onClick={handleCopyHTML}
             variant="outline"
-            className="w-full"
+            className="w-full h-12 lg:h-10 transition-colors duration-200"
           >
             📋 Copy HTML
           </Button>
           <Button 
             onClick={handleDownloadPNG}
             variant="outline"
-            className="w-full"
+            className="w-full h-12 lg:h-10 transition-colors duration-200"
           >
             📥 Download PNG
           </Button>
         </div>
 
         {/* Quick Setup Instructions */}
-        <Card className="bg-blue-50 border-blue-200">
+        <Card className="bg-primary/10 border-primary/20">
           <CardContent className="p-4">
-            <h4 className="font-medium text-blue-900 mb-3">Quick Setup:</h4>
-            <div className="space-y-2 text-sm text-blue-800">
+            <h4 className="font-medium text-primary mb-3">Quick Setup:</h4>
+            <div className="space-y-2 text-sm text-primary/80">
               <div>
                 <strong>• Outlook:</strong> Copy for Outlook → Paste in Settings → Mail → Signatures
               </div>
@@ -451,6 +454,16 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
       <p className="text-xs text-muted-foreground text-center">
         This preview shows how your signature will appear in email clients
       </p>
+
+      {/* Copy Feedback Notification */}
+      {copyFeedback && (
+        <div 
+          role="alert"
+          className="fixed top-4 right-4 bg-primary text-primary-foreground px-4 py-2 rounded-md shadow-lg z-50 animate-in slide-in-from-top-2 max-w-sm"
+        >
+          {copyFeedback}
+        </div>
+      )}
     </div>
   );
 }
