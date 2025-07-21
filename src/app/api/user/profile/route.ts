@@ -36,9 +36,10 @@ export async function PUT(request: NextRequest) {
     if (email !== session.user.email) {
       // This will trigger the sendChangeEmailVerification logic
       await auth.api.changeEmail({
-        userId: session.user.id,
-        newEmail: email,
-        callbackURL: process.env.BETTER_AUTH_URL || 'http://localhost:3000',
+        body: {
+          newEmail: email,
+          callbackURL: process.env.BETTER_AUTH_URL || 'http://localhost:3000',
+        },
       });
       // Only update the name directly
       await db

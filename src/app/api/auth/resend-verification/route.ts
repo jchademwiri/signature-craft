@@ -4,8 +4,9 @@ import { db } from '@/db';
 import { users } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import { Resend } from 'resend';
-import WelcomeEmail from '@/emails/welcome';
+// import WelcomeEmail from '../../../../emails/welcome';
 import React from 'react';
+import WelcomeEmail from '@emails/welcome';
 
 export async function POST(request: NextRequest) {
   try {
