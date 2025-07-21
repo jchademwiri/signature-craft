@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { TemplateProps, TemplateComponent, TemplateMetadata } from "./types";
 import { ReactElement } from "react";
 
@@ -38,7 +39,7 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
         {website && <div style={{ color: secondaryColor }}>Web: {website}</div>}
         {logoData && (
           <div>
-            <img 
+            <Image 
               src={logoData} 
               alt="Logo" 
               style={{ maxWidth: "100px", maxHeight: "50px" }} 
