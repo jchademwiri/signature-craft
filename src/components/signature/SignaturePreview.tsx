@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { SignatureData } from "./SignatureBuilder";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -91,14 +92,17 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
                 {logoData && (
                   <tr>
                     <td style={{ paddingTop: "8px" }}>
-                      <img 
+                      <Image 
                         src={logoData} 
                         alt="Company Logo" 
+                        width={isMobile ? 120 : 150}
+                        height={isMobile ? 60 : 75}
                         style={{ 
                           maxWidth: isMobile ? "120px" : "150px", 
                           height: "auto",
                           display: "block"
-                        }} 
+                        }}
+                        unoptimized
                       />
                     </td>
                   </tr>
@@ -116,15 +120,18 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
                 <tr>
                   <td style={{ verticalAlign: "top", paddingRight: logoData ? "16px" : "0" }}>
                     {logoData && (
-                      <img 
+                      <Image 
                         src={logoData} 
                         alt="Company Logo" 
+                        width={isMobile ? 60 : 80}
+                        height={isMobile ? 30 : 40}
                         style={{ 
                           maxWidth: isMobile ? "60px" : "80px", 
                           height: "auto",
                           display: "block",
                           marginBottom: "8px"
-                        }} 
+                        }}
+                        unoptimized
                       />
                     )}
                   </td>
@@ -222,14 +229,17 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
             )}
             {logoData && (
               <div style={{ marginTop: "8px" }}>
-                <img 
+                <Image 
                   src={logoData} 
                   alt="Company Logo" 
+                  width={isMobile ? 100 : 120}
+                  height={isMobile ? 50 : 60}
                   style={{ 
                     maxWidth: isMobile ? "100px" : "120px", 
                     height: "auto",
                     display: "block"
-                  }} 
+                  }}
+                  unoptimized
                 />
               </div>
             )}

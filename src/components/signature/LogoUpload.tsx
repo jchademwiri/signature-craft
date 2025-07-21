@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Upload, X, Image as ImageIcon } from "lucide-react";
@@ -40,7 +41,7 @@ export function LogoUpload({ logoData, onLogoChange }: LogoUploadProps) {
       }
 
       // For other image types, resize using canvas
-      const img = new Image();
+      const img = document.createElement('img');
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
 
@@ -129,11 +130,15 @@ export function LogoUpload({ logoData, onLogoChange }: LogoUploadProps) {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <img 
-                  src={logoData} 
-                  alt="Company Logo" 
-                  className="w-12 h-12 object-contain border rounded"
-                />
+                <div className="w-12 h-12 relative border rounded overflow-hidden">
+                  <Image 
+                    src={logoData} 
+                    alt="Company Logo" 
+                    fill
+                    className="object-contain"
+                    unoptimized
+                  />
+                </div>
                 <div>
                   <p className="text-sm font-medium">Logo uploaded</p>
                   <p className="text-xs text-muted-foreground">

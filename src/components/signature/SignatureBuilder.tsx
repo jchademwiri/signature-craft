@@ -68,7 +68,6 @@ export function SignatureBuilder() {
       });
 
       if (response.ok) {
-        const savedSignature = await response.json();
         // Navigate to dashboard with success message
         router.push("/dashboard?saved=true");
       } else {

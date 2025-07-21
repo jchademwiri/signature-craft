@@ -1,10 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
-import trustedGoogle from "@/../public/trusted-google.svg";
-import trustedMicrosoft from "@/../public/trusted-microsoft.svg";
-import trustedAws from "@/../public/trusted-aws.svg";
-import trustedMeta from "@/../public/trusted-meta.svg";
-import trustedShopify from "@/../public/trusted-shopify.svg";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { Container } from "@/components/ui/container";
