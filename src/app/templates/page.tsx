@@ -15,7 +15,7 @@ const mockData: TemplateProps = {
 
 export default function TemplatesGalleryPage() {
   return (
-    <main className="max-w-4xl mx-auto px-4 py-12">
+    <main className="container mx-auto px-4 py-12 pt-20">
       <h1 className="text-3xl font-bold mb-2">Signature Template Gallery</h1>
       <p className="mb-8 text-gray-600 max-w-2xl">
         Preview all available signature templates below. Choose the style that fits you best—no account required!

@@ -53,7 +53,7 @@ export function Header() {
             Pricing
           </Link>
           <Link 
-            href="#templates" 
+            href="/templates" 
             className="text-sm font-medium hover:underline hover:text-primary transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             aria-label="View templates section"
           >
@@ -127,7 +127,7 @@ export function Header() {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild className="h-12">
-                <Link href="#templates" className="flex items-center gap-3 py-3 text-base">
+                <Link href="/templates" className="flex items-center gap-3 py-3 text-base">
                   Templates
                 </Link>
               </DropdownMenuItem>
