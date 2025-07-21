@@ -39,7 +39,12 @@ export default function VerifyEmailPage() {
           <br />
           Please check your email and click the verification link to activate your account.
         </p>
-        <Button type="button" className="w-full" onClick={handleResend} disabled={loading}>
+        <Button
+          type="button"
+          className="w-full text-white"
+          onClick={handleResend}
+          disabled={loading}
+        >
           {loading ? 'Resending...' : 'Resend verification email'}
         </Button>
         {message && <p className="mt-4 text-green-600">{message}</p>}

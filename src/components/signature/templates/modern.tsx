@@ -50,6 +50,8 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
                 <Image
                   src={logoData}
                   alt="Logo"
+                  width={80}
+                  height={50}
                   style={{ maxWidth: '80px', maxHeight: '50px', display: 'block' }}
                 />
               </td>

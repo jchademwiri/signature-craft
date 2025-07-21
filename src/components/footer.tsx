@@ -24,7 +24,7 @@ export function Footer() {
               <Link href="/#features" className="text-sm text-muted-foreground hover:underline block">
                 Features
               </Link>
-              <Link href="/#templates" className="text-sm text-muted-foreground hover:underline block">
+              <Link href="/templates" className="text-sm text-muted-foreground hover:underline block">
                 Templates
               </Link>
               <Link href="/#pricing" className="text-sm text-muted-foreground hover:underline block">
