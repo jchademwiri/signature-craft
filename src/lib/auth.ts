@@ -6,7 +6,8 @@ import * as schema from '@/db/schema';
 import { db } from '@/db';
 
 import { Resend } from 'resend';
-import { PasswordResetEmail } from '../../emails/password-reset';
+import PasswordResetEmail from '@emails/password-reset';
+// import { PasswordResetEmail } from '../../emails/password-reset';
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
