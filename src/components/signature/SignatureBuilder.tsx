@@ -32,11 +32,11 @@ export function SignatureBuilder() {
     email: "",
     phone: "",
     website: "",
+    address: "",
     logoData: undefined,
     templateId: "classic",
     primaryColor: "#0066cc",
     secondaryColor: "#004499",
-    address: "",
   });
   const [isSaving, setIsSaving] = useState(false);
 

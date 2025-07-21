@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useSession } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { Container } from "@/components/ui/container";
-import { SignatureBuilder } from "@/components/signature/SignatureBuilder";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, FileText } from "lucide-react";
-import Link from "next/link";
+import { useSession } from '@/lib/auth-client';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { Container } from '@/components/ui/container';
+import { SignatureBuilder } from '@/components/signature/SignatureBuilder';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, FileText } from 'lucide-react';
+import Link from 'next/link';
 
 export default function BuilderPage() {
   const { data: session, isPending } = useSession();
@@ -15,7 +15,7 @@ export default function BuilderPage() {
 
   useEffect(() => {
     if (!isPending && !session) {
-      router.push("/login");
+      router.push('/login');
     }
   }, [session, isPending, router]);
 
