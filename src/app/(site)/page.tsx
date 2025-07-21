@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
@@ -11,8 +10,7 @@ import { FAQSection } from "@/components/faq-section";
 
 export default function Home() {
   return (
-    <>
-      <Header />
+    <>  
       <main className="flex flex-col w-full flex-1 pt-16 bg-background">
         {/* Hero Section */}
         <Container>

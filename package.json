@@ -12,7 +12,8 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "db:drop": "node drop-tables.mjs",
-    "db:reset": "node db-reset.mjs"
+    "db:reset": "node db-reset.mjs",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
@@ -49,6 +50,7 @@
     "drizzle-kit": "^0.31.4",
     "eslint": "^9",
     "eslint-config-next": "15.4.1",
+    "prettier": "^3.6.2",
     "react-email": "4.2.3",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.5",

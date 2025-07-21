@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
-import { Header } from "@/components/header";
+import SiteNavigation from '@/components/navigation/site';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "SignatureCraft | Professional Email Signatures",
-  description: "Create, customize, and deploy professional email signatures with logos, social links, and banners.",
+  title: 'SignatureCraft | Professional Email Signatures',
+  description:
+    'Create, customize, and deploy professional email signatures with logos, social links, and banners.',
 };
 
 export default function SiteLayout({
@@ -13,7 +14,7 @@ export default function SiteLayout({
 }>) {
   return (
     <>
-      <Header />
+      <SiteNavigation />
       {children}
     </>
   );
