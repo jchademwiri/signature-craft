@@ -5,6 +5,6 @@ export const metadata = {
   description: "Preview your email signature in different templates and layouts.",
 };
 
-export default function PreviewLayout({ children }: { children: ReactNode }) {
+export default function DashboardLayout({ children }: { children: ReactNode }) {
   return <>{children}</>;
 } 
