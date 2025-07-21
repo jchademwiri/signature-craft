@@ -21,7 +21,15 @@ export async function GET(request: NextRequest) {
         name: signatures.name,
         title: signatures.title,
         company: signatures.company,
+        department: signatures.department,
+        address: signatures.address,
         email: signatures.email,
+        phone: signatures.phone,
+        mobile: signatures.mobile,
+        website: signatures.website,
+        logoData: signatures.logoData,
+        primaryColor: signatures.primaryColor,
+        secondaryColor: signatures.secondaryColor,
         templateId: signatures.templateId,
         createdAt: signatures.createdAt,
       })
@@ -55,17 +63,16 @@ export async function POST(request: NextRequest) {
       name,
       title,
       company,
+      department,
+      address,
       email,
       phone,
       mobile,
       website,
       logoData,
-      templateId = "classic",
-      // Destructure but ignore unused fields
-      department,
-      address,
       primaryColor,
       secondaryColor,
+      templateId = "classic",
     } = body;
     /* eslint-enable @typescript-eslint/no-unused-vars */
 
@@ -85,10 +92,15 @@ export async function POST(request: NextRequest) {
         name,
         title,
         company,
+        department,
+        address,
         email,
         phone: phone || mobile, // Use phone or mobile as fallback
+        mobile,
         website,
         logoData,
+        primaryColor,
+        secondaryColor,
         templateId,
       })
       .returning();
