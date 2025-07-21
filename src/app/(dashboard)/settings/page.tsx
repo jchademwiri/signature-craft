@@ -1,53 +1,65 @@
-"use client";
+'use client';
 
-import { useSession, signOut } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Container } from "@/components/ui/container";
-import { Separator } from "@/components/ui/separator";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {  User, LogOut,  Settings, Edit, Lock, Save, X } from "lucide-react";
-
+import { useSession, signOut } from '@/lib/auth-client';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Container } from '@/components/ui/container';
+import { Separator } from '@/components/ui/separator';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { User, LogOut, Settings, Edit, Lock, Save, X } from 'lucide-react';
 
 export default function SettingsPage() {
   const { data: session, isPending } = useSession();
   const router = useRouter();
-  
+
   // Edit Profile State
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [profileData, setProfileData] = useState({
-    name: "",
-    email: "",
+    name: '',
+    email: '',
   });
   const [isUpdatingProfile, setIsUpdatingProfile] = useState(false);
 
   // Change Password State
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [passwordData, setPasswordData] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
   });
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
 
+  // Signature count state
+  const [signatureCount, setSignatureCount] = useState<number | null>(null);
+
   useEffect(() => {
     if (!isPending && !session) {
-      router.push("/login");
+      router.push('/login');
     }
     if (session) {
       setProfileData({
-        name: session.user.name || "",
-        email: session.user.email || "",
+        name: session.user.name || '',
+        email: session.user.email || '',
       });
     }
   }, [session, isPending, router]);
 
+  useEffect(() => {
+    if (session) {
+      // Fetch signature count
+      fetch('/api/signatures')
+        .then((res) => (res.ok ? res.json() : []))
+        .then((data) => setSignatureCount(Array.isArray(data) ? data.length : 0))
+        .catch(() => setSignatureCount(0));
+    }
+  }, [session]);
+
   const handleLogout = async () => {
     await signOut();
-    router.push("/");
+    router.push('/');
   };
 
   const handleEditProfile = () => {
@@ -57,23 +69,23 @@ export default function SettingsPage() {
   const handleCancelEdit = () => {
     setIsEditingProfile(false);
     setProfileData({
-      name: session?.user.name || "",
-      email: session?.user.email || "",
+      name: session?.user.name || '',
+      email: session?.user.email || '',
     });
   };
 
   const handleUpdateProfile = async () => {
     if (!profileData.name.trim()) {
-      alert("Name is required");
+      alert('Name is required');
       return;
     }
 
     setIsUpdatingProfile(true);
     try {
-      const response = await fetch("/api/user/profile", {
-        method: "PUT",
+      const response = await fetch('/api/user/profile', {
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(profileData),
       });
@@ -84,11 +96,11 @@ export default function SettingsPage() {
         window.location.reload();
       } else {
         const error = await response.json();
-        alert(error.error || "Failed to update profile");
+        alert(error.error || 'Failed to update profile');
       }
     } catch (error) {
-      console.error("Error updating profile:", error);
-      alert("Failed to update profile. Please try again.");
+      console.error('Error updating profile:', error);
+      alert('Failed to update profile. Please try again.');
     } finally {
       setIsUpdatingProfile(false);
     }
@@ -101,34 +113,38 @@ export default function SettingsPage() {
   const handleCancelPasswordChange = () => {
     setIsChangingPassword(false);
     setPasswordData({
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: '',
     });
   };
 
   const handleUpdatePassword = async () => {
-    if (!passwordData.currentPassword || !passwordData.newPassword || !passwordData.confirmPassword) {
-      alert("All password fields are required");
+    if (
+      !passwordData.currentPassword ||
+      !passwordData.newPassword ||
+      !passwordData.confirmPassword
+    ) {
+      alert('All password fields are required');
       return;
     }
 
     if (passwordData.newPassword !== passwordData.confirmPassword) {
-      alert("New passwords do not match");
+      alert('New passwords do not match');
       return;
     }
 
     if (passwordData.newPassword.length < 6) {
-      alert("New password must be at least 6 characters long");
+      alert('New password must be at least 6 characters long');
       return;
     }
 
     setIsUpdatingPassword(true);
     try {
-      const response = await fetch("/api/user/password", {
-        method: "PUT",
+      const response = await fetch('/api/user/password', {
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           currentPassword: passwordData.currentPassword,
@@ -139,18 +155,18 @@ export default function SettingsPage() {
       if (response.ok) {
         setIsChangingPassword(false);
         setPasswordData({
-          currentPassword: "",
-          newPassword: "",
-          confirmPassword: "",
+          currentPassword: '',
+          newPassword: '',
+          confirmPassword: '',
         });
-        alert("Password updated successfully");
+        alert('Password updated successfully');
       } else {
         const error = await response.json();
-        alert(error.error || "Failed to update password");
+        alert(error.error || 'Failed to update password');
       }
     } catch (error) {
-      console.error("Error updating password:", error);
-      alert("Failed to update password. Please try again.");
+      console.error('Error updating password:', error);
+      alert('Failed to update password. Please try again.');
     } finally {
       setIsUpdatingPassword(false);
     }
@@ -187,9 +203,7 @@ export default function SettingsPage() {
                   <User className="h-5 w-5" />
                   Profile Information
                 </CardTitle>
-                <CardDescription>
-                  Your basic account information
-                </CardDescription>
+                <CardDescription>Your basic account information</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 {isEditingProfile ? (
@@ -202,18 +216,22 @@ export default function SettingsPage() {
                           id="edit-name"
                           type="text"
                           value={profileData.name}
-                          onChange={(e) => setProfileData(prev => ({ ...prev, name: e.target.value }))}
+                          onChange={(e) =>
+                            setProfileData((prev) => ({ ...prev, name: e.target.value }))
+                          }
                           placeholder="Enter your full name"
                         />
                       </div>
-                      
+
                       <div className="space-y-2">
                         <Label htmlFor="edit-email">Email Address</Label>
                         <Input
                           id="edit-email"
                           type="email"
                           value={profileData.email}
-                          onChange={(e) => setProfileData(prev => ({ ...prev, email: e.target.value }))}
+                          onChange={(e) =>
+                            setProfileData((prev) => ({ ...prev, email: e.target.value }))
+                          }
                           placeholder="Enter your email address"
                         />
                       </div>
@@ -258,18 +276,25 @@ export default function SettingsPage() {
                           id="current-password"
                           type="password"
                           value={passwordData.currentPassword}
-                          onChange={(e) => setPasswordData(prev => ({ ...prev, currentPassword: e.target.value }))}
+                          onChange={(e) =>
+                            setPasswordData((prev) => ({
+                              ...prev,
+                              currentPassword: e.target.value,
+                            }))
+                          }
                           placeholder="Enter your current password"
                         />
                       </div>
-                      
+
                       <div className="space-y-2">
                         <Label htmlFor="new-password">New Password</Label>
                         <Input
                           id="new-password"
                           type="password"
                           value={passwordData.newPassword}
-                          onChange={(e) => setPasswordData(prev => ({ ...prev, newPassword: e.target.value }))}
+                          onChange={(e) =>
+                            setPasswordData((prev) => ({ ...prev, newPassword: e.target.value }))
+                          }
                           placeholder="Enter your new password"
                         />
                       </div>
@@ -280,7 +305,12 @@ export default function SettingsPage() {
                           id="confirm-password"
                           type="password"
                           value={passwordData.confirmPassword}
-                          onChange={(e) => setPasswordData(prev => ({ ...prev, confirmPassword: e.target.value }))}
+                          onChange={(e) =>
+                            setPasswordData((prev) => ({
+                              ...prev,
+                              confirmPassword: e.target.value,
+                            }))
+                          }
                           placeholder="Confirm your new password"
                         />
                       </div>
@@ -327,7 +357,7 @@ export default function SettingsPage() {
                           <p className="text-sm">{session.user.name}</p>
                         </div>
                       </div>
-                      
+
                       <div className="space-y-2">
                         <label className="text-sm font-medium text-muted-foreground">
                           Email Address
@@ -344,11 +374,14 @@ export default function SettingsPage() {
                       </label>
                       <div className="p-3 bg-muted rounded-md">
                         <p className="text-sm">
-                          {new Date(session.user.createdAt || Date.now()).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                          })}
+                          {new Date(session.user.createdAt || Date.now()).toLocaleDateString(
+                            'en-US',
+                            {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric',
+                            }
+                          )}
                         </p>
                       </div>
                     </div>
@@ -356,8 +389,8 @@ export default function SettingsPage() {
                     <Separator />
 
                     <div className="flex flex-col sm:flex-row gap-4">
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         className="flex-1"
                         onClick={handleEditProfile}
                         disabled={isEditingProfile}
@@ -365,8 +398,8 @@ export default function SettingsPage() {
                         <Edit className="h-4 w-4 mr-2" />
                         Edit Profile
                       </Button>
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         className="flex-1"
                         onClick={handleChangePassword}
                         disabled={isChangingPassword}
@@ -384,9 +417,7 @@ export default function SettingsPage() {
             <Card>
               <CardHeader>
                 <CardTitle className="text-destructive">Account Actions</CardTitle>
-                <CardDescription>
-                  Manage your account and session
-                </CardDescription>
+                <CardDescription>Manage your account and session</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between p-4 border rounded-lg">
@@ -425,9 +456,7 @@ export default function SettingsPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Usage & Plan</CardTitle>
-                <CardDescription>
-                  Your current usage and plan information
-                </CardDescription>
+                <CardDescription>Your current usage and plan information</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -435,16 +464,16 @@ export default function SettingsPage() {
                     <div className="space-y-1">
                       <p className="text-sm font-medium text-primary">Current Plan</p>
                       <p className="text-2xl font-bold">Free</p>
-                      <p className="text-xs text-muted-foreground">
-                        1 signature, basic templates
-                      </p>
+                      <p className="text-xs text-muted-foreground">1 signature, basic templates</p>
                     </div>
                   </div>
-                  
+
                   <div className="p-4 bg-muted rounded-lg">
                     <div className="space-y-1">
                       <p className="text-sm font-medium">Signatures Created</p>
-                      <p className="text-2xl font-bold">-</p>
+                      <p className="text-2xl font-bold">
+                        {signatureCount !== null ? signatureCount : '-'}
+                      </p>
                       <p className="text-xs text-muted-foreground">
                         Total signatures in your account
                       </p>
