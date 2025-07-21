@@ -5,9 +5,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { Container } from '@/components/ui/container';
 import { SignatureBuilder } from '@/components/signature/SignatureBuilder';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft, FileText } from 'lucide-react';
-import Link from 'next/link';
 
 export default function BuilderPage() {
   const { data: session, isPending } = useSession();

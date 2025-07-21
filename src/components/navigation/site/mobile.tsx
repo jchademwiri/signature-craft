@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Menu } from 'lucide-react';
 
-type Props = { session: any };
+type Props = { session: { user: { name: string } } | null | undefined };
 
 export function SiteMobileNavigation({ session }: Props) {
   return (
@@ -64,6 +64,7 @@ export function SiteMobileNavigation({ session }: Props) {
                 Templates
               </Link>
             </DropdownMenuItem>
+            <DropdownMenuSeparator />
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

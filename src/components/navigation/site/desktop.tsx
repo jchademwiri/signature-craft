@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 
-type Props = { session: any };
+type Props = { session: { user: { name: string } } | null | undefined };
 
 export function SiteDesktopNavigation({ session }: Props) {
   return (
