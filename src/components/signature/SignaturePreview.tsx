@@ -457,12 +457,12 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
             📧 Copy for Gmail
           </Button>
           <Button
-            onClick={handleCopyHTML}
+            onClick={handleCopyForGmail}
             variant="outline"
             className="w-full h-12 lg:h-10 transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-            aria-label="Copy signature as HTML code"
+            aria-label="Copy signature for Apple Mail"
           >
-            📋 Copy HTML
+            🍏 Copy for Apple Mail
           </Button>
           <Button
             onClick={handleDownloadPNG}
@@ -486,8 +486,7 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
                 <strong>• Gmail:</strong> Copy for Gmail → Paste in Settings → General → Signature
               </div>
               <div>
-                <strong>• Apple Mail:</strong> Use Copy for Gmail → Paste in Preferences →
-                Signatures
+                <strong>• Apple Mail:</strong> Copy for Apple Mail → Paste in Preferences → Signatures
               </div>
             </div>
           </CardContent>
