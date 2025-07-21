@@ -12,10 +12,7 @@ export interface TemplateProps {
   // Optional fields
   title?: string;
   company?: string;
-  department?: string;
-  address?: string;
   phone?: string;
-  mobile?: string;
   website?: string;
   
   // Visual customization

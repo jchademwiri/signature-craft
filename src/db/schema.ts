@@ -1,4 +1,5 @@
 import { pgTable, varchar, text, timestamp, boolean } from "drizzle-orm/pg-core";
+import crypto from "crypto";
 
 export const users = pgTable("users", {
   id: text("id").primaryKey(),
@@ -57,16 +58,13 @@ export const verifications = pgTable("verifications", {
 });
 
 export const signatures = pgTable("signatures", {
-  id: text("id").primaryKey(),
+  id: text("id").$defaultFn(() => crypto.randomUUID()).primaryKey(),
   userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
   name: varchar("name", { length: 100 }).notNull(),
   title: varchar("title", { length: 100 }),
   company: varchar("company", { length: 100 }),
-  department: varchar("department", { length: 100 }),
-  address: varchar("address", { length: 255 }),
   email: varchar("email", { length: 255 }).notNull(),
   phone: varchar("phone", { length: 50 }),
-  mobile: varchar("mobile", { length: 50 }),
   website: varchar("website", { length: 255 }),
   logoData: text("logo_data"),
   primaryColor: varchar("primary_color", { length: 20 }),

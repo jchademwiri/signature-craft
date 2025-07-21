@@ -93,17 +93,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
           />
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="department">Department</Label>
-          <Input
-            id="department"
-            type="text"
-            placeholder="Marketing"
-            value={data.department}
-            onChange={(e) => onChange("department", e.target.value)}
-            className="h-12 lg:h-10 text-base lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
-          />
-        </div>
+
       </div>
 
       <Separator />
@@ -126,17 +116,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
           />
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="mobile">Mobile Number</Label>
-          <Input
-            id="mobile"
-            type="tel"
-            placeholder="+27 82 123 4567"
-            value={data.mobile}
-            onChange={(e) => onChange("mobile", e.target.value)}
-            className="h-12 lg:h-10 text-base lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
-          />
-        </div>
+
 
         <div className="space-y-2">
           <Label htmlFor="website">Website</Label>
@@ -150,17 +130,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
           />
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="address">Address</Label>
-          <Input
-            id="address"
-            type="text"
-            placeholder="123 Business Street, Cape Town"
-            value={data.address}
-            onChange={(e) => onChange("address", e.target.value)}
-            className="h-12 lg:h-10 text-base lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
-          />
-        </div>
+
       </div>
 
       <Separator />

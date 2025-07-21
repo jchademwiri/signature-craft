@@ -1,9 +1,8 @@
 import { auth } from "@/lib/auth";
 import { db } from "@/db";
 import { signatures } from "@/db/schema";
-import { eq, and } from "drizzle-orm";
+import { eq, and, desc } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
-import { randomUUID } from "crypto";
 
 export async function GET(request: NextRequest) {
   try {
@@ -21,11 +20,8 @@ export async function GET(request: NextRequest) {
         name: signatures.name,
         title: signatures.title,
         company: signatures.company,
-        department: signatures.department,
-        address: signatures.address,
         email: signatures.email,
         phone: signatures.phone,
-        mobile: signatures.mobile,
         website: signatures.website,
         logoData: signatures.logoData,
         primaryColor: signatures.primaryColor,
@@ -35,7 +31,7 @@ export async function GET(request: NextRequest) {
       })
       .from(signatures)
       .where(eq(signatures.userId, session.user.id))
-      .orderBy(signatures.createdAt);
+      .orderBy(desc(signatures.createdAt));
 
     return NextResponse.json(userSignatures);
   } catch (error) {
@@ -63,11 +59,8 @@ export async function POST(request: NextRequest) {
       name,
       title,
       company,
-      department,
-      address,
       email,
       phone,
-      mobile,
       website,
       logoData,
       primaryColor,
@@ -84,28 +77,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Create values object without explicit ID and include color fields if provided
+    const signatureValues = {
+      userId: session.user.id,
+      name,
+      title,
+      company,
+      email,
+      phone,
+      website,
+      logoData,
+      templateId,
+      ...(primaryColor ? { primaryColor } : {}),
+      ...(secondaryColor ? { secondaryColor } : {}),
+    };
+
     const newSignature = await db
       .insert(signatures)
-      .values({
-        id: randomUUID(),
-        userId: session.user.id,
-        name,
-        title,
-        company,
-        department,
-        address,
-        email,
-        phone: phone || mobile, // Use phone or mobile as fallback
-        mobile,
-        website,
-        logoData,
-        primaryColor,
-        secondaryColor,
-        templateId,
-      })
+      .values(signatureValues)
       .returning();
-
+    
     return NextResponse.json(newSignature[0], { status: 201 });
+
   } catch (error) {
     console.error("Error creating signature:", error);
     return NextResponse.json(

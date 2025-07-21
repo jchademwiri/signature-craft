@@ -16,9 +16,6 @@ export interface SignatureData {
   email: string;
   phone: string;
   website: string;
-  department: string;
-  mobile: string;
-  address: string;
   logoData?: string;
   templateId: "classic" | "modern" | "minimal";
   primaryColor?: string;
@@ -34,9 +31,6 @@ export function SignatureBuilder() {
     email: "",
     phone: "",
     website: "",
-    department: "",
-    mobile: "",
-    address: "",
     logoData: undefined,
     templateId: "classic",
     primaryColor: "#0066cc",
