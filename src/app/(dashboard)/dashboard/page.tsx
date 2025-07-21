@@ -153,7 +153,7 @@ export default function DashboardPage() {
                     {signatures.length} signature{signatures.length !== 1 ? 's' : ''}
                   </span>
                 </div>
-                <div className="grid gap-4">
+                <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
                   {signatures.map((signature) => (
                     <Card
                       key={signature.id}
@@ -169,7 +169,7 @@ export default function DashboardPage() {
                       }}
                     >
                       <CardContent className="p-6">
-                        <div className="flex items-start justify-between">
+                        <div className="flex flex-col gap-4">
                           <div className="space-y-1 flex-1">
                             <h3 className="font-medium group-hover:text-primary transition-colors duration-200">
                               {signature.name}
@@ -189,7 +189,7 @@ export default function DashboardPage() {
                               </span>
                             </div>
                           </div>
-                          <div className="flex items-center gap-2 ml-4">
+                          <div className="flex flex-row gap-2 pt-4 border-t border-border">
                             <Button
                               variant="outline"
                               size="sm"
