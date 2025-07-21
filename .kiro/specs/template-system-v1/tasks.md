@@ -8,7 +8,12 @@
   - Ensure interfaces support all current signature fields and future extensibility
   - _Requirements: 1.1, 1.2, 1.3, 7.1, 7.2_
 
-- [ ] 2. Update Classic template with metadata
+- [x] 2. Update Classic template with metadata
+
+
+
+
+
   - Modify `src/components/signature/templates/classic.tsx` to include metadata property
   - Ensure template follows new TemplateComponent interface
   - Add proper TypeScript typing and error handling

@@ -1,6 +1,11 @@
-import { TemplateProps, TemplateComponent } from "./types";
+import { TemplateProps, TemplateComponent, TemplateMetadata } from "./types";
+import { ReactElement } from "react";
 
-export const Classic: TemplateComponent = (props: TemplateProps) => {
+/**
+ * Classic email signature template
+ * A traditional signature layout with contact details stacked vertically
+ */
+export const Classic: TemplateComponent = (props: TemplateProps): ReactElement => {
   const {
     name,
     title,
@@ -12,6 +17,11 @@ export const Classic: TemplateComponent = (props: TemplateProps) => {
     primaryColor = "#000000",
     secondaryColor = "#666666",
   } = props;
+  
+  // Error handling for required fields
+  if (!name || !email) {
+    console.error("Classic template: Name and email are required fields");
+  }
   
   return (
     <section id="classic">
@@ -37,9 +47,18 @@ export const Classic: TemplateComponent = (props: TemplateProps) => {
   );
 };
 
-// Add metadata to the component
-Classic.metadata = {
+// Define comprehensive metadata for the template
+const classicMetadata: TemplateMetadata = {
   id: "classic",
   name: "Classic",
   description: "A traditional signature layout with contact details stacked vertically",
+  category: "professional",
+  tags: ["traditional", "vertical", "simple"],
+  version: "1.0.0",
+  author: {
+    name: "SignatureCraft Team"
+  }
 };
+
+// Attach metadata to the component
+Classic.metadata = classicMetadata;
