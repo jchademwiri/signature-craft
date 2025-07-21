@@ -50,6 +50,10 @@
   - _Requirements: 1.1, 1.2, 1.6, 3.5_
 
 - [ ] 5. Create template registry system
+
+
+
+
   - Implement `src/components/signature/templates/index.ts` with TEMPLATES registry
   - Export all templates and types from single entry point
   - Ensure automatic registration using template metadata
@@ -59,7 +63,7 @@
 ## Phase 2: Template Development Environment
 
 - [ ] 6. Create preview page structure
-  - Create `src/app/preview/page.tsx` with sidebar and main preview area layout
+  - Update `src/app/preview/page.tsx` with sidebar and main preview area layout
   - Implement responsive design with sidebar navigation and main content area
   - Add proper routing and page metadata for the preview environment
   - Ensure the page is accessible only during development or with proper authentication
