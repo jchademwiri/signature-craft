@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { signatures } from "@/lib/schema";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 import { randomUUID } from "crypto";
 
@@ -115,7 +115,10 @@ export async function DELETE(request: NextRequest) {
     }
     // Only delete if the signature belongs to the user
     const deleted = await db.delete(signatures)
-      .where(eq(signatures.id, id), eq(signatures.userId, session.user.id))
+      .where(and(
+        eq(signatures.id, id),
+        eq(signatures.userId, session.user.id)
+      ))
       .returning();
     if (!deleted.length) {
       return NextResponse.json({ error: "Signature not found or not authorized" }, { status: 404 });

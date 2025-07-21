@@ -62,10 +62,10 @@ export async function PUT(request: NextRequest) {
     const ctx = await auth.$context;
     
     // Verify current password
-    const isCurrentPasswordValid = await ctx.password.verify(
-      currentPassword,
-      userAccount[0].password || ""
-    );
+    const isCurrentPasswordValid = await ctx.password.verify({
+      password: currentPassword,
+      hash: userAccount[0].password || ""
+    });
 
     if (!isCurrentPasswordValid) {
       return NextResponse.json(
