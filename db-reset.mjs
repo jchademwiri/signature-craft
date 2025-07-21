@@ -41,7 +41,7 @@ const sql = neon(process.env.DATABASE_URL);
  */
 function getTableNamesFromSchema() {
   try {
-    const schemaPath = join(process.cwd(), "src", "lib", "schema.ts");
+    const schemaPath = join(process.cwd(), "src", "db", "schema.ts");
     const schemaContent = readFileSync(schemaPath, "utf-8");
     
     // Extract table names using regex to find pgTable declarations

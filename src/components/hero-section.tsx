@@ -39,7 +39,7 @@ export function HeroSection() {
         
         <div className="flex flex-col sm:flex-row gap-4 mt-8">
           <Button size="lg"  asChild className="text-white">
-            <Link href="/register">Create Your Signature</Link>
+            <Link href="/builder">Create Your Signature</Link>
           </Button>
           <Button size="lg" variant="outline" asChild>
             <Link href="#templates">View Templates</Link>
