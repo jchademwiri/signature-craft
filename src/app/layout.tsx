@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 };
 
 import { ThemeProvider } from "@/components/theme-provider";
-import { Header } from "@/components/header";
+
 
 export default function SiteLayout({
   children,
@@ -40,7 +40,7 @@ export default function SiteLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
+         
           {children}
         </ThemeProvider>
       </body>

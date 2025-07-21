@@ -71,4 +71,5 @@ export const signatures = pgTable("signatures", {
   templateId: varchar("template_id", { length: 20 }).default("classic"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
+  address: varchar("address", { length: 255 }),
 });

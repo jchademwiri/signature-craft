@@ -18,7 +18,7 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
   const [copyFeedback, setCopyFeedback] = useState<string | null>(null);
   
   const generateSignatureHTML = (isMobile: boolean = false) => {
-    const { name, title, company, email, phone, website, logoData, templateId, primaryColor, secondaryColor } = data;
+    const { name, title, company, email, phone, website, logoData, templateId, primaryColor, secondaryColor, address } = data;
     
     // Base styles for email compatibility
     const baseStyles = {
@@ -53,6 +53,13 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
                   <tr>
                     <td style={{ paddingBottom: "4px" }}>
                       <strong>{company}</strong>
+                    </td>
+                  </tr>
+                )}
+                {address && (
+                  <tr>
+                    <td style={{ paddingBottom: "4px", ...secondaryTextStyles }}>
+                      {address}
                     </td>
                   </tr>
                 )}
@@ -132,6 +139,11 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
                         {company && <strong>{company}</strong>}
                       </div>
                     )}
+                    {address && (
+                      <div style={{ marginBottom: "8px", ...secondaryTextStyles }}>
+                        {address}
+                      </div>
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -171,6 +183,11 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
                 {title && <span>{title}</span>}
                 {title && company && <span>, </span>}
                 {company && <span>{company}</span>}
+              </div>
+            )}
+            {address && (
+              <div style={{ marginBottom: "4px", ...secondaryTextStyles }}>
+                {address}
               </div>
             )}
             <div style={{ marginBottom: "4px" }}>
@@ -226,7 +243,7 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
   };
 
   const generateHTMLForExport = () => {
-    const { name, title, company, email, phone, website, logoData, templateId, primaryColor, secondaryColor } = data;
+    const { name, title, company, email, phone, website, logoData, templateId, primaryColor, secondaryColor, address } = data;
     
     // Generate clean HTML for email clients
     const baseStyles = `
@@ -243,6 +260,7 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
             <tbody>
               <tr><td style="padding-bottom: 8px;"><strong style="font-size: 18px;">${name || "Your Name"}</strong>${title ? ` | ${title}` : ""}</td></tr>
               ${company ? `<tr><td style="padding-bottom: 4px;"><strong>${company}</strong></td></tr>` : ""}
+              ${address ? `<tr><td style="padding-bottom: 4px; color: ${secondaryColor || "#004499"};">${address}</td></tr>` : ""}
               <tr><td style="padding-bottom: 4px;">📧 <a href="mailto:${email || "email@company.com"}" style="color: ${primaryColor || "#0066cc"}; text-decoration: none;">${email || "email@company.com"}</a>${phone ? ` | 📞 <a href="tel:${phone}" style="color: ${primaryColor || "#0066cc"}; text-decoration: none;">${phone}</a>` : ""}</td></tr>
               ${website ? `<tr><td style="padding-bottom: 8px;">🌐 <a href="${website}" style="color: ${primaryColor || "#0066cc"}; text-decoration: none;">${website}</a></td></tr>` : ""}
               ${logoData ? `<tr><td style="padding-top: 8px;"><img src="${logoData}" alt="Company Logo" style="max-width: 150px; height: auto; display: block;" /></td></tr>` : ""}
@@ -261,6 +279,7 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
                 <td style="vertical-align: top;">
                   <div style="margin-bottom: 4px;"><strong style="font-size: 18px;">${name || "Your Name"}</strong></div>
                   ${(title || company) ? `<div style="margin-bottom: 8px; color: ${secondaryColor || "#004499"};">${title ? title : ""}${title && company ? " at " : ""}${company ? `<strong>${company}</strong>` : ""}</div>` : ""}
+                  ${address ? `<div style="margin-bottom: 8px; color: ${secondaryColor || "#004499"};">${address}</div>` : ""}
                 </td>
               </tr>
               <tr>
@@ -276,6 +295,7 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
         return `<div style="${baseStyles}">
           <div style="margin-bottom: 4px;"><strong style="font-size: 18px;">${name || "Your Name"}</strong></div>
           ${(title || company) ? `<div style="margin-bottom: 4px; color: ${secondaryColor || "#004499"};">${title ? title : ""}${title && company ? ", " : ""}${company ? company : ""}</div>` : ""}
+          ${address ? `<div style="margin-bottom: 4px; color: ${secondaryColor || "#004499"};">${address}</div>` : ""}
           <div style="margin-bottom: 4px;"><a href="mailto:${email || "email@company.com"}" style="color: ${primaryColor || "#0066cc"}; text-decoration: none;">${email || "email@company.com"}</a>${phone ? ` | <a href="tel:${phone}" style="color: ${primaryColor || "#0066cc"}; text-decoration: none;">${phone}</a>` : ""}</div>
           ${website ? `<div style="margin-bottom: 4px;"><a href="${website}" style="color: ${primaryColor || "#0066cc"}; text-decoration: none;">${website}</a></div>` : ""}
           ${logoData ? `<div style="margin-top: 8px;"><img src="${logoData}" alt="Company Logo" style="max-width: 120px; height: auto; display: block;" /></div>` : ""}

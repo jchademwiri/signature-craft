@@ -130,6 +130,18 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
           />
         </div>
 
+        <div className="space-y-2">
+          <Label htmlFor="address">Office Address</Label>
+          <Input
+            id="address"
+            type="text"
+            placeholder="123 Main St, City, Country"
+            value={data.address}
+            onChange={(e) => onChange("address", e.target.value)}
+            className="h-12 lg:h-10 text-base lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
+          />
+        </div>
+
 
       </div>
 

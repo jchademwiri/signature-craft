@@ -67,6 +67,7 @@ export async function POST(request: NextRequest) {
       primaryColor,
       secondaryColor,
       templateId = "classic",
+      address,
     } = body;
     /* eslint-enable @typescript-eslint/no-unused-vars */
 
@@ -92,6 +93,7 @@ export async function POST(request: NextRequest) {
       templateId,
       ...(primaryColor ? { primaryColor } : {}),
       ...(secondaryColor ? { secondaryColor } : {}),
+      address,
     };
 
     const newSignature = await db

@@ -20,6 +20,7 @@ export interface SignatureData {
   templateId: "classic" | "modern" | "minimal";
   primaryColor?: string;
   secondaryColor?: string;
+  address?: string;
 }
 
 export function SignatureBuilder() {
@@ -35,6 +36,7 @@ export function SignatureBuilder() {
     templateId: "classic",
     primaryColor: "#0066cc",
     secondaryColor: "#004499",
+    address: "",
   });
   const [isSaving, setIsSaving] = useState(false);
 
