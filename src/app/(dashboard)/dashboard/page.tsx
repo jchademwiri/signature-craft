@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useSession, signOut } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Container } from "@/components/ui/container";
-import { Plus, LogOut, FileText, Settings, Trash2 } from "lucide-react";
-import Link from "next/link";
+import { useSession, signOut } from '@/lib/auth-client';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Container } from '@/components/ui/container';
+import { Plus, LogOut, FileText, Settings, Trash2 } from 'lucide-react';
+import Link from 'next/link';
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -18,7 +18,7 @@ import {
   AlertDialogDescription,
   AlertDialogAction,
   AlertDialogCancel,
-} from "@/components/ui/alert-dialog";
+} from '@/components/ui/alert-dialog';
 
 interface Signature {
   id: string;
@@ -40,7 +40,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (!isPending && !session) {
-      router.push("/login");
+      router.push('/login');
     }
   }, [session, isPending, router]);
 
@@ -52,13 +52,13 @@ export default function DashboardPage() {
 
   const fetchSignatures = async () => {
     try {
-      const response = await fetch("/api/signatures");
+      const response = await fetch('/api/signatures');
       if (response.ok) {
         const data = await response.json();
         setSignatures(data);
       }
     } catch (error) {
-      console.error("Failed to fetch signatures:", error);
+      console.error('Failed to fetch signatures:', error);
     } finally {
       setLoading(false);
     }
@@ -66,23 +66,23 @@ export default function DashboardPage() {
 
   const handleLogout = async () => {
     await signOut();
-    router.push("/");
+    router.push('/');
   };
 
   const handleDelete = async (id: string) => {
     setDeletingId(id);
     try {
-      const res = await fetch(`/api/signatures?id=${id}`, { method: "DELETE" });
+      const res = await fetch(`/api/signatures?id=${id}`, { method: 'DELETE' });
       if (res.ok) {
         setSignatures((prev) => prev.filter((s) => s.id !== id));
       } else {
         const err = await res.json();
-        alert(err.error || "Failed to delete signature");
+        alert(err.error || 'Failed to delete signature');
       }
-    /* eslint-disable @typescript-eslint/no-unused-vars */
+      /* eslint-disable @typescript-eslint/no-unused-vars */
     } catch (error) {
-      alert("Failed to delete signature. Please try again.");
-    /* eslint-enable @typescript-eslint/no-unused-vars */
+      alert('Failed to delete signature. Please try again.');
+      /* eslint-enable @typescript-eslint/no-unused-vars */
     } finally {
       setDeletingId(null);
       setDialogOpenId(null);
@@ -101,12 +101,10 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-background">
       <main className="py-8">
         <Container>
-          <div className="max-w-4xl mx-auto space-y-8">
+          <div className="container mx-auto space-y-8">
             {/* Welcome Section */}
             <div className="space-y-2">
-              <h1 className="text-3xl font-bold tracking-tight">
-                Welcome to your dashboard
-              </h1>
+              <h1 className="text-3xl font-bold tracking-tight">Welcome to your dashboard</h1>
               <p className="text-muted-foreground">
                 Create and manage your professional email signatures
               </p>
@@ -118,16 +116,17 @@ export default function DashboardPage() {
                 <div className="mx-auto w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-200">
                   <Plus className="h-6 w-6 text-primary" />
                 </div>
-                <CardTitle className="text-xl group-hover:text-primary transition-colors duration-200">Create Your Professional Signature</CardTitle>
+                <CardTitle className="text-xl group-hover:text-primary transition-colors duration-200">
+                  Create Your Professional Signature
+                </CardTitle>
                 <CardDescription className="text-base">
                   Build a professional email signature in just 3 clicks
                 </CardDescription>
               </CardHeader>
               <CardContent className="text-center">
-                <Button 
+                <Button
                   size="lg"
-                  
-                  asChild 
+                  asChild
                   className="w-full sm:w-auto h-12 lg:h-11 transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 text-white"
                   aria-label="Create a new professional email signature"
                 >
@@ -156,8 +155,8 @@ export default function DashboardPage() {
                 </div>
                 <div className="grid gap-4">
                   {signatures.map((signature) => (
-                    <Card 
-                      key={signature.id} 
+                    <Card
+                      key={signature.id}
                       className="hover:shadow-lg hover:border-primary/30 hover:scale-[1.01] transition-all duration-200 cursor-pointer group"
                       role="button"
                       tabIndex={0}
@@ -172,7 +171,9 @@ export default function DashboardPage() {
                       <CardContent className="p-6">
                         <div className="flex items-start justify-between">
                           <div className="space-y-1 flex-1">
-                            <h3 className="font-medium group-hover:text-primary transition-colors duration-200">{signature.name}</h3>
+                            <h3 className="font-medium group-hover:text-primary transition-colors duration-200">
+                              {signature.name}
+                            </h3>
                             {signature.title && signature.company && (
                               <p className="text-sm text-muted-foreground">
                                 {signature.title} at {signature.company}
@@ -189,10 +190,10 @@ export default function DashboardPage() {
                             </div>
                           </div>
                           <div className="flex items-center gap-2 ml-4">
-                            <Button 
-                              variant="outline" 
-                              size="sm" 
-                              className="hover:bg-primary hover:text-primary-foreground transition-colors duration-200 h-12 w-12 sm:h-10 sm:w-auto focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2" 
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="hover:bg-primary hover:text-primary-foreground transition-colors duration-200 h-12 w-12 sm:h-10 sm:w-auto focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                               asChild
                               aria-label={`Edit signature for ${signature.name}`}
                             >
@@ -201,10 +202,10 @@ export default function DashboardPage() {
                                 <span className="sm:hidden">✏️</span>
                               </Link>
                             </Button>
-                            <Button 
-                              variant="outline" 
-                              size="sm" 
-                              className="h-12 w-12 sm:h-10 sm:w-auto opacity-60 cursor-not-allowed" 
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="h-12 w-12 sm:h-10 sm:w-auto opacity-60 cursor-not-allowed"
                               disabled
                               aria-label="Export coming soon"
                               title="Export coming soon"
@@ -212,7 +213,10 @@ export default function DashboardPage() {
                               <span className="hidden sm:inline">Export</span>
                               <span className="sm:hidden">⏳</span>
                             </Button>
-                            <AlertDialog open={dialogOpenId === signature.id} onOpenChange={open => setDialogOpenId(open ? signature.id : null)}>
+                            <AlertDialog
+                              open={dialogOpenId === signature.id}
+                              onOpenChange={(open) => setDialogOpenId(open ? signature.id : null)}
+                            >
                               <AlertDialogTrigger asChild>
                                 <Button
                                   variant="destructive"
@@ -220,13 +224,22 @@ export default function DashboardPage() {
                                   className="h-12 w-12 sm:h-10 sm:w-auto focus-visible:ring-2 focus-visible:ring-destructive focus-visible:ring-offset-2"
                                   aria-label={`Delete signature for ${signature.name}`}
                                   title="Delete signature"
-                                  onClick={e => { e.stopPropagation(); setDialogOpenId(signature.id); }}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setDialogOpenId(signature.id);
+                                  }}
                                   disabled={deletingId === signature.id}
                                 >
                                   {deletingId === signature.id ? (
-                                    <span className="flex items-center"><span className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-1"></span>Deleting...</span>
+                                    <span className="flex items-center">
+                                      <span className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-1"></span>
+                                      Deleting...
+                                    </span>
                                   ) : (
-                                    <><Trash2 className="h-4 w-4 mr-1" /> <span className="hidden sm:inline">Delete</span></>
+                                    <>
+                                      <Trash2 className="h-4 w-4 mr-1" />{' '}
+                                      <span className="hidden sm:inline">Delete</span>
+                                    </>
                                   )}
                                 </Button>
                               </AlertDialogTrigger>
@@ -234,12 +247,15 @@ export default function DashboardPage() {
                                 <AlertDialogHeader>
                                   <AlertDialogTitle>Delete Signature</AlertDialogTitle>
                                   <AlertDialogDescription>
-                                    Are you sure you want to delete this signature? This action cannot be undone.
+                                    Are you sure you want to delete this signature? This action
+                                    cannot be undone.
                                   </AlertDialogDescription>
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
                                   <AlertDialogCancel asChild>
-                                    <Button variant="outline" type="button">Cancel</Button>
+                                    <Button variant="outline" type="button">
+                                      Cancel
+                                    </Button>
                                   </AlertDialogCancel>
                                   <AlertDialogAction asChild>
                                     <Button
@@ -248,7 +264,7 @@ export default function DashboardPage() {
                                       onClick={() => handleDelete(signature.id)}
                                       disabled={deletingId === signature.id}
                                     >
-                                      {deletingId === signature.id ? "Deleting..." : "Delete"}
+                                      {deletingId === signature.id ? 'Deleting...' : 'Delete'}
                                     </Button>
                                   </AlertDialogAction>
                                 </AlertDialogFooter>
@@ -271,8 +287,8 @@ export default function DashboardPage() {
                   <p className="text-muted-foreground mb-6">
                     Create your first professional email signature to get started
                   </p>
-                  <Button 
-                    asChild 
+                  <Button
+                    asChild
                     className="h-12 lg:h-10 transition-colors duration-200 bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                     aria-label="Create your first professional email signature"
                   >
@@ -284,8 +300,6 @@ export default function DashboardPage() {
                 </CardContent>
               </Card>
             )}
-
-
           </div>
         </Container>
       </main>

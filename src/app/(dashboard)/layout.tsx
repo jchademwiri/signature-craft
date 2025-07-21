@@ -1,8 +1,8 @@
-"use client";
-import { ReactNode } from "react";
-import { useSession, signOut } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
-import { DashboardNavigation } from "@/components/dashboard-navigation";
+'use client';
+import { ReactNode } from 'react';
+import { useSession, signOut } from '@/lib/auth-client';
+import { useRouter } from 'next/navigation';
+import { DashboardNavigation } from '@/components/dashboard-navigation';
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const { data: session, isPending } = useSession();
@@ -10,7 +10,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 
   const handleLogout = async () => {
     await signOut();
-    router.push("/");
+    router.push('/');
   };
 
   if (isPending || !session) {
@@ -27,4 +27,4 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       {children}
     </>
   );
-} 
+}
