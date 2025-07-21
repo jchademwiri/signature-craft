@@ -225,6 +225,7 @@ export function LogoUpload({ logoData, onLogoChange }: LogoUploadProps) {
         accept="image/png,image/jpeg,image/jpg,image/svg+xml"
         onChange={handleFileInputChange}
         className="hidden"
+        aria-label="Upload company logo"
       />
     </div>
   );
