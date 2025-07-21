@@ -3,6 +3,7 @@ import { db } from "@/db";
 import { signatures } from "@/db/schema";
 import { eq, and, desc } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
+import { randomUUID } from "crypto";
 
 export async function GET(request: NextRequest) {
   try {
@@ -77,8 +78,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create values object without explicit ID and include color fields if provided
+    // Create values object with explicit ID and include color fields if provided
     const signatureValues = {
+      id: randomUUID(),
       userId: session.user.id,
       name,
       title,
