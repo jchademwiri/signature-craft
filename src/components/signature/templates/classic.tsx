@@ -26,13 +26,16 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
   return (
     <section id="classic">
       <div className="text-xs space-y-1" style={{ color: primaryColor }}>
-        <div><strong>{name}</strong>{title ? ` | ${title}` : ""}</div>
-        {company && <div><strong>{company}</strong></div>}
         <div>
-          {email && <span> {email} </span>}
-          {phone && <span>|  {phone}</span>}
+          <strong>{name}</strong>
+          {title && <span style={{ color: secondaryColor }}> | {title}</span>}
         </div>
-        {website && <div> {website}</div>}
+        {company && <div><strong>{company}</strong></div>}
+        <div style={{ color: secondaryColor }}>
+          {email && <span>Email: {email}</span>}
+          {phone && <span>{email ? " | " : ""}Phone: {phone}</span>}
+        </div>
+        {website && <div style={{ color: secondaryColor }}>Web: {website}</div>}
         {logoData && (
           <div>
             <img 

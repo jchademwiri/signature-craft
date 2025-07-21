@@ -1,6 +1,11 @@
-import { TemplateProps, TemplateComponent } from "./types";
+import { TemplateProps, TemplateComponent, TemplateMetadata } from "./types";
+import { ReactElement } from "react";
 
-export const Modern: TemplateComponent = (props: TemplateProps) => {
+/**
+ * Modern email signature template
+ * A contemporary layout with logo and name side by side
+ */
+export const Modern: TemplateComponent = (props: TemplateProps): ReactElement => {
   const {
     name,
     title,
@@ -13,34 +18,47 @@ export const Modern: TemplateComponent = (props: TemplateProps) => {
     secondaryColor = "#666666",
   } = props;
   
+  // Error handling for required fields
+  if (!name || !email) {
+    console.error("Modern template: Name and email are required fields");
+  }
+  
+  // Handle different combinations of title and company
+  const titleCompanyText = (() => {
+    if (title && company) return `${title} at ${company}`;
+    if (title) return title;
+    if (company) return company;
+    return "";
+  })();
+  
   return (
     <section id="modern">
-      <table style={{ fontFamily: "Arial, sans-serif", color: primaryColor }}>
+      <table style={{ fontFamily: "Arial, sans-serif", color: primaryColor, borderCollapse: "collapse", width: "100%", maxWidth: "400px" }}>
         <tbody>
           <tr>
             {logoData && (
-              <td style={{ verticalAlign: "top", paddingRight: "10px" }}>
+              <td style={{ verticalAlign: "top", paddingRight: "12px", width: "1%" }}>
                 <img 
                   src={logoData} 
                   alt="Logo" 
-                  style={{ maxWidth: "100px", maxHeight: "50px" }} 
+                  style={{ maxWidth: "80px", maxHeight: "50px", display: "block" }} 
                 />
               </td>
             )}
-            <td>
-              <div style={{ fontWeight: "bold", fontSize: "16px" }}>{name}</div>
-              {title && company && (
+            <td style={{ verticalAlign: "middle" }}>
+              <div style={{ fontWeight: "bold", fontSize: "16px", marginBottom: "2px" }}>{name}</div>
+              {titleCompanyText && (
                 <div style={{ color: secondaryColor, fontSize: "14px" }}>
-                  {title} at {company}
+                  {titleCompanyText}
                 </div>
               )}
             </td>
           </tr>
           <tr>
-            <td colSpan={logoData ? 2 : 1} style={{ paddingTop: "5px", fontSize: "12px", color: secondaryColor }}>
-              {email && <span> {email} </span>}
-              {phone && <span>|  {phone} </span>}
-              {website && <span>|  {website}</span>}
+            <td colSpan={logoData ? 2 : 1} style={{ paddingTop: "8px", fontSize: "12px", color: secondaryColor }}>
+              {email && <span>Email: {email}</span>}
+              {phone && <span>{email ? " | " : ""}Phone: {phone}</span>}
+              {website && <span>{(email || phone) ? " | " : ""}Web: {website}</span>}
             </td>
           </tr>
         </tbody>
@@ -49,9 +67,18 @@ export const Modern: TemplateComponent = (props: TemplateProps) => {
   );
 };
 
-// Add metadata to the component
-Modern.metadata = {
+// Define comprehensive metadata for the template
+const modernMetadata: TemplateMetadata = {
   id: "modern",
   name: "Modern",
   description: "A contemporary layout with logo and name side by side",
+  category: "professional",
+  tags: ["contemporary", "side-by-side", "clean"],
+  version: "1.0.0",
+  author: {
+    name: "SignatureCraft Team"
+  }
 };
+
+// Attach metadata to the component
+Modern.metadata = modernMetadata;
