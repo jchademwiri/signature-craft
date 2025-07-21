@@ -107,11 +107,22 @@ fileMatchPattern: "**/*.tsx"
 ### Template Selection UI
 ```tsx
 <div className="grid grid-cols-1 gap-4">
-  {templates.map((template) => (
-    <Card key={template.id} className="cursor-pointer hover:border-primary">
-      <CardContent className="p-4">
-        <div className="text-sm">
-          {/* Template preview */}
+  {Object.values(TEMPLATES).map((Template) => (
+    <Card 
+      key={Template.metadata.id} 
+      className={cn(
+        "cursor-pointer hover:border-primary",
+        selectedTemplate === Template.metadata.id && "border-primary"
+      )}
+      onClick={() => setSelectedTemplate(Template.metadata.id)}
+    >
+      <CardHeader className="p-4 pb-2">
+        <CardTitle className="text-sm">{Template.metadata.name}</CardTitle>
+        <CardDescription className="text-xs">{Template.metadata.description}</CardDescription>
+      </CardHeader>
+      <CardContent className="p-4 pt-0">
+        <div className="text-sm border rounded-md p-2 bg-muted/50">
+          <Template {...sampleData} showMobile={false} />
         </div>
       </CardContent>
     </Card>
@@ -130,12 +141,68 @@ fileMatchPattern: "**/*.tsx"
   </CardHeader>
   <CardContent>
     <div className="space-y-4">
-      <Button className="w-full">Copy for Gmail</Button>
-      <Button variant="outline" className="w-full">Copy for Outlook</Button>
+      <Button 
+        className="w-full" 
+        onClick={copyForGmail}
+        disabled={isLoading}
+      >
+        {isGmailLoading ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Copying...
+          </>
+        ) : (
+          <>
+            <Mail className="mr-2 h-4 w-4" />
+            Copy for Gmail
+          </>
+        )}
+      </Button>
+      
+      <Button 
+        variant="outline" 
+        className="w-full"
+        onClick={copyForOutlook}
+        disabled={isLoading}
+      >
+        {isOutlookLoading ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Copying...
+          </>
+        ) : (
+          <>
+            <Mail className="mr-2 h-4 w-4" />
+            Copy for Outlook
+          </>
+        )}
+      </Button>
+      
+      <Button 
+        variant="outline" 
+        className="w-full"
+        onClick={copyForAppleMail}
+        disabled={isLoading}
+      >
+        {isAppleMailLoading ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Copying...
+          </>
+        ) : (
+          <>
+            <Mail className="mr-2 h-4 w-4" />
+            Copy for Apple Mail
+          </>
+        )}
+      </Button>
     </div>
   </CardContent>
   <CardFooter>
-    <Button variant="ghost" className="w-full">Download .htm file</Button>
+    <Button variant="ghost" className="w-full" onClick={downloadHtml}>
+      <Download className="mr-2 h-4 w-4" />
+      Download .htm file
+    </Button>
   </CardFooter>
 </Card>
 ```

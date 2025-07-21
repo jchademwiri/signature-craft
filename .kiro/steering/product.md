@@ -72,11 +72,21 @@ Target: South African professionals and SMBs who need branded email signatures q
 [Email] | [Phone]
 ```
 
+## Template System Architecture
+- **Component-Based**: Each template is a React component with consistent props interface
+- **Metadata-Driven**: Templates include metadata for name, description, and preview
+- **Registry System**: Central registry for all templates with automatic registration
+- **Type Safety**: Full TypeScript support with interfaces and type checking
+- **Preview Environment**: Development environment for testing templates with sample data
+- **Error Handling**: Graceful fallbacks for template rendering failures
+
 ## Copy-Paste Export Requirements
 - **Gmail**: HTML format that pastes directly into Gmail signature settings
 - **Outlook**: Rich text format for Outlook signature editor (web/desktop)
-- **Apple Mail**: .htm file download with installation instructions
-- **Fallback**: Plain text version for unsupported clients
+- **Apple Mail**: Optimized format for Apple Mail with proper formatting
+- **Fallback**: .htm file download for unsupported clients
+- **Error Handling**: Graceful fallbacks for clipboard operation failures
+- **User Feedback**: Clear success/error messages for all export operations
 
 ## User Experience Principles
 - **Simplicity First**: Every feature must pass the "3-click test"

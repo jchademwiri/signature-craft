@@ -170,9 +170,12 @@ export const signatures = pgTable("signatures", {
 - **HTML Output**: Table-based layouts with inline CSS
 - **Compatibility**: Gmail, Outlook (desktop/web/mobile), Apple Mail
 - **Templates**: Exactly 3 options (Classic, Modern, Minimal)
+- **Template Architecture**: TypeScript interfaces with metadata, registry system
+- **Template Components**: React components with consistent props interface
 - **Export Formats**: 
-  - Gmail: HTML copy-paste
+  - Gmail: HTML copy-paste with proper formatting
   - Outlook: Rich text format copy-paste
+  - Apple Mail: Optimized format for Apple Mail
   - Fallback: .htm file download
 
 ## Performance Targets (MVP)

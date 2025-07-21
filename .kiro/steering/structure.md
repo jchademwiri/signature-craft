@@ -93,15 +93,28 @@ signaturecraft-mvp/
 │   ├── TemplateSelector.tsx       # ✅ Template selection with visual previews
 │   ├── FormFields.tsx             # ✅ Contact info form with validation
 │   ├── LogoUpload.tsx             # ✅ Logo upload with drag-and-drop and error handling
-│   └── BrandColors.tsx            # ✅ Color customization with picker interface
+│   ├── BrandColors.tsx            # ✅ Color customization with picker interface
+│   └── templates/                 # Template system components
+│       ├── types.ts               # Template interfaces and types
+│       ├── index.ts               # Template registry system
+│       ├── classic.tsx            # Classic template implementation
+│       ├── modern.tsx             # Modern template implementation
+│       └── minimal.tsx            # Minimal template implementation
 
 ## 🚧 PENDING IMPLEMENTATION (PHASE 3)
 ├── src/app/export/page.tsx         # Dedicated export page with comprehensive guides
+├── src/app/preview/page.tsx        # Template preview development environment
 ├── src/app/api/export/[id]/route.ts # Export API endpoints (HTML, Outlook, text, download)
 ├── src/app/api/signatures/[id]/route.ts # Update and delete signature endpoints
-└── src/components/export/          # Export components
-    ├── ExportPanel.tsx             # Enhanced export panel with advanced options
-    └── InstallationGuide.tsx       # Step-by-step installation guides with screenshots
+├── src/components/export/          # Export components
+│   ├── ExportPanel.tsx             # Enhanced export panel with advanced options
+│   └── InstallationGuide.tsx       # Step-by-step installation guides with screenshots
+└── src/components/preview/         # Template preview components
+    ├── TemplateSidebar.tsx         # Template navigation sidebar
+    ├── TemplatePreviewArea.tsx     # Template preview display area
+    ├── SampleDataForm.tsx          # Test data editor for templates
+    ├── Sidebar.tsx                 # Navigation sidebar for preview environment
+    └── PreviewPanel.tsx            # Preview panel with tabs
 ```
 
 ## File Naming Conventions
