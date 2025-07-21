@@ -166,31 +166,6 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <Container>
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/dashboard" className="flex items-center gap-2">
-                  <ArrowLeft className="h-4 w-4" />
-                  Back to Dashboard
-                </Link>
-              </Button>
-              <div className="flex items-center gap-2">
-                <FileText className="h-6 w-6 text-primary" />
-                <span className="font-semibold text-lg">SignatureCraft</span>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-muted-foreground">
-                Welcome, {session.user.name}
-              </span>
-            </div>
-          </div>
-        </Container>
-      </header>
-
       <main className="py-8">
         <Container>
           <div className="max-w-2xl mx-auto space-y-8">

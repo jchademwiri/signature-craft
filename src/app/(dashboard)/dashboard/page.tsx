@@ -99,38 +99,6 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <Container>
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center gap-2">
-              <FileText className="h-6 w-6 text-primary" />
-              <span className="font-semibold text-lg">SignatureCraft</span>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-muted-foreground">
-                Welcome, {session.user.name}
-              </span>
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/settings" className="flex items-center gap-2">
-                  <Settings className="h-4 w-4" />
-                  Settings
-                </Link>
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleLogout}
-                className="flex items-center gap-2"
-              >
-                <LogOut className="h-4 w-4" />
-                Logout
-              </Button>
-            </div>
-          </div>
-        </Container>
-      </header>
-
       <main className="py-8">
         <Container>
           <div className="max-w-4xl mx-auto space-y-8">

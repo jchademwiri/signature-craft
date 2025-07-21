@@ -1,7 +1,4 @@
 <svg width="200" height="50" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Background -->
-  <rect width="200" height="50" rx="8" fill="#1F2937"/>
-  
   <!-- Icon - Stylized signature/pen -->
   <g transform="translate(12, 12)">
     <!-- Pen body -->
@@ -11,7 +8,6 @@
     <!-- Signature line -->
     <path d="M4 22C8 20 12 22 16 20C20 18 24 20 26 18" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" fill="none"/>
   </g>
-  
   <!-- Text -->
   <text x="45" y="20" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="#F9FAFB">
     Signature
@@ -19,7 +15,6 @@
   <text x="45" y="35" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="#60A5FA">
     Craft
   </text>
-  
   <!-- Decorative elements -->
   <circle cx="175" cy="15" r="2" fill="#60A5FA" opacity="0.3"/>
   <circle cx="185" cy="20" r="1.5" fill="#60A5FA" opacity="0.5"/>
