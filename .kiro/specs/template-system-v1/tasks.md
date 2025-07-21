@@ -9,11 +9,6 @@
   - _Requirements: 1.1, 1.2, 1.3, 7.1, 7.2_
 
 - [x] 2. Update Classic template with metadata
-
-
-
-
-
   - Modify `src/components/signature/templates/classic.tsx` to include metadata property
   - Ensure template follows new TemplateComponent interface
   - Add proper TypeScript typing and error handling
@@ -21,14 +16,6 @@
   - _Requirements: 1.1, 1.2, 1.6, 7.3_
 
 - [x] 3. Create Modern template component
-
-
-
-
-
-
-
-
   - Implement `src/components/signature/templates/modern.tsx` with side-by-side layout
   - Include metadata with id, name, and description
   - Ensure responsive design and proper styling
@@ -36,24 +23,13 @@
   - _Requirements: 1.1, 1.2, 1.6, 3.5_
 
 - [x] 4. Create Minimal template component
-
-
-
-
-
-
-
   - Implement `src/components/signature/templates/minimal.tsx` with clean, simple layout
   - Include metadata with id, name, and description
   - Focus on essential information only (name, title, company, email, phone)
   - Test template renders correctly and handles missing data gracefully
   - _Requirements: 1.1, 1.2, 1.6, 3.5_
 
-- [ ] 5. Create template registry system
-
-
-
-
+- [x] 5. Create template registry system
   - Implement `src/components/signature/templates/index.ts` with TEMPLATES registry
   - Export all templates and types from single entry point
   - Ensure automatic registration using template metadata
@@ -62,14 +38,14 @@
 
 ## Phase 2: Template Development Environment
 
-- [ ] 6. Create preview page structure
+- [x] 6. Create preview page structure
   - Update `src/app/preview/page.tsx` with sidebar and main preview area layout
   - Implement responsive design with sidebar navigation and main content area
   - Add proper routing and page metadata for the preview environment
   - Ensure the page is accessible only during development or with proper authentication
   - _Requirements: 5.1, 5.2, 5.3, 5.4_
 
-- [ ] 7. Build template sidebar navigation
+- [x] 7. Build template sidebar navigation
   - Create `src/components/preview/TemplateSidebar.tsx` component
   - Loop through all available templates from the registry
   - Display template names, descriptions, and mini previews
@@ -77,7 +53,7 @@
   - Add smooth transitions and hover effects for better UX
   - _Requirements: 5.1, 5.2, 5.3, 5.6_
 
-- [ ] 8. Create template preview area
+- [x] 8. Create template preview area
   - Implement `src/components/preview/TemplatePreviewArea.tsx` component
   - Show selected template with sample data in desktop and mobile views
   - Add tabs for switching between desktop and mobile preview modes
@@ -85,7 +61,7 @@
   - Add export testing functionality for development
   - _Requirements: 5.3, 5.4, 5.5, 5.7_
 
-- [ ] 9. Build sample data form controls
+- [x] 9. Build sample data form controls
   - Create `src/components/preview/SampleDataForm.tsx` component
   - Add form fields for all template props (name, title, company, email, etc.)
   - Include color pickers for primary and secondary colors
@@ -95,7 +71,7 @@
 
 ## Phase 3: Form Data Persistence
 
-- [ ] 10. Implement data loading for edit mode
+- [x] 10. Implement data loading for edit mode
   - Update `src/components/signature/SignatureBuilder.tsx` to handle edit mode
   - Add logic to fetch signature data from database when in edit mode
   - Ensure all fields are properly populated with existing data
@@ -103,14 +79,14 @@
   - Add loading state while fetching signature data
   - _Requirements: 6.1, 6.2, 6.4, 6.5_
 
-- [ ] 11. Create form prefill utility
+- [x] 11. Create form prefill utility
   - Implement utility function to map database signature to form fields
   - Handle all field types including text, colors, and logo data
   - Add validation to ensure data integrity
   - Include fallback values for missing or corrupted data
   - _Requirements: 6.1, 6.2, 6.6_
 
-- [ ] 12. Update form submission logic
+- [x] 12. Update form submission logic
   - Modify form submission to handle both create and update operations
   - Ensure only modified fields are highlighted in the UI
   - Add confirmation for major changes (template switching, logo removal)

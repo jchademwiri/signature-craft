@@ -1,7 +1,7 @@
 'use client';
 
 import { useSession } from '@/lib/auth-client';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { Container } from '@/components/ui/container';
 import { SignatureBuilder } from '@/components/signature/SignatureBuilder';
@@ -12,6 +12,8 @@ import Link from 'next/link';
 export default function BuilderPage() {
   const { data: session, isPending } = useSession();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const editId = searchParams.get('edit');
 
   useEffect(() => {
     if (!isPending && !session) {
@@ -31,7 +33,7 @@ export default function BuilderPage() {
     <div className="h-screen bg-background flex flex-col">
       <main className="flex-1 overflow-hidden">
         <Container className="h-full py-4">
-          <SignatureBuilder />
+          <SignatureBuilder editId={editId || undefined} />
         </Container>
       </main>
     </div>

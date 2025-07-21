@@ -15,6 +15,39 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+
+    if (id) {
+      // Fetch a single signature by ID (if it belongs to the user)
+      const signature = await db
+        .select({
+          id: signatures.id,
+          name: signatures.name,
+          title: signatures.title,
+          company: signatures.company,
+          email: signatures.email,
+          phone: signatures.phone,
+          website: signatures.website,
+          address: signatures.address,
+          logoData: signatures.logoData,
+          primaryColor: signatures.primaryColor,
+          secondaryColor: signatures.secondaryColor,
+          templateId: signatures.templateId,
+          createdAt: signatures.createdAt,
+        })
+        .from(signatures)
+        .where(and(eq(signatures.userId, session.user.id), eq(signatures.id, id)));
+      if (!signature.length) {
+        return NextResponse.json(
+          { error: 'Signature not found or not authorized' },
+          { status: 404 }
+        );
+      }
+      return NextResponse.json(signature[0]);
+    }
+
+    // Otherwise, fetch all signatures for the user
     const userSignatures = await db
       .select({
         id: signatures.id,

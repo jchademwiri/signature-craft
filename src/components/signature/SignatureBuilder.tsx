@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRouter } from "next/navigation";
@@ -23,7 +23,7 @@ export interface SignatureData {
   address?: string;
 }
 
-export function SignatureBuilder() {
+export function SignatureBuilder({ editId }: { editId?: string }) {
   const router = useRouter();
   const [signatureData, setSignatureData] = useState<SignatureData>({
     name: "",
@@ -39,6 +39,28 @@ export function SignatureBuilder() {
     secondaryColor: "#004499",
   });
   const [isSaving, setIsSaving] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (editId) {
+      setIsLoading(true);
+      fetch(`/api/signatures?id=${editId}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data && !data.error) {
+            // Convert nulls to empty strings or undefined for controlled inputs
+            const safeData = {
+              ...signatureData,
+              ...Object.fromEntries(
+                Object.entries(data).map(([key, value]) => [key, value ?? (key === 'logoData' ? undefined : '')])
+              ),
+            };
+            setSignatureData(safeData);
+          }
+        })
+        .finally(() => setIsLoading(false));
+    }
+  }, [editId]);
 
   const handleDataChange = (field: keyof SignatureData, value: string) => {
     setSignatureData(prev => ({
