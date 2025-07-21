@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
-import { Separator } from "@/components/ui/separator";
-import { Plus, User, LogOut, FileText, Settings, Trash2 } from "lucide-react";
+import { Plus, LogOut, FileText, Settings, Trash2 } from "lucide-react";
 import Link from "next/link";
 import {
   AlertDialog,
@@ -80,8 +79,10 @@ export default function DashboardPage() {
         const err = await res.json();
         alert(err.error || "Failed to delete signature");
       }
-    } catch (e) {
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    } catch (error) {
       alert("Failed to delete signature. Please try again.");
+    /* eslint-enable @typescript-eslint/no-unused-vars */
     } finally {
       setDeletingId(null);
       setDialogOpenId(null);

@@ -1,6 +1,6 @@
-import { auth } from "@/lib/auth";
-import { db } from "@/lib/db";
-import { signatures } from "@/lib/schema";
+import { auth } from "@/db/auth";
+import { db } from "@/db/db";
+import { signatures } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 import { randomUUID } from "crypto";
@@ -50,6 +50,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
+    /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
       name,
       title,
@@ -58,13 +59,15 @@ export async function POST(request: NextRequest) {
       phone,
       mobile,
       website,
-      department,
-      address,
       logoData,
       templateId = "classic",
+      // Destructure but ignore unused fields
+      department,
+      address,
       primaryColor,
       secondaryColor,
     } = body;
+    /* eslint-enable @typescript-eslint/no-unused-vars */
 
     // Basic validation
     if (!name || !email) {
