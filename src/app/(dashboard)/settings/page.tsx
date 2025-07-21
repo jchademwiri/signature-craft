@@ -241,7 +241,7 @@ export default function SettingsPage() {
                       <Button
                         onClick={handleUpdateProfile}
                         disabled={isUpdatingProfile}
-                        className="flex-1"
+                        className="flex-1 text-white"
                       >
                         {isUpdatingProfile ? (
                           <>

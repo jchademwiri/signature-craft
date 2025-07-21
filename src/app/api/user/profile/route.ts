@@ -40,6 +40,7 @@ export async function PUT(request: NextRequest) {
           newEmail: email,
           callbackURL: process.env.BETTER_AUTH_URL || 'http://localhost:3000',
         },
+        headers: request.headers,
       });
       // Only update the name directly
       await db
