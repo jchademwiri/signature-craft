@@ -1,25 +1,25 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useRouter } from "next/navigation";
-import { signUp } from "@/lib/auth-client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { useRouter } from 'next/navigation';
+import { signUp } from '@/lib/auth-client';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const registerSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email address"),
+  name: z.string().min(2, 'Name must be at least 2 characters'),
+  email: z.string().email('Please enter a valid email address'),
   password: z
     .string()
-    .min(8, "Password must be at least 8 characters")
+    .min(8, 'Password must be at least 8 characters')
     .regex(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-      "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+      'Password must contain at least one uppercase letter, one lowercase letter, and one number'
     ),
 });
 
@@ -50,12 +50,12 @@ export function RegisterForm() {
       });
 
       if (result.error) {
-        setError(result.error.message || "Registration failed. Please try again.");
+        setError(result.error.message || 'Registration failed. Please try again.');
       } else {
-        router.push("/dashboard");
+        router.push('/verify-email');
       }
     } catch {
-      setError("An unexpected error occurred. Please try again.");
+      setError('An unexpected error occurred. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -77,12 +77,10 @@ export function RegisterForm() {
               id="name"
               type="text"
               placeholder="Enter your full name"
-              {...register("name")}
+              {...register('name')}
               disabled={isLoading}
             />
-            {errors.name && (
-              <p className="text-sm text-red-600">{errors.name.message}</p>
-            )}
+            {errors.name && <p className="text-sm text-red-600">{errors.name.message}</p>}
           </div>
 
           <div className="space-y-2">
@@ -91,12 +89,10 @@ export function RegisterForm() {
               id="email"
               type="email"
               placeholder="Enter your email"
-              {...register("email")}
+              {...register('email')}
               disabled={isLoading}
             />
-            {errors.email && (
-              <p className="text-sm text-red-600">{errors.email.message}</p>
-            )}
+            {errors.email && <p className="text-sm text-red-600">{errors.email.message}</p>}
           </div>
 
           <div className="space-y-2">
@@ -105,12 +101,10 @@ export function RegisterForm() {
               id="password"
               type="password"
               placeholder="Create a strong password"
-              {...register("password")}
+              {...register('password')}
               disabled={isLoading}
             />
-            {errors.password && (
-              <p className="text-sm text-red-600">{errors.password.message}</p>
-            )}
+            {errors.password && <p className="text-sm text-red-600">{errors.password.message}</p>}
             <p className="text-xs text-gray-500">
               Password must be at least 8 characters with uppercase, lowercase, and number
             </p>
@@ -122,14 +116,18 @@ export function RegisterForm() {
             </div>
           )}
 
-          <Button type="submit" className="w-full h-12 text-white transition-colors duration-200" disabled={isLoading}>
-            {isLoading ? "Creating account..." : "Create Account"}
+          <Button
+            type="submit"
+            className="w-full h-12 text-white transition-colors duration-200"
+            disabled={isLoading}
+          >
+            {isLoading ? 'Creating account...' : 'Create Account'}
           </Button>
         </form>
 
         <div className="mt-6 text-center text-sm">
           <p className="text-gray-600">
-            Already have an account?{" "}
+            Already have an account?{' '}
             <a href="/login" className="text-blue-600 hover:underline">
               Sign in
             </a>
