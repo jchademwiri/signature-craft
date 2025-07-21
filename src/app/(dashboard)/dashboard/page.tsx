@@ -289,7 +289,7 @@ export default function DashboardPage() {
                   </p>
                   <Button
                     asChild
-                    className="h-12 lg:h-10 transition-colors duration-200 bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                    className="h-12 lg:h-10 transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 text-white"
                     aria-label="Create your first professional email signature"
                   >
                     <Link href="/builder">
