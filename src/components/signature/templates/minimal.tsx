@@ -1,6 +1,11 @@
-import { TemplateProps, TemplateComponent } from "./types";
+import { TemplateProps, TemplateComponent, TemplateMetadata } from "./types";
+import { ReactElement } from "react";
 
-export const Minimal: TemplateComponent = (props: TemplateProps) => {
+/**
+ * Minimal email signature template
+ * A clean, simple layout focusing on essential information only
+ */
+export const Minimal: TemplateComponent = (props: TemplateProps): ReactElement => {
   const {
     name,
     title,
@@ -11,26 +16,65 @@ export const Minimal: TemplateComponent = (props: TemplateProps) => {
     secondaryColor = "#666666",
   } = props;
   
+  // Error handling for required fields
+  if (!name || !email) {
+    console.error("Minimal template: Name and email are required fields");
+  }
+  
+  // Build title and company line
+  const titleCompanyLine = (() => {
+    if (title && company) return `${title}, ${company}`;
+    if (title) return title;
+    if (company) return company;
+    return "";
+  })();
+  
+  // Build contact line with email and phone
+  const contactLine = (() => {
+    const contacts = [];
+    if (email) contacts.push(email);
+    if (phone) contacts.push(phone);
+    return contacts.join(" | ");
+  })();
+  
   return (
     <section id="minimal">
-      <div style={{ fontFamily: "Arial, sans-serif", color: primaryColor }}>
-        <div style={{ fontWeight: "bold", fontSize: "14px" }}>{name}</div>
-        {(title || company) && (
-          <div style={{ color: secondaryColor, fontSize: "12px" }}>
-            {title}{company ? `, ${company}` : ""}
+      <div style={{ fontFamily: "Arial, sans-serif", fontSize: "14px", lineHeight: "1.4" }}>
+        {/* Name - always displayed and required */}
+        <div style={{ fontWeight: "bold", color: primaryColor, marginBottom: "2px" }}>
+          {name}
+        </div>
+        
+        {/* Title and Company line - only if at least one exists */}
+        {titleCompanyLine && (
+          <div style={{ color: secondaryColor, marginBottom: "2px" }}>
+            {titleCompanyLine}
           </div>
         )}
-        <div style={{ fontSize: "12px", color: secondaryColor }}>
-          {email}{phone ? ` | ${phone}` : ""}
-        </div>
+        
+        {/* Contact information line - email and phone */}
+        {contactLine && (
+          <div style={{ color: secondaryColor, fontSize: "13px" }}>
+            {contactLine}
+          </div>
+        )}
       </div>
     </section>
   );
 };
 
-// Add metadata to the component
-Minimal.metadata = {
+// Define comprehensive metadata for the template
+const minimalMetadata: TemplateMetadata = {
   id: "minimal",
   name: "Minimal",
-  description: "A clean, simple signature with just the essential information",
+  description: "A clean, simple layout focusing on essential information only",
+  category: "minimal",
+  tags: ["clean", "simple", "essential", "compact"],
+  version: "1.0.0",
+  author: {
+    name: "SignatureCraft Team"
+  }
 };
+
+// Attach metadata to the component
+Minimal.metadata = minimalMetadata;
