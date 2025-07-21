@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Monitor, Smartphone } from 'lucide-react';
+import { useRef } from 'react';
 
 interface SignaturePreviewProps {
   data: SignatureData;
@@ -16,6 +17,9 @@ interface SignaturePreviewProps {
 
 export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewProps) {
   const [copyFeedback, setCopyFeedback] = useState<string | null>(null);
+  const outlookRef = useRef<HTMLDivElement>(null!);
+  const gmailRef = useRef<HTMLDivElement>(null!);
+  const appleMailRef = useRef<HTMLDivElement>(null!);
 
   const generateSignatureHTML = (isMobile: boolean = false) => {
     const {
@@ -38,6 +42,7 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
       fontSize: isMobile ? '14px' : '16px',
       lineHeight: '1.4',
       color: '#333333',
+      background: '#fff', // Ensure white background
     };
 
     const linkStyles = {
@@ -300,6 +305,7 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
       font-size: 16px;
       line-height: 1.4;
       color: #333333;
+      background: #fff;
     `;
 
     switch (templateId) {
@@ -355,6 +361,23 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
     }
   };
 
+  const copyRichHTML = (ref: React.RefObject<HTMLDivElement>, label: string) => {
+    if (!ref.current) return;
+    const range = document.createRange();
+    range.selectNodeContents(ref.current);
+    const selection = window.getSelection();
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+    try {
+      document.execCommand('copy');
+      setCopyFeedback(`${label} signature copied to clipboard!`);
+    } catch (error) {
+      setCopyFeedback(`Failed to copy ${label} signature. Please try again.`);
+    }
+    selection?.removeAllRanges();
+    setTimeout(() => setCopyFeedback(null), 3000);
+  };
+
   const handleCopyForOutlook = () => {
     const htmlContent = generateHTMLForExport();
     copyToClipboard(htmlContent, 'Outlook');
@@ -377,6 +400,18 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
 
   return (
     <div className="space-y-6">
+      {/* Hidden contenteditable divs for rich copy */}
+      <div style={{ position: 'absolute', left: '-9999px', top: 0 }}>
+        <div ref={outlookRef} contentEditable suppressContentEditableWarning>
+          {generateSignatureHTML(false)}
+        </div>
+        <div ref={gmailRef} contentEditable suppressContentEditableWarning>
+          {generateSignatureHTML(false)}
+        </div>
+        <div ref={appleMailRef} contentEditable suppressContentEditableWarning>
+          {generateSignatureHTML(false)}
+        </div>
+      </div>
       <Tabs defaultValue="desktop" className="w-full">
         <TabsList className="grid w-full grid-cols-2 h-12 lg:h-10">
           <TabsTrigger
@@ -442,14 +477,14 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
         {/* Export Buttons Grid */}
         <div className="grid grid-cols-2 gap-3">
           <Button
-            onClick={handleCopyForOutlook}
+            onClick={() => copyRichHTML(outlookRef, 'Outlook')}
             className="w-full bg-slate-900 hover:bg-slate-800 text-white h-12 lg:h-10 transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             aria-label="Copy signature for Microsoft Outlook"
           >
             📧 Copy for Outlook
           </Button>
           <Button
-            onClick={handleCopyForGmail}
+            onClick={() => copyRichHTML(gmailRef, 'Gmail')}
             variant="outline"
             className="w-full h-12 lg:h-10 transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             aria-label="Copy signature for Gmail"
@@ -457,7 +492,7 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
             📧 Copy for Gmail
           </Button>
           <Button
-            onClick={handleCopyForGmail}
+            onClick={() => copyRichHTML(appleMailRef, 'Apple Mail')}
             variant="outline"
             className="w-full h-12 lg:h-10 transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             aria-label="Copy signature for Apple Mail"
@@ -486,7 +521,8 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
                 <strong>• Gmail:</strong> Copy for Gmail → Paste in Settings → General → Signature
               </div>
               <div>
-                <strong>• Apple Mail:</strong> Copy for Apple Mail → Paste in Preferences → Signatures
+                <strong>• Apple Mail:</strong> Copy for Apple Mail → Paste in Preferences →
+                Signatures
               </div>
             </div>
           </CardContent>
