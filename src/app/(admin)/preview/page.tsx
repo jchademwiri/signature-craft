@@ -1,28 +1,29 @@
 'use client';
 
-import { useSession } from "@/lib/auth-client";
-import { useState } from "react";
-import { TEMPLATES } from "@/components/signature/templates";
-import { TemplateComponent, TemplateProps } from "@/components/signature/templates/types";
+import { useSession } from '@/lib/auth-client';
+import { useState } from 'react';
+import { TEMPLATES } from '@/templates';
+import { TemplateComponent, TemplateProps } from '@/templates/types';
 
-const isDev = process.env.NODE_ENV === "development";
+const isDev = process.env.NODE_ENV === 'development';
 
 const sidebarItems = [
-  { label: "Classic", id: "classic" },
-  { label: "Modern", id: "modern" },
-  { label: "Minimal", id: "minimal" },
+  { label: 'Classic', id: 'classic' },
+  { label: 'Modern', id: 'modern' },
+  { label: 'Minimal', id: 'minimal' },
+  { label: 'Corporate', id: 'corporate' },
 ];
 
 const mockData: TemplateProps = {
-  name: "Jane Doe",
-  title: "Product Manager",
-  company: "Acme Corp",
-  email: "jane.doe@acme.com",
-  phone: "+1 (555) 123-4567",
-  website: "www.acme.com",
-  logoData: "/logo.svg",
-  primaryColor: "#1a73e8",
-  secondaryColor: "#5f6368",
+  name: 'Jacob Chademwiri',
+  title: 'Product Manager',
+  company: 'Acme Corp',
+  email: 'jane.doe@acme.com',
+  phone: '+1 (555) 123-4567',
+  website: 'www.acme.com',
+  logoData: '/logo.svg',
+  primaryColor: '#1a73e8',
+  secondaryColor: '#5f6368',
 };
 
 export default function Preview() {
@@ -33,8 +34,12 @@ export default function Preview() {
     return (
       <main className="flex items-center justify-center min-h-[60vh] bg-gray-100 dark:bg-gray-900">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-2 text-gray-900 dark:text-gray-100">Access Restricted</h1>
-          <p className="text-gray-600 dark:text-gray-300">You must be signed in to access the preview environment.</p>
+          <h1 className="text-2xl font-bold mb-2 text-gray-900 dark:text-gray-100">
+            Access Restricted
+          </h1>
+          <p className="text-gray-600 dark:text-gray-300">
+            You must be signed in to access the preview environment.
+          </p>
         </div>
       </main>
     );
@@ -69,10 +74,14 @@ export default function Preview() {
       </aside>
       {/* Main Preview Area */}
       <section className="flex-1 p-8 overflow-auto">
-        <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Email Signature Preview</h1>
+        <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+          Email Signature Preview
+        </h1>
         <div className="border rounded-lg p-6 bg-white dark:bg-gray-800 dark:border-gray-700 shadow-sm min-h-[300px] flex flex-col items-center justify-center">
           <Template {...mockData} />
-          <span className="mt-4 text-gray-500 dark:text-gray-400 text-sm">This is a live preview of the <b>{Template.metadata.name}</b> template.</span>
+          <span className="mt-4 text-gray-500 dark:text-gray-400 text-sm">
+            This is a live preview of the <b>{Template.metadata.name}</b> template.
+          </span>
         </div>
       </section>
     </main>

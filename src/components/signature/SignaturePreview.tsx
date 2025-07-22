@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Monitor, Smartphone } from 'lucide-react';
 import Link from 'next/link';
-import { TEMPLATES, TemplateProps } from './templates';
+import { TEMPLATES, TemplateProps } from '@/templates';
 
 interface SignaturePreviewProps {
   data: SignatureData;
@@ -135,15 +135,69 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
           ${logoData ? `<div style="margin-top: 8px;"><img src="${logoData}" alt="Company Logo" style="max-width: 120px; height: auto; display: block;" /></div>` : ''}
         </div>`;
 
-      // case 'corporate':
-      //   return `<div style="${baseStyles}">
-      //       <div style="margin-bottom: 4px;"><strong style="font-size: 18px;">${name || 'Your Name'}</strong></div>
-      //       ${title || company ? `<div style="margin-bottom: 4px; color: ${secondaryColor || '#004499'};">${title ? title : ''}${title && company ? ', ' : ''}${company ? company : ''}</div>` : ''}
-      //       ${address ? `<div style="margin-bottom: 4px; color: ${secondaryColor || '#004499'};">${address}</div>` : ''}
-      //       <div style="margin-bottom: 4px;"><a href="mailto:${email || 'email@company.com'}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${email || 'email@company.com'}</a>${phone ? ` | <a href="tel:${phone}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${phone}</a>` : ''}</div>
-      //       ${website ? `<div style="margin-bottom: 4px;"><a href="${website}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${website}</a></div>` : ''}
-      //       ${logoData ? `<div style="margin-top: 8px;"><img src="${logoData}" alt="Company Logo" style="max-width: 120px; height: auto; display: block;" /></div>` : ''}
-      //     </div>`;
+      case 'corporate':
+        return `<div style="${baseStyles}">
+          <table cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
+            <tbody>
+              <tr>
+                <td style="width: 120px; padding: 20px; vertical-align: top; background-color: #f8fafc; border-right: 3px solid ${primaryColor || '#2563eb'};">
+                  <div style="width: 80px; height: 80px; border-radius: 50%; background-color: ${primaryColor || '#2563eb'}; display: flex; align-items: center; justify-content: center; color: white; font-size: 28px; font-weight: bold; margin: 0 auto; border: 3px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    ${
+                      logoData
+                        ? `<img src="${logoData}" alt="Profile" style="width: 74px; height: 74px; border-radius: 50%; object-fit: cover;" />`
+                        : `<span>${(name || 'Your Name')
+                            .split(' ')
+                            .map((n) => n[0])
+                            .join('')
+                            .toUpperCase()
+                            .substring(0, 2)}</span>`
+                    }
+                  </div>
+                </td>
+                <td style="padding: 20px; vertical-align: top;">
+                  <div style="margin-bottom: 12px;">
+                    <div style="font-size: 20px; font-weight: bold; color: ${primaryColor || '#2563eb'}; margin-bottom: 4px; line-height: 1.2;">${name || 'Your Name'}</div>
+                    <div style="font-size: 14px; color: ${secondaryColor || '#64748b'}; font-weight: 500; margin-bottom: 2px;">${title || 'Your Title'}</div>
+                    <div style="font-size: 14px; color: ${primaryColor || '#2563eb'}; font-weight: 600;">${company || 'Your Company'}</div>
+                  </div>
+                  <div style="font-size: 13px; line-height: 1.4;">
+                    <div style="margin-bottom: 6px; display: flex; align-items: center;">
+                      <span style="color: ${primaryColor || '#2563eb'}; margin-right: 8px; font-size: 14px;">📧</span>
+                      <a href="mailto:${email || 'email@company.com'}" style="color: ${secondaryColor || '#64748b'}; text-decoration: none; font-size: 13px;">${email || 'email@company.com'}</a>
+                    </div>
+                    ${
+                      phone
+                        ? `<div style="margin-bottom: 6px; display: flex; align-items: center;">
+                      <span style="color: ${primaryColor || '#2563eb'}; margin-right: 8px; font-size: 14px;">📞</span>
+                      <a href="tel:${phone}" style="color: ${secondaryColor || '#64748b'}; text-decoration: none; font-size: 13px;">${phone}</a>
+                    </div>`
+                        : ''
+                    }
+                    ${
+                      website
+                        ? `<div style="margin-bottom: 6px; display: flex; align-items: center;">
+                      <span style="color: ${primaryColor || '#2563eb'}; margin-right: 8px; font-size: 14px;">🌐</span>
+                      <a href="${website.startsWith('http') ? website : `https://${website}`}" target="_blank" rel="noopener noreferrer" style="color: ${secondaryColor || '#64748b'}; text-decoration: none; font-size: 13px;">${website}</a>
+                    </div>`
+                        : ''
+                    }
+                    ${
+                      address
+                        ? `<div style="margin-bottom: 6px; display: flex; align-items: flex-start;">
+                      <span style="color: ${primaryColor || '#2563eb'}; margin-right: 8px; font-size: 14px;">📍</span>
+                      <span style="color: ${secondaryColor || '#64748b'}; font-size: 13px; line-height: 1.3;">${address}</span>
+                    </div>`
+                        : ''
+                    }
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" style="height: 4px; background-color: ${primaryColor || '#2563eb'}; padding: 0;"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>`;
 
       default:
         return '<div>Template not found</div>';
