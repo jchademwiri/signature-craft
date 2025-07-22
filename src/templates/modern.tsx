@@ -34,88 +34,111 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
 
   return (
     <section id="modern">
-      <table
+      <div
         style={{
+          padding: '16px',
           fontFamily: 'Arial, sans-serif',
-          color: primaryColor,
-          borderCollapse: 'collapse',
-          width: '600px',
-          maxWidth: '100%',
-          background: 'white',
+          width: '100%',
+          maxWidth: '500px',
         }}
       >
-        <tbody>
-          <tr>
-            {logoData && (
-              <td style={{ verticalAlign: 'top', paddingRight: '12px', width: '1%' }}>
-                <Image
-                  src={logoData}
-                  alt="Logo"
-                  width={80}
-                  height={0}
-                  style={{ maxWidth: '80px', width: 'auto', height: 'auto', display: 'block' }}
-                  unoptimized
-                />
-              </td>
-            )}
-            <td style={{ verticalAlign: 'middle' }}>
-              <div style={{ fontWeight: 'bold', fontSize: '16px', marginBottom: '2px' }}>
-                {displayName}
-              </div>
-              {titleCompanyText && (
-                <div style={{ color: secondaryColor, fontSize: '14px' }}>{titleCompanyText}</div>
-              )}
-            </td>
-          </tr>
-          <tr>
-            <td
-              colSpan={logoData ? 2 : 1}
-              style={{ paddingTop: '8px', fontSize: '12px', color: secondaryColor }}
-            >
-              <span>
-                📧{' '}
-                <a
-                  href={`mailto:${displayEmail}`}
-                  style={{ color: primaryColor, textDecoration: 'none' }}
+        <table
+          style={{
+            color: primaryColor,
+            borderCollapse: 'collapse',
+            width: '100%',
+            background: 'white',
+          }}
+        >
+          <tbody>
+            <tr>
+              {logoData && (
+                <td
+                  style={{
+                    verticalAlign: 'top',
+                    paddingRight: '20px',
+                    width: 'auto',
+                    paddingTop: '0px',
+                  }}
                 >
-                  {displayEmail}
-                </a>
-              </span>
-              {phone && (
-                <span>
-                  {' | '}📞{' '}
-                  <a href={`tel:${phone}`} style={{ color: primaryColor, textDecoration: 'none' }}>
-                    {phone}
-                  </a>
-                </span>
+                  <img
+                    src={logoData}
+                    alt="Logo"
+                    style={{ maxWidth: '100px', width: 'auto', height: 'auto', display: 'block' }}
+                  />
+                </td>
               )}
-              {website && (
-                <span>
-                  {' | '}🌐{' '}
-                  <a
-                    href={website.startsWith('http') ? website : `https://${website}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: primaryColor, textDecoration: 'none' }}
-                  >
-                    {website}
-                  </a>
-                </span>
-              )}
-            </td>
-          </tr>
-          {address && (
+              <td style={{ verticalAlign: 'middle' }}>
+                <div
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: '18px',
+                    marginBottom: '6px',
+                    color: primaryColor,
+                  }}
+                >
+                  {displayName}
+                </div>
+                {titleCompanyText && (
+                  <div style={{ color: secondaryColor, fontSize: '14px', marginBottom: '4px' }}>
+                    {titleCompanyText}
+                  </div>
+                )}
+              </td>
+            </tr>
             <tr>
               <td
                 colSpan={logoData ? 2 : 1}
-                style={{ paddingTop: '6px', fontSize: '12px', color: secondaryColor }}
+                style={{ paddingTop: '12px', fontSize: '14px', color: secondaryColor }}
               >
-                {address}
+                <div style={{ marginBottom: '4px' }}>
+                  📧{' '}
+                  <a
+                    href={`mailto:${displayEmail}`}
+                    style={{ color: primaryColor, textDecoration: 'none' }}
+                  >
+                    {displayEmail}
+                  </a>
+                </div>
+                {phone && (
+                  <div style={{ marginBottom: '4px' }}>
+                    📞{' '}
+                    <a
+                      href={`tel:${phone}`}
+                      style={{ color: primaryColor, textDecoration: 'none' }}
+                    >
+                      {phone}
+                    </a>
+                  </div>
+                )}
+                {website && (
+                  <div style={{ marginBottom: '4px' }}>
+                    🌐{' '}
+                    <a
+                      href={website.startsWith('http') ? website : `https://${website}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: primaryColor, textDecoration: 'none' }}
+                    >
+                      {website}
+                    </a>
+                  </div>
+                )}
               </td>
             </tr>
-          )}
-        </tbody>
-      </table>
+            {address && (
+              <tr>
+                <td
+                  colSpan={logoData ? 2 : 1}
+                  style={{ paddingTop: '8px', fontSize: '14px', color: secondaryColor }}
+                >
+                  📍 {address}
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </section>
   );
 };

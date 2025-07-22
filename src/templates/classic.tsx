@@ -26,62 +26,68 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
   return (
     <section id="classic">
       <div
-        className="text-xs space-y-1"
-        style={{ color: primaryColor, width: '600px', maxWidth: '100%', background: 'white' }}
+        className="text-sm space-y-3"
+        style={{
+          color: primaryColor,
+          width: '100%',
+          maxWidth: '500px',
+          background: 'white',
+          padding: '16px',
+          fontFamily: 'Arial, sans-serif',
+        }}
       >
-        <div>
-          <strong>{displayName}</strong>
-          {title && <span style={{ color: secondaryColor }}> | {title}</span>}
-        </div>
-        {company && (
-          <div>
-            <strong>{company}</strong>
+        {logoData && (
+          <div style={{ marginBottom: '12px' }}>
+            <img
+              src={logoData}
+              alt="Logo"
+              style={{ maxWidth: '120px', height: 'auto', display: 'block' }}
+            />
           </div>
         )}
-        <div style={{ color: secondaryColor }}>
-          <span>
-            Email:{' '}
+        <div style={{ marginBottom: '8px' }}>
+          <strong style={{ fontSize: '16px', color: primaryColor }}>{displayName}</strong>
+          {title && (
+            <div style={{ color: secondaryColor, fontSize: '14px', marginTop: '2px' }}>{title}</div>
+          )}
+        </div>
+        {company && (
+          <div style={{ marginBottom: '8px' }}>
+            <strong style={{ fontSize: '14px' }}>{company}</strong>
+          </div>
+        )}
+        <div style={{ color: secondaryColor, marginBottom: '6px' }}>
+          <div style={{ marginBottom: '4px' }}>
+            📧{' '}
             <a
               href={`mailto:${displayEmail}`}
               style={{ color: primaryColor, textDecoration: 'none' }}
             >
               {displayEmail}
             </a>
-          </span>
+          </div>
           {phone && (
-            <span>
-              {' | '}Phone:{' '}
+            <div style={{ marginBottom: '4px' }}>
+              📞{' '}
               <a href={`tel:${phone}`} style={{ color: primaryColor, textDecoration: 'none' }}>
                 {phone}
               </a>
-            </span>
+            </div>
+          )}
+          {website && (
+            <div style={{ marginBottom: '4px' }}>
+              🌐{' '}
+              <a
+                href={website.startsWith('http') ? website : `https://${website}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: primaryColor, textDecoration: 'none' }}
+              >
+                {website}
+              </a>
+            </div>
           )}
         </div>
-        {website && (
-          <div style={{ color: secondaryColor }}>
-            Web:{' '}
-            <a
-              href={website.startsWith('http') ? website : `https://${website}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: primaryColor, textDecoration: 'none' }}
-            >
-              {website}
-            </a>
-          </div>
-        )}
-        {logoData && (
-          <div>
-            <Image
-              src={logoData}
-              alt="Logo"
-              width={80}
-              height={0}
-              style={{ maxWidth: '80px', width: 'auto', height: 'auto' }}
-              unoptimized
-            />
-          </div>
-        )}
       </div>
     </section>
   );

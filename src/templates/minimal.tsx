@@ -30,74 +30,80 @@ export const Minimal: TemplateComponent = (props: TemplateProps): ReactElement =
     return '';
   })();
 
-  // We'll handle the contact line differently to include proper links
-
   return (
     <section id="minimal">
       <div
         style={{
           fontFamily: 'Arial, sans-serif',
           fontSize: '14px',
-          lineHeight: '1.4',
-          width: '600px',
-          maxWidth: '100%',
+          lineHeight: '1.5',
+          width: '100%',
+          maxWidth: '500px',
           background: 'white',
+          padding: '16px',
         }}
       >
         {/* Logo - only if provided */}
         {logoData && (
-          <div style={{ marginBottom: '6px' }}>
-            <Image
+          <div style={{ marginBottom: '12px' }}>
+            <img
               src={logoData}
               alt="Logo"
-              width={80}
-              height={0}
-              style={{ maxWidth: '80px', width: 'auto', height: 'auto' }}
-              unoptimized
+              style={{ maxWidth: '120px', width: 'auto', height: 'auto', display: 'block' }}
             />
           </div>
         )}
+
         {/* Name - always displayed and required */}
-        <div style={{ fontWeight: 'bold', color: primaryColor, marginBottom: '2px' }}>
+        <div
+          style={{ fontWeight: 'bold', color: primaryColor, marginBottom: '6px', fontSize: '18px' }}
+        >
           {displayName}
         </div>
 
         {/* Title and Company line - only if at least one exists */}
         {titleCompanyLine && (
-          <div style={{ color: secondaryColor, marginBottom: '2px' }}>{titleCompanyLine}</div>
-        )}
-
-        {/* Contact information line - email and phone */}
-        <div style={{ color: secondaryColor, fontSize: '13px' }}>
-          <a
-            href={`mailto:${displayEmail}`}
-            style={{ color: primaryColor, textDecoration: 'none' }}
-          >
-            {displayEmail}
-          </a>
-          {phone && (
-            <>
-              {' | '}
-              <a href={`tel:${phone}`} style={{ color: primaryColor, textDecoration: 'none' }}>
-                {phone}
-              </a>
-            </>
-          )}
-        </div>
-
-        {/* Website link if provided */}
-        {props.website && (
-          <div style={{ color: secondaryColor, fontSize: '13px', marginTop: '2px' }}>
-            <a
-              href={props.website.startsWith('http') ? props.website : `https://${props.website}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: primaryColor, textDecoration: 'none' }}
-            >
-              {props.website}
-            </a>
+          <div style={{ color: secondaryColor, marginBottom: '8px', fontSize: '14px' }}>
+            {titleCompanyLine}
           </div>
         )}
+
+        {/* Contact information */}
+        <div style={{ marginBottom: '6px' }}>
+          <div style={{ marginBottom: '4px' }}>
+            📧{' '}
+            <a
+              href={`mailto:${displayEmail}`}
+              style={{ color: primaryColor, textDecoration: 'none', fontSize: '14px' }}
+            >
+              {displayEmail}
+            </a>
+          </div>
+          {phone && (
+            <div style={{ marginBottom: '4px' }}>
+              📞{' '}
+              <a
+                href={`tel:${phone}`}
+                style={{ color: primaryColor, textDecoration: 'none', fontSize: '14px' }}
+              >
+                {phone}
+              </a>
+            </div>
+          )}
+          {props.website && (
+            <div style={{ marginBottom: '4px' }}>
+              🌐{' '}
+              <a
+                href={props.website.startsWith('http') ? props.website : `https://${props.website}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: primaryColor, textDecoration: 'none', fontSize: '14px' }}
+              >
+                {props.website}
+              </a>
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
