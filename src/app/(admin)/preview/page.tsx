@@ -147,12 +147,177 @@ export default function Preview() {
                   <CardHeader>
                     <CardTitle>Test Data</CardTitle>
                     <CardDescription>
-                      This tab would contain a form to edit sample data for template preview
+                      Edit sample data to test how templates look with different information
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-muted-foreground">
-                      Sample data form component would be implemented here
+                    <div className="space-y-4">
+                      <div className="flex items-center space-x-2 mb-4">
+                        <Button
+                          size="sm"
+                          onClick={() => {
+                            // Reset to default data
+                            window.location.reload();
+                          }}
+                        >
+                          Reset to Default
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => {
+                            // Set minimal data
+                            console.log('Set minimal data');
+                          }}
+                        >
+                          Minimal Data
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => {
+                            // Set no logo data
+                            console.log('Set no logo data');
+                          }}
+                        >
+                          No Logo
+                        </Button>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-4">
+                          <div>
+                            <label className="text-sm font-medium">Full Name *</label>
+                            <input
+                              type="text"
+                              className="w-full mt-1 px-3 py-2 border rounded-md"
+                              defaultValue={mockData.name}
+                              placeholder="John Doe"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="text-sm font-medium">Job Title</label>
+                            <input
+                              type="text"
+                              className="w-full mt-1 px-3 py-2 border rounded-md"
+                              defaultValue={mockData.title}
+                              placeholder="Software Developer"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="text-sm font-medium">Company</label>
+                            <input
+                              type="text"
+                              className="w-full mt-1 px-3 py-2 border rounded-md"
+                              defaultValue={mockData.company}
+                              placeholder="Acme Corp"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="space-y-4">
+                          <div>
+                            <label className="text-sm font-medium">Email *</label>
+                            <input
+                              type="email"
+                              className="w-full mt-1 px-3 py-2 border rounded-md"
+                              defaultValue={mockData.email}
+                              placeholder="john@company.com"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="text-sm font-medium">Phone</label>
+                            <input
+                              type="tel"
+                              className="w-full mt-1 px-3 py-2 border rounded-md"
+                              defaultValue={mockData.phone}
+                              placeholder="+27 11 123 4567"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="text-sm font-medium">Website</label>
+                            <input
+                              type="url"
+                              className="w-full mt-1 px-3 py-2 border rounded-md"
+                              defaultValue={mockData.website}
+                              placeholder="www.company.com"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="space-y-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <label className="text-sm font-medium">Primary Color</label>
+                            <div className="flex items-center space-x-2 mt-1">
+                              <div
+                                className="w-8 h-8 rounded border"
+                                style={{ backgroundColor: mockData.primaryColor }}
+                              />
+                              <input
+                                type="color"
+                                className="w-16 h-8 border rounded"
+                                defaultValue={mockData.primaryColor}
+                              />
+                              <input
+                                type="text"
+                                className="flex-1 px-3 py-2 border rounded-md"
+                                defaultValue={mockData.primaryColor}
+                                placeholder="#4285f4"
+                              />
+                            </div>
+                          </div>
+
+                          <div>
+                            <label className="text-sm font-medium">Secondary Color</label>
+                            <div className="flex items-center space-x-2 mt-1">
+                              <div
+                                className="w-8 h-8 rounded border"
+                                style={{ backgroundColor: mockData.secondaryColor }}
+                              />
+                              <input
+                                type="color"
+                                className="w-16 h-8 border rounded"
+                                defaultValue={mockData.secondaryColor}
+                              />
+                              <input
+                                type="text"
+                                className="flex-1 px-3 py-2 border rounded-md"
+                                defaultValue={mockData.secondaryColor}
+                                placeholder="#9aa0a6"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="text-sm font-medium">Logo</label>
+                          <div className="mt-1 border-2 border-dashed border-gray-300 rounded-md p-4 text-center">
+                            <div className="text-sm text-muted-foreground">
+                              Drag and drop your logo here, or click to browse
+                            </div>
+                            <Button variant="outline" size="sm" className="mt-2">
+                              Choose File
+                            </Button>
+                            <div className="text-xs text-muted-foreground mt-1">
+                              PNG, JPG, SVG up to 2MB
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="pt-4 border-t">
+                        <div className="text-sm text-muted-foreground">
+                          <strong>Note:</strong> This is a development environment for testing
+                          templates. Changes here don't affect the actual preview data yet - this
+                          would be connected to live preview updates in a full implementation.
+                        </div>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
