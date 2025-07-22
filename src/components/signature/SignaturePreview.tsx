@@ -135,6 +135,16 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
           ${logoData ? `<div style="margin-top: 8px;"><img src="${logoData}" alt="Company Logo" style="max-width: 120px; height: auto; display: block;" /></div>` : ''}
         </div>`;
 
+      // case 'corporate':
+      //   return `<div style="${baseStyles}">
+      //       <div style="margin-bottom: 4px;"><strong style="font-size: 18px;">${name || 'Your Name'}</strong></div>
+      //       ${title || company ? `<div style="margin-bottom: 4px; color: ${secondaryColor || '#004499'};">${title ? title : ''}${title && company ? ', ' : ''}${company ? company : ''}</div>` : ''}
+      //       ${address ? `<div style="margin-bottom: 4px; color: ${secondaryColor || '#004499'};">${address}</div>` : ''}
+      //       <div style="margin-bottom: 4px;"><a href="mailto:${email || 'email@company.com'}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${email || 'email@company.com'}</a>${phone ? ` | <a href="tel:${phone}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${phone}</a>` : ''}</div>
+      //       ${website ? `<div style="margin-bottom: 4px;"><a href="${website}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${website}</a></div>` : ''}
+      //       ${logoData ? `<div style="margin-top: 8px;"><img src="${logoData}" alt="Company Logo" style="max-width: 120px; height: auto; display: block;" /></div>` : ''}
+      //     </div>`;
+
       default:
         return '<div>Template not found</div>';
     }
@@ -309,7 +319,7 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
         </div>
 
         {/* Quick Setup Instructions */}
-        <Card className="bg-primary/10 border-primary/20">
+        {/* <Card className="bg-primary/10 border-primary/20">
           <CardContent className="p-4">
             <h4 className="font-medium text-primary mb-3">Quick Setup:</h4>
             <div className="space-y-2 text-sm text-primary/80">
@@ -325,7 +335,7 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
               </div>
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
       </div>
 
       <p className="text-xs text-muted-foreground text-center">

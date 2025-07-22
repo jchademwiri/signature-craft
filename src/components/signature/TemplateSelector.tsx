@@ -5,8 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Check } from 'lucide-react';
 
 interface TemplateSelectorProps {
-  selectedTemplate: 'classic' | 'modern' | 'minimal';
-  onTemplateChange: (templateId: 'classic' | 'modern' | 'minimal') => void;
+  selectedTemplate: 'classic' | 'modern' | 'minimal' | 'corporate';
+  onTemplateChange: (templateId: 'classic' | 'modern' | 'minimal' | 'corporate') => void;
 }
 
 export function TemplateSelector({ selectedTemplate, onTemplateChange }: TemplateSelectorProps) {
@@ -51,6 +51,21 @@ export function TemplateSelector({ selectedTemplate, onTemplateChange }: Templat
     {
       id: 'minimal' as const,
       name: 'Minimal',
+      description: 'Clean and simple with essential info only',
+      preview: (
+        <div className="text-xs space-y-1">
+          <div>
+            <strong>John Smith</strong>
+          </div>
+          <div className="text-gray-600">Marketing Manager, Acme Corporation</div>
+          <div>john@acme.com | +27 11 123 4567</div>
+          <div>www.acme.com</div>
+        </div>
+      ),
+    },
+    {
+      id: 'corporate' as const,
+      name: 'Corporate',
       description: 'Clean and simple with essential info only',
       preview: (
         <div className="text-xs space-y-1">
