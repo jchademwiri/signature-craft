@@ -1,14 +1,13 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
+import { useState, useRef } from 'react';
 import { SignatureData } from './SignatureBuilder';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Monitor, Smartphone } from 'lucide-react';
-import { useRef } from 'react';
 import Link from 'next/link';
+import { TEMPLATES, TemplateProps } from './templates';
 
 interface SignaturePreviewProps {
   data: SignatureData;
@@ -23,258 +22,23 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
   const appleMailRef = useRef<HTMLDivElement>(null!);
 
   const generateSignatureHTML = (isMobile: boolean = false) => {
-    const {
-      name,
-      title,
-      company,
-      email,
-      phone,
-      website,
-      logoData,
-      templateId,
-      primaryColor,
-      secondaryColor,
-      address,
-    } = data;
+    const { templateId } = data;
 
-    // Base styles for email compatibility
-    const baseStyles = {
-      fontFamily: 'Arial, sans-serif',
-      fontSize: isMobile ? '14px' : '16px',
-      lineHeight: '1.4',
-      color: '#333333',
-      background: '#fff', // Ensure white background
-    };
+    // Get the selected template component from the registry
+    const SelectedTemplate = TEMPLATES[templateId];
 
-    const linkStyles = {
-      color: primaryColor || '#0066cc',
-      textDecoration: 'none',
-    };
-
-    const secondaryTextStyles = {
-      color: secondaryColor || '#004499',
-    };
-
-    switch (templateId) {
-      case 'classic':
-        return (
-          <div style={baseStyles}>
-            <table cellPadding="0" cellSpacing="0" style={{ borderCollapse: 'collapse' }}>
-              <tbody>
-                <tr>
-                  <td style={{ paddingBottom: '8px' }}>
-                    <strong style={{ fontSize: isMobile ? '16px' : '18px' }}>
-                      {name || 'Your Name'}
-                    </strong>
-                    {title && <span> | {title}</span>}
-                  </td>
-                </tr>
-                {company && (
-                  <tr>
-                    <td style={{ paddingBottom: '4px' }}>
-                      <strong>{company}</strong>
-                    </td>
-                  </tr>
-                )}
-                {address && (
-                  <tr>
-                    <td style={{ paddingBottom: '4px', ...secondaryTextStyles }}>{address}</td>
-                  </tr>
-                )}
-                <tr>
-                  <td style={{ paddingBottom: '4px' }}>
-                    📧{' '}
-                    <Link href={`mailto:${email || 'email@company.com'}`} style={linkStyles}>
-                      {email || 'email@company.com'}
-                    </Link>
-                    {phone && (
-                      <>
-                        {' | '}📞{' '}
-                        <Link href={`tel:${phone}`} style={linkStyles}>
-                          {phone}
-                        </Link>
-                      </>
-                    )}
-                  </td>
-                </tr>
-                {website && (
-                  <tr>
-                    <td style={{ paddingBottom: '8px' }}>
-                      🌐{' '}
-                      <Link href={website} style={linkStyles}>
-                        {website}
-                      </Link>
-                    </td>
-                  </tr>
-                )}
-                {logoData && (
-                  <tr>
-                    <td style={{ paddingTop: '8px' }}>
-                      <Image
-                        src={logoData}
-                        alt="Company Logo"
-                        width={isMobile ? 120 : 150}
-                        height={isMobile ? 60 : 75}
-                        style={{
-                          maxWidth: isMobile ? '120px' : '150px',
-                          height: 'auto',
-                          display: 'block',
-                        }}
-                        unoptimized
-                      />
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        );
-
-      case 'modern':
-        return (
-          <div style={baseStyles}>
-            <table cellPadding="0" cellSpacing="0" style={{ borderCollapse: 'collapse' }}>
-              <tbody>
-                <tr>
-                  <td style={{ verticalAlign: 'top', paddingRight: logoData ? '16px' : '0' }}>
-                    {logoData && (
-                      <Image
-                        src={logoData}
-                        alt="Company Logo"
-                        width={isMobile ? 60 : 80}
-                        height={isMobile ? 30 : 40}
-                        style={{
-                          maxWidth: isMobile ? '60px' : '80px',
-                          height: 'auto',
-                          display: 'block',
-                          marginBottom: '8px',
-                        }}
-                        unoptimized
-                      />
-                    )}
-                  </td>
-                  <td style={{ verticalAlign: 'top' }}>
-                    <div style={{ marginBottom: '4px' }}>
-                      <strong style={{ fontSize: isMobile ? '16px' : '18px' }}>
-                        {name || 'Your Name'}
-                      </strong>
-                    </div>
-                    {(title || company) && (
-                      <div style={{ marginBottom: '8px', ...secondaryTextStyles }}>
-                        {title && <span>{title}</span>}
-                        {title && company && <span> at </span>}
-                        {company && <strong>{company}</strong>}
-                      </div>
-                    )}
-                  </td>
-                </tr>
-                <tr>
-                  <td colSpan={2} style={{ paddingTop: '8px', borderTop: '1px solid #e0e0e0' }}>
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        gap: '8px',
-                        alignItems: 'center',
-                      }}
-                    >
-                      📧{' '}
-                      <Link href={`mailto:${email || 'email@company.com'}`} style={linkStyles}>
-                        {email || 'email@company.com'}
-                      </Link>
-                      {phone && (
-                        <>
-                          <span style={{ color: '#ccc' }}>|</span>
-                          📞{' '}
-                          <a href={`tel:${phone}`} style={linkStyles}>
-                            {phone}
-                          </a>
-                        </>
-                      )}
-                      {website && (
-                        <>
-                          <span style={{ color: '#ccc' }}>|</span>
-                          🌐{' '}
-                          <Link href={website} style={linkStyles}>
-                            {website}
-                          </Link>
-                        </>
-                      )}
-                    </div>
-                  </td>
-                </tr>
-                {address && (
-                  <tr>
-                    <td colSpan={2} style={{ paddingTop: '6px', ...secondaryTextStyles }}>
-                      {address}
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        );
-
-      case 'minimal':
-        return (
-          <div style={baseStyles}>
-            <div style={{ marginBottom: '4px' }}>
-              <strong style={{ fontSize: isMobile ? '16px' : '18px' }}>
-                {name || 'Your Name'}
-              </strong>
-            </div>
-            {(title || company) && (
-              <div style={{ marginBottom: '4px', ...secondaryTextStyles }}>
-                {title && <span>{title}</span>}
-                {title && company && <span>, </span>}
-                {company && <span>{company}</span>}
-              </div>
-            )}
-            {address && (
-              <div style={{ marginBottom: '4px', ...secondaryTextStyles }}>{address}</div>
-            )}
-            <div style={{ marginBottom: '4px' }}>
-              <a href={`mailto:${email || 'email@company.com'}`} style={linkStyles}>
-                {email || 'email@company.com'}
-              </a>
-              {phone && (
-                <>
-                  {' | '}
-                  <a href={`tel:${phone}`} style={linkStyles}>
-                    {phone}
-                  </a>
-                </>
-              )}
-            </div>
-            {website && (
-              <div style={{ marginBottom: '4px' }}>
-                <a href={website} style={linkStyles}>
-                  {website}
-                </a>
-              </div>
-            )}
-            {logoData && (
-              <div style={{ marginTop: '8px' }}>
-                <Image
-                  src={logoData}
-                  alt="Company Logo"
-                  width={isMobile ? 100 : 120}
-                  height={isMobile ? 50 : 60}
-                  style={{
-                    maxWidth: isMobile ? '100px' : '120px',
-                    height: 'auto',
-                    display: 'block',
-                  }}
-                  unoptimized
-                />
-              </div>
-            )}
-          </div>
-        );
-
-      default:
-        return <div>Select a template to preview your signature</div>;
+    if (!SelectedTemplate) {
+      return <div>Template not found. Please select a valid template.</div>;
     }
+
+    // Create template props from signature data
+    const templateProps: TemplateProps = {
+      ...data,
+      showMobile: isMobile,
+    };
+
+    // Render the selected template with the data
+    return <SelectedTemplate {...templateProps} />;
   };
 
   const copyToClipboard = async (content: string, format: string) => {
@@ -289,7 +53,10 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
     }
   };
 
-  const generateHTMLForExport = () => {
+  // Helper function to convert React component to HTML string
+  // For now, we'll keep using the original HTML generation approach
+  // In a production app, you would use ReactDOMServer.renderToStaticMarkup on the server side
+  const generateHTMLString = (templateId: string): string => {
     const {
       name,
       title,
@@ -298,7 +65,6 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
       phone,
       website,
       logoData,
-      templateId,
       primaryColor,
       secondaryColor,
       address,
@@ -353,7 +119,6 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
               </tr>`
                   : ''
               }
-              </tr>
             </tbody>
           </table>
         </div>`;
@@ -369,8 +134,13 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
         </div>`;
 
       default:
-        return '';
+        return '<div>Template not found</div>';
     }
+  };
+
+  const generateHTMLForExport = () => {
+    const { templateId } = data;
+    return generateHTMLString(templateId);
   };
 
   const copyRichHTML = (ref: React.RefObject<HTMLDivElement>, label: string) => {
@@ -549,7 +319,7 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
       {copyFeedback && (
         <div
           role="alert"
-          className="fixed top-4 right-4 bg-primary text-primary-foreground px-4 py-2 rounded-md shadow-lg z-50 animate-in slide-in-from-top-2 max-w-sm"
+          className="fixed top-4 right-4 bg-primary text-foreground px-4 py-2 rounded-md shadow-lg z-50 animate-in slide-in-from-top-2 max-w-sm"
         >
           {copyFeedback}
         </div>

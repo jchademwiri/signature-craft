@@ -21,6 +21,9 @@ export interface TemplateProps {
   primaryColor?: string;
   secondaryColor?: string;
 
+  // Display options
+  showMobile?: boolean;
+
   // Future extensibility fields
   socialLinks?: {
     linkedin?: string;

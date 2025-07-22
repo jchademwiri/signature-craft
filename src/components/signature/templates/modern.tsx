@@ -20,10 +20,9 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
     secondaryColor = '#666666',
   } = props;
 
-  // Error handling for required fields
-  if (!name || !email) {
-    console.error('Modern template: Name and email are required fields');
-  }
+  // Use default values for required fields if not provided
+  const displayName = name || 'Your Name';
+  const displayEmail = email || 'email@company.com';
 
   // Handle different combinations of title and company
   const titleCompanyText = (() => {
@@ -59,7 +58,7 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
             )}
             <td style={{ verticalAlign: 'middle' }}>
               <div style={{ fontWeight: 'bold', fontSize: '16px', marginBottom: '2px' }}>
-                {name}
+                {displayName}
               </div>
               {titleCompanyText && (
                 <div style={{ color: secondaryColor, fontSize: '14px' }}>{titleCompanyText}</div>
@@ -71,15 +70,15 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
               colSpan={logoData ? 2 : 1}
               style={{ paddingTop: '8px', fontSize: '12px', color: secondaryColor }}
             >
-              {email && <span>📧 {email}</span>}
+              <span>📧 {displayEmail}</span>
               {phone && (
                 <span>
-                  {email ? ' | ' : ''}📞 {phone}
+                  {' | '}📞 {phone}
                 </span>
               )}
               {website && (
                 <span>
-                  {email || phone ? ' | ' : ''}🌐 {website}
+                  {' | '}🌐 {website}
                 </span>
               )}
             </td>

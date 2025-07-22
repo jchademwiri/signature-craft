@@ -18,10 +18,9 @@ export const Minimal: TemplateComponent = (props: TemplateProps): ReactElement =
     logoData,
   } = props;
 
-  // Error handling for required fields
-  if (!name || !email) {
-    console.error('Minimal template: Name and email are required fields');
-  }
+  // Use default values for required fields if not provided
+  const displayName = name || 'Your Name';
+  const displayEmail = email || 'email@company.com';
 
   // Build title and company line
   const titleCompanyLine = (() => {
@@ -34,7 +33,7 @@ export const Minimal: TemplateComponent = (props: TemplateProps): ReactElement =
   // Build contact line with email and phone
   const contactLine = (() => {
     const contacts = [];
-    if (email) contacts.push(email);
+    contacts.push(displayEmail);
     if (phone) contacts.push(phone);
     return contacts.join(' | ');
   })();
@@ -55,7 +54,9 @@ export const Minimal: TemplateComponent = (props: TemplateProps): ReactElement =
           </div>
         )}
         {/* Name - always displayed and required */}
-        <div style={{ fontWeight: 'bold', color: primaryColor, marginBottom: '2px' }}>{name}</div>
+        <div style={{ fontWeight: 'bold', color: primaryColor, marginBottom: '2px' }}>
+          {displayName}
+        </div>
 
         {/* Title and Company line - only if at least one exists */}
         {titleCompanyLine && (

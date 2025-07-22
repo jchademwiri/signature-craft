@@ -193,7 +193,7 @@ export default function DashboardPage() {
                             <Button
                               variant="outline"
                               size="sm"
-                              className="hover:bg-primary hover:text-primary-foreground transition-colors duration-200 h-12 w-12 sm:h-10 sm:w-auto focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                              className="hover:bg-primary hover:text-foreground transition-colors duration-200 h-12 w-12 sm:h-10 sm:w-auto focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                               asChild
                               aria-label={`Edit signature for ${signature.name}`}
                             >

@@ -1,14 +1,17 @@
-"use client";
+'use client';
 
 import React, { useState, ReactNode, HTMLAttributes } from 'react';
 import { Check, Sparkles, Users, Building, Crown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import Link from "next/link";
+import Link from 'next/link';
 
 // Card components
 type CardProps = HTMLAttributes<HTMLDivElement> & { className?: string; children: ReactNode };
 const Card: React.FC<CardProps> = ({ className = '', children, ...props }) => (
-  <div className={`bg-card text-card-foreground rounded-xl shadow-lg border border-border ${className}`} {...props}>
+  <div
+    className={`bg-card text-card-foreground rounded-xl shadow-lg border border-border ${className}`}
+    {...props}
+  >
     {children}
   </div>
 );
@@ -46,7 +49,7 @@ type Plan = {
   period?: string;
   features: string[];
   buttonText: string;
-  buttonVariant: "default" | "outline" | "secondary" | "ghost" | "link" | "destructive";
+  buttonVariant: 'default' | 'outline' | 'secondary' | 'ghost' | 'link' | 'destructive';
   popular?: boolean;
 };
 
@@ -60,26 +63,34 @@ function PricingCard({ plan, index }: PricingCardProps) {
 
   const getCardIcon = (planName: string) => {
     switch (planName.toLowerCase()) {
-      case 'free': return <Sparkles className="h-5 w-5 text-primary" />;
-      case 'pro': return <Users className="h-5 w-5 text-primary" />;
-      case 'team': return <Building className="h-5 w-5 text-primary" />;
-      default: return <Crown className="h-5 w-5 text-primary" />;
+      case 'free':
+        return <Sparkles className="h-5 w-5 text-primary" />;
+      case 'pro':
+        return <Users className="h-5 w-5 text-primary" />;
+      case 'team':
+        return <Building className="h-5 w-5 text-primary" />;
+      default:
+        return <Crown className="h-5 w-5 text-primary" />;
     }
   };
 
   const getBg = (planName: string) => {
     switch (planName.toLowerCase()) {
-      case 'free': return 'bg-primary/10';
-      case 'pro': return 'bg-accent/20';
-      case 'team': return 'bg-secondary/20';
-      default: return 'bg-muted';
+      case 'free':
+        return 'bg-primary/10';
+      case 'pro':
+        return 'bg-accent/20';
+      case 'team':
+        return 'bg-secondary/20';
+      default:
+        return 'bg-muted';
     }
   };
 
   // Determine CTA link based on plan
-  let ctaHref = "/register";
-  if (plan.name.toLowerCase() === "pro") ctaHref = "/checkout";
-  if (plan.name.toLowerCase() === "team") ctaHref = "/contact";
+  let ctaHref = '/register';
+  if (plan.name.toLowerCase() === 'pro') ctaHref = '/checkout';
+  if (plan.name.toLowerCase() === 'team') ctaHref = '/contact';
 
   return (
     <section
@@ -89,11 +100,13 @@ function PricingCard({ plan, index }: PricingCardProps) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Card className={`flex flex-col h-full relative overflow-hidden ${
-        plan.popular
-          ? 'border-primary shadow-2xl ring-4 ring-primary/20 dark:ring-primary/40'
-          : 'hover:border-accent/50 dark:hover:border-accent/70'
-      } ${isHovered ? 'shadow-2xl' : 'shadow-lg'}`}>
+      <Card
+        className={`flex flex-col h-full relative overflow-hidden ${
+          plan.popular
+            ? 'border-primary shadow-2xl ring-4 ring-primary/20 dark:ring-primary/40'
+            : 'hover:border-accent/50 dark:hover:border-accent/70'
+        } ${isHovered ? 'shadow-2xl' : 'shadow-lg'}`}
+      >
         {/* Popular badge */}
         {plan.popular && (
           <div className="absolute top-0 left-0 right-0">
@@ -125,14 +138,8 @@ function PricingCard({ plan, index }: PricingCardProps) {
             <CardDescription>{plan.description}</CardDescription>
             {/* Price section */}
             <div className="mt-6 flex items-baseline">
-              <span className="text-4xl font-bold text-foreground">
-                {plan.price}
-              </span>
-              {plan.period && (
-                <span className="text-muted-foreground ml-1">
-                  {plan.period}
-                </span>
-              )}
+              <span className="text-4xl font-bold text-foreground">{plan.price}</span>
+              {plan.period && <span className="text-muted-foreground ml-1">{plan.period}</span>}
             </div>
             {/* Savings badge for popular plan */}
             {plan.popular && (
@@ -146,10 +153,12 @@ function PricingCard({ plan, index }: PricingCardProps) {
               {plan.features.map((feature: string, i: number) => (
                 <li
                   key={i}
-                  className={`flex items-start gap-3 group [animation-delay:${(index * 150) + (i * 50)}ms]`}
+                  className={`flex items-start gap-3 group [animation-delay:${index * 150 + i * 50}ms]`}
                 >
-                  <div className={`flex-shrink-0 w-5 h-5 rounded-full bg-primary flex items-center justify-center mt-0.5 group-hover:scale-110 transition-transform duration-200`}>
-                    <Check className="h-3 w-3 text-primary-foreground" />
+                  <div
+                    className={`flex-shrink-0 w-5 h-5 rounded-full bg-primary flex items-center justify-center mt-0.5 group-hover:scale-110 transition-transform duration-200`}
+                  >
+                    <Check className="h-3 w-3 text-foreground" />
                   </div>
                   <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
                     {feature}
@@ -177,9 +186,11 @@ function PricingCard({ plan, index }: PricingCardProps) {
             {/* Additional info */}
             <div className="mt-3 text-center">
               <p className="text-xs text-muted-foreground">
-                {plan.name === 'Free' ? 'No credit card required' :
-                  plan.name === 'Pro' ? '14-day free trial' :
-                    'Custom enterprise solutions'}
+                {plan.name === 'Free'
+                  ? 'No credit card required'
+                  : plan.name === 'Pro'
+                    ? '14-day free trial'
+                    : 'Custom enterprise solutions'}
               </p>
             </div>
           </CardFooter>
@@ -194,57 +205,57 @@ export function PricingSection() {
 
   const plans: Plan[] = [
     {
-      name: "Free",
-      description: "Perfect for individuals getting started",
-      price: "R0",
+      name: 'Free',
+      description: 'Perfect for individuals getting started',
+      price: 'R0',
       features: [
-        "1 professional email signature",
-        "3 beautiful templates",
-        "Logo upload & customization",
-        "Social media links",
-        "Export to Gmail & Outlook",
-        "Basic analytics"
+        '1 professional email signature',
+        '3 beautiful templates',
+        'Logo upload & customization',
+        'Social media links',
+        'Export to Gmail & Outlook',
+        'Basic analytics',
       ],
-      buttonText: "Get Started Free",
-      buttonVariant: "outline"
+      buttonText: 'Get Started Free',
+      buttonVariant: 'outline',
     },
     {
-      name: "Pro",
-      description: "Ideal for freelancers and professionals",
-      price: isAnnual ? "R79" : "R99",
-      period: "/month",
+      name: 'Pro',
+      description: 'Ideal for freelancers and professionals',
+      price: isAnnual ? 'R79' : 'R99',
+      period: '/month',
       features: [
-        "5 email signatures",
-        "5+ premium templates",
-        "Logo & banner uploads",
-        "Advanced social media integration",
-        "Real-time analytics dashboard",
-        "Export to all email clients",
-        "Priority support & tutorials",
-        "A/B testing for signatures"
+        '5 email signatures',
+        '5+ premium templates',
+        'Logo & banner uploads',
+        'Advanced social media integration',
+        'Real-time analytics dashboard',
+        'Export to all email clients',
+        'Priority support & tutorials',
+        'A/B testing for signatures',
       ],
-      buttonText: "Start Free Trial",
-      buttonVariant: "default",
-      popular: true
+      buttonText: 'Start Free Trial',
+      buttonVariant: 'default',
+      popular: true,
     },
     {
-      name: "Team",
-      description: "Built for businesses and growing teams",
-      price: isAnnual ? "R239" : "R299",
-      period: "/month",
+      name: 'Team',
+      description: 'Built for businesses and growing teams',
+      price: isAnnual ? 'R239' : 'R299',
+      period: '/month',
       features: [
-        "Unlimited signatures",
-        "Advanced team management",
-        "Custom branding & templates",
-        "White-label solutions",
-        "Advanced analytics & reporting",
-        "API access & integrations",
-        "Dedicated account manager",
-        "SSO & enterprise security"
+        'Unlimited signatures',
+        'Advanced team management',
+        'Custom branding & templates',
+        'White-label solutions',
+        'Advanced analytics & reporting',
+        'API access & integrations',
+        'Dedicated account manager',
+        'SSO & enterprise security',
       ],
-      buttonText: "Contact Sales",
-      buttonVariant: "outline"
-    }
+      buttonText: 'Contact Sales',
+      buttonVariant: 'outline',
+    },
   ];
 
   return (
@@ -256,14 +267,21 @@ export function PricingSection() {
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
             Simple, Transparent
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"> Pricing</span>
+            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              {' '}
+              Pricing
+            </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
             Choose the perfect plan for your needs. Upgrade or downgrade at any time.
           </p>
           {/* Billing toggle */}
           <div className="flex items-center justify-center gap-4 mb-8">
-            <span className={`text-sm font-medium ${!isAnnual ? 'text-foreground' : 'text-muted-foreground'}`}>Monthly</span>
+            <span
+              className={`text-sm font-medium ${!isAnnual ? 'text-foreground' : 'text-muted-foreground'}`}
+            >
+              Monthly
+            </span>
             <Button
               onClick={() => setIsAnnual(!isAnnual)}
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary ${
@@ -279,7 +297,11 @@ export function PricingSection() {
                 }`}
               />
             </Button>
-            <span className={`text-sm font-medium ${isAnnual ? 'text-foreground' : 'text-muted-foreground'}`}>Annual</span>
+            <span
+              className={`text-sm font-medium ${isAnnual ? 'text-foreground' : 'text-muted-foreground'}`}
+            >
+              Annual
+            </span>
             {isAnnual && (
               <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
                 Save 20%

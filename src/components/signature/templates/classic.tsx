@@ -19,16 +19,15 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
     secondaryColor = '#666666',
   } = props;
 
-  // Error handling for required fields
-  if (!name || !email) {
-    console.error('Classic template: Name and email are required fields');
-  }
+  // Use default values for required fields if not provided
+  const displayName = name || 'Your Name';
+  const displayEmail = email || 'email@company.com';
 
   return (
     <section id="classic">
       <div className="text-xs space-y-1" style={{ color: primaryColor }}>
         <div>
-          <strong>{name}</strong>
+          <strong>{displayName}</strong>
           {title && <span style={{ color: secondaryColor }}> | {title}</span>}
         </div>
         {company && (
@@ -37,10 +36,10 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
           </div>
         )}
         <div style={{ color: secondaryColor }}>
-          {email && <span>Email: {email}</span>}
+          <span>Email: {displayEmail}</span>
           {phone && (
             <span>
-              {email ? ' | ' : ''}Phone: {phone}
+              {' | '}Phone: {phone}
             </span>
           )}
         </div>
