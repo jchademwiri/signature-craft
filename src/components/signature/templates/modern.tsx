@@ -71,15 +71,34 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
               colSpan={logoData ? 2 : 1}
               style={{ paddingTop: '8px', fontSize: '12px', color: secondaryColor }}
             >
-              <span>📧 {displayEmail}</span>
+              <span>
+                📧{' '}
+                <a
+                  href={`mailto:${displayEmail}`}
+                  style={{ color: primaryColor, textDecoration: 'none' }}
+                >
+                  {displayEmail}
+                </a>
+              </span>
               {phone && (
                 <span>
-                  {' | '}📞 {phone}
+                  {' | '}📞{' '}
+                  <a href={`tel:${phone}`} style={{ color: primaryColor, textDecoration: 'none' }}>
+                    {phone}
+                  </a>
                 </span>
               )}
               {website && (
                 <span>
-                  {' | '}🌐 {website}
+                  {' | '}🌐{' '}
+                  <a
+                    href={website.startsWith('http') ? website : `https://${website}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: primaryColor, textDecoration: 'none' }}
+                  >
+                    {website}
+                  </a>
                 </span>
               )}
             </td>

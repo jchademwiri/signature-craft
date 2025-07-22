@@ -36,14 +36,37 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
           </div>
         )}
         <div style={{ color: secondaryColor }}>
-          <span>Email: {displayEmail}</span>
+          <span>
+            Email:{' '}
+            <a
+              href={`mailto:${displayEmail}`}
+              style={{ color: primaryColor, textDecoration: 'none' }}
+            >
+              {displayEmail}
+            </a>
+          </span>
           {phone && (
             <span>
-              {' | '}Phone: {phone}
+              {' | '}Phone:{' '}
+              <a href={`tel:${phone}`} style={{ color: primaryColor, textDecoration: 'none' }}>
+                {phone}
+              </a>
             </span>
           )}
         </div>
-        {website && <div style={{ color: secondaryColor }}>Web: {website}</div>}
+        {website && (
+          <div style={{ color: secondaryColor }}>
+            Web:{' '}
+            <a
+              href={website.startsWith('http') ? website : `https://${website}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: primaryColor, textDecoration: 'none' }}
+            >
+              {website}
+            </a>
+          </div>
+        )}
         {logoData && (
           <div>
             <Image

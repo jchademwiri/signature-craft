@@ -30,13 +30,7 @@ export const Minimal: TemplateComponent = (props: TemplateProps): ReactElement =
     return '';
   })();
 
-  // Build contact line with email and phone
-  const contactLine = (() => {
-    const contacts = [];
-    contacts.push(displayEmail);
-    if (phone) contacts.push(phone);
-    return contacts.join(' | ');
-  })();
+  // We'll handle the contact line differently to include proper links
 
   return (
     <section id="minimal">
@@ -65,8 +59,35 @@ export const Minimal: TemplateComponent = (props: TemplateProps): ReactElement =
         )}
 
         {/* Contact information line - email and phone */}
-        {contactLine && (
-          <div style={{ color: secondaryColor, fontSize: '13px' }}>{contactLine}</div>
+        <div style={{ color: secondaryColor, fontSize: '13px' }}>
+          <a
+            href={`mailto:${displayEmail}`}
+            style={{ color: primaryColor, textDecoration: 'none' }}
+          >
+            {displayEmail}
+          </a>
+          {phone && (
+            <>
+              {' | '}
+              <a href={`tel:${phone}`} style={{ color: primaryColor, textDecoration: 'none' }}>
+                {phone}
+              </a>
+            </>
+          )}
+        </div>
+
+        {/* Website link if provided */}
+        {props.website && (
+          <div style={{ color: secondaryColor, fontSize: '13px', marginTop: '2px' }}>
+            <a
+              href={props.website.startsWith('http') ? props.website : `https://${props.website}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: primaryColor, textDecoration: 'none' }}
+            >
+              {props.website}
+            </a>
+          </div>
         )}
       </div>
     </section>
