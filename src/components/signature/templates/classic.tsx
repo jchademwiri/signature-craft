@@ -49,9 +49,10 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
             <Image
               src={logoData}
               alt="Logo"
-              width={100}
-              height={50}
-              style={{ maxWidth: '100px', maxHeight: '50px' }}
+              width={150}
+              height={0}
+              style={{ maxWidth: '150px', width: 'auto', height: 'auto' }}
+              unoptimized
             />
           </div>
         )}

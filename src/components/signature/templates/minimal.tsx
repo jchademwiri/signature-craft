@@ -48,8 +48,9 @@ export const Minimal: TemplateComponent = (props: TemplateProps): ReactElement =
               src={logoData}
               alt="Logo"
               width={80}
-              height={40}
-              style={{ maxWidth: '80px', maxHeight: '40px' }}
+              height={0}
+              style={{ maxWidth: '80px', width: 'auto', height: 'auto' }}
+              unoptimized
             />
           </div>
         )}

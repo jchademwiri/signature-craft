@@ -51,8 +51,9 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
                   src={logoData}
                   alt="Logo"
                   width={80}
-                  height={50}
-                  style={{ maxWidth: '80px', maxHeight: '50px', display: 'block' }}
+                  height={0}
+                  style={{ maxWidth: '80px', width: 'auto', height: 'auto', display: 'block' }}
+                  unoptimized
                 />
               </td>
             )}
