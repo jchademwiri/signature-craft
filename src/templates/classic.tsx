@@ -26,68 +26,65 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
   return (
     <section id="classic">
       <div
-        className="text-sm space-y-3"
+        className="text-sm"
         style={{
           color: primaryColor,
           width: '100%',
-          maxWidth: '500px',
+          maxWidth: '400px',
           background: 'white',
-          padding: '16px',
+          padding: '8px',
           fontFamily: 'Arial, sans-serif',
+          lineHeight: '1.4',
         }}
       >
-        {logoData && (
-          <div style={{ marginBottom: '12px' }}>
-            <img
-              src={logoData}
-              alt="Logo"
-              style={{ maxWidth: '120px', height: 'auto', display: 'block' }}
-            />
-          </div>
-        )}
-        <div style={{ marginBottom: '8px' }}>
-          <strong style={{ fontSize: '16px', color: primaryColor }}>{displayName}</strong>
-          {title && (
-            <div style={{ color: secondaryColor, fontSize: '14px', marginTop: '2px' }}>{title}</div>
-          )}
+        <div style={{ marginBottom: '3px' }}>
+          <strong style={{ fontSize: '15px', color: primaryColor }}>{displayName}</strong>
+          {title && <span style={{ color: secondaryColor, fontSize: '13px' }}> | {title}</span>}
         </div>
         {company && (
-          <div style={{ marginBottom: '8px' }}>
-            <strong style={{ fontSize: '14px' }}>{company}</strong>
+          <div style={{ marginBottom: '3px' }}>
+            <strong style={{ fontSize: '13px' }}>{company}</strong>
           </div>
         )}
-        <div style={{ color: secondaryColor, marginBottom: '6px' }}>
-          <div style={{ marginBottom: '4px' }}>
-            📧{' '}
-            <a
-              href={`mailto:${displayEmail}`}
-              style={{ color: primaryColor, textDecoration: 'none' }}
-            >
-              {displayEmail}
-            </a>
-          </div>
+        <div style={{ color: secondaryColor, fontSize: '12px', marginBottom: '3px' }}>
+          📧{' '}
+          <a
+            href={`mailto:${displayEmail}`}
+            style={{ color: primaryColor, textDecoration: 'none' }}
+          >
+            {displayEmail}
+          </a>
           {phone && (
-            <div style={{ marginBottom: '4px' }}>
-              📞{' '}
+            <>
+              {' | '}📞{' '}
               <a href={`tel:${phone}`} style={{ color: primaryColor, textDecoration: 'none' }}>
                 {phone}
               </a>
-            </div>
-          )}
-          {website && (
-            <div style={{ marginBottom: '4px' }}>
-              🌐{' '}
-              <a
-                href={website.startsWith('http') ? website : `https://${website}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ color: primaryColor, textDecoration: 'none' }}
-              >
-                {website}
-              </a>
-            </div>
+            </>
           )}
         </div>
+        {website && (
+          <div style={{ color: secondaryColor, fontSize: '12px', marginBottom: '3px' }}>
+            🌐{' '}
+            <a
+              href={website.startsWith('http') ? website : `https://${website}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: primaryColor, textDecoration: 'none' }}
+            >
+              {website}
+            </a>
+          </div>
+        )}
+        {logoData && (
+          <div style={{ marginTop: '6px' }}>
+            <img
+              src={logoData}
+              alt="Logo"
+              style={{ maxWidth: '80px', height: 'auto', display: 'block' }}
+            />
+          </div>
+        )}
       </div>
     </section>
   );

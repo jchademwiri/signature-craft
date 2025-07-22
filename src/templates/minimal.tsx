@@ -35,75 +35,69 @@ export const Minimal: TemplateComponent = (props: TemplateProps): ReactElement =
       <div
         style={{
           fontFamily: 'Arial, sans-serif',
-          fontSize: '14px',
-          lineHeight: '1.5',
+          fontSize: '13px',
+          lineHeight: '1.4',
           width: '100%',
-          maxWidth: '500px',
+          maxWidth: '400px',
           background: 'white',
-          padding: '16px',
+          padding: '8px',
         }}
       >
-        {/* Logo - only if provided */}
-        {logoData && (
-          <div style={{ marginBottom: '12px' }}>
-            <img
-              src={logoData}
-              alt="Logo"
-              style={{ maxWidth: '120px', width: 'auto', height: 'auto', display: 'block' }}
-            />
-          </div>
-        )}
-
         {/* Name - always displayed and required */}
         <div
-          style={{ fontWeight: 'bold', color: primaryColor, marginBottom: '6px', fontSize: '18px' }}
+          style={{ fontWeight: 'bold', color: primaryColor, marginBottom: '2px', fontSize: '15px' }}
         >
           {displayName}
         </div>
 
         {/* Title and Company line - only if at least one exists */}
         {titleCompanyLine && (
-          <div style={{ color: secondaryColor, marginBottom: '8px', fontSize: '14px' }}>
+          <div style={{ color: secondaryColor, marginBottom: '3px', fontSize: '13px' }}>
             {titleCompanyLine}
           </div>
         )}
 
         {/* Contact information */}
-        <div style={{ marginBottom: '6px' }}>
-          <div style={{ marginBottom: '4px' }}>
-            📧{' '}
-            <a
-              href={`mailto:${displayEmail}`}
-              style={{ color: primaryColor, textDecoration: 'none', fontSize: '14px' }}
-            >
-              {displayEmail}
-            </a>
-          </div>
+        <div style={{ fontSize: '12px', color: secondaryColor }}>
+          <a
+            href={`mailto:${displayEmail}`}
+            style={{ color: primaryColor, textDecoration: 'none' }}
+          >
+            {displayEmail}
+          </a>
           {phone && (
-            <div style={{ marginBottom: '4px' }}>
-              📞{' '}
-              <a
-                href={`tel:${phone}`}
-                style={{ color: primaryColor, textDecoration: 'none', fontSize: '14px' }}
-              >
+            <>
+              {' | '}
+              <a href={`tel:${phone}`} style={{ color: primaryColor, textDecoration: 'none' }}>
                 {phone}
               </a>
-            </div>
+            </>
           )}
           {props.website && (
-            <div style={{ marginBottom: '4px' }}>
-              🌐{' '}
+            <>
+              {' | '}
               <a
                 href={props.website.startsWith('http') ? props.website : `https://${props.website}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ color: primaryColor, textDecoration: 'none', fontSize: '14px' }}
+                style={{ color: primaryColor, textDecoration: 'none' }}
               >
                 {props.website}
               </a>
-            </div>
+            </>
           )}
         </div>
+
+        {/* Logo - at the bottom for minimal template */}
+        {logoData && (
+          <div style={{ marginTop: '6px' }}>
+            <img
+              src={logoData}
+              alt="Logo"
+              style={{ maxWidth: '70px', width: 'auto', height: 'auto', display: 'block' }}
+            />
+          </div>
+        )}
       </div>
     </section>
   );

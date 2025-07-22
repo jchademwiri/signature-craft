@@ -16,7 +16,7 @@ const mockData: TemplateProps = {
   phone: '+27 11 123 4567',
   website: 'www.techcorp.co.za',
   address: 'Cape Town, South Africa',
-  logoData: 'https://placehold.co/200x80/2563eb/ffffff?text=TechCorp', // Using a placeholder logo that will definitely show
+  logoData: '/logo.svg', // Using the actual logo
   primaryColor: '#2563eb',
   secondaryColor: '#64748b',
   socialLinks: {
@@ -136,9 +136,9 @@ export default function TemplatesGalleryPage() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="bg-muted/20 p-12 rounded-lg border-2 border-dashed border-muted-foreground/20 hover:bg-muted/30 transition-colors">
+                  <div className="bg-muted/20 p-6 rounded-lg border-2 border-dashed border-muted-foreground/20 hover:bg-muted/30 transition-colors">
                     <div className="flex justify-center">
-                      <div className="w-full max-w-lg bg-white p-6 rounded-md shadow-sm">
+                      <div className="w-full max-w-lg bg-white p-3 rounded-md shadow-sm">
                         <Template {...mockData} />
                       </div>
                     </div>

@@ -36,10 +36,10 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
     <section id="modern">
       <div
         style={{
-          padding: '16px',
+          padding: '8px',
           fontFamily: 'Arial, sans-serif',
           width: '100%',
-          maxWidth: '500px',
+          maxWidth: '400px',
         }}
       >
         <table
@@ -56,7 +56,7 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
                 <td
                   style={{
                     verticalAlign: 'top',
-                    paddingRight: '20px',
+                    paddingRight: '12px',
                     width: 'auto',
                     paddingTop: '0px',
                   }}
@@ -64,7 +64,7 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
                   <img
                     src={logoData}
                     alt="Logo"
-                    style={{ maxWidth: '100px', width: 'auto', height: 'auto', display: 'block' }}
+                    style={{ maxWidth: '70px', width: 'auto', height: 'auto', display: 'block' }}
                   />
                 </td>
               )}
@@ -72,15 +72,15 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
                 <div
                   style={{
                     fontWeight: 'bold',
-                    fontSize: '18px',
-                    marginBottom: '6px',
+                    fontSize: '15px',
+                    marginBottom: '2px',
                     color: primaryColor,
                   }}
                 >
                   {displayName}
                 </div>
                 {titleCompanyText && (
-                  <div style={{ color: secondaryColor, fontSize: '14px', marginBottom: '4px' }}>
+                  <div style={{ color: secondaryColor, fontSize: '13px', marginBottom: '2px' }}>
                     {titleCompanyText}
                   </div>
                 )}
@@ -89,9 +89,9 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
             <tr>
               <td
                 colSpan={logoData ? 2 : 1}
-                style={{ paddingTop: '12px', fontSize: '14px', color: secondaryColor }}
+                style={{ paddingTop: '6px', fontSize: '12px', color: secondaryColor }}
               >
-                <div style={{ marginBottom: '4px' }}>
+                <div style={{ marginBottom: '2px' }}>
                   📧{' '}
                   <a
                     href={`mailto:${displayEmail}`}
@@ -101,7 +101,7 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
                   </a>
                 </div>
                 {phone && (
-                  <div style={{ marginBottom: '4px' }}>
+                  <div style={{ marginBottom: '2px' }}>
                     📞{' '}
                     <a
                       href={`tel:${phone}`}
@@ -112,7 +112,7 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
                   </div>
                 )}
                 {website && (
-                  <div style={{ marginBottom: '4px' }}>
+                  <div style={{ marginBottom: '2px' }}>
                     🌐{' '}
                     <a
                       href={website.startsWith('http') ? website : `https://${website}`}

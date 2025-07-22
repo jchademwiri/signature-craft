@@ -42,10 +42,10 @@ export const Corporate: TemplateComponent = (props: TemplateProps): ReactElement
       <div
         style={{
           fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-          width: '600px',
-          maxWidth: '100%',
+          width: '100%',
+          maxWidth: '400px',
           background: 'white',
-          padding: '0',
+          padding: '8px',
           margin: '0',
         }}
       >
@@ -55,7 +55,7 @@ export const Corporate: TemplateComponent = (props: TemplateProps): ReactElement
             width: '100%',
             backgroundColor: '#ffffff',
             border: `1px solid #e2e8f0`,
-            borderRadius: '8px',
+            borderRadius: '6px',
             overflow: 'hidden',
           }}
         >
@@ -65,44 +65,41 @@ export const Corporate: TemplateComponent = (props: TemplateProps): ReactElement
               {/* Left section with profile image */}
               <td
                 style={{
-                  width: '120px',
-                  padding: '20px',
+                  width: '80px',
+                  padding: '12px',
                   verticalAlign: 'top',
                   backgroundColor: '#f8fafc',
-                  borderRight: `3px solid ${primaryColor}`,
+                  borderRight: `2px solid ${primaryColor}`,
                 }}
               >
                 <div
                   style={{
-                    width: '80px',
-                    height: '80px',
+                    width: '60px',
+                    height: '60px',
                     borderRadius: '50%',
                     backgroundColor: primaryColor,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     color: 'white',
-                    fontSize: '28px',
+                    fontSize: '20px',
                     fontWeight: 'bold',
                     margin: '0 auto',
-                    border: '3px solid white',
-                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                    border: '2px solid white',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
                   }}
                 >
                   {/* If logoData is provided, use it as profile image, otherwise show initials */}
                   {logoData ? (
-                    <Image
+                    <img
                       src={logoData}
                       alt="Profile"
-                      width={74}
-                      height={74}
                       style={{
-                        width: '74px',
-                        height: '74px',
+                        width: '56px',
+                        height: '56px',
                         borderRadius: '50%',
                         objectFit: 'cover',
                       }}
-                      unoptimized
                     />
                   ) : (
                     <span>
@@ -118,15 +115,15 @@ export const Corporate: TemplateComponent = (props: TemplateProps): ReactElement
               </td>
 
               {/* Right section with contact info */}
-              <td style={{ padding: '20px', verticalAlign: 'top' }}>
+              <td style={{ padding: '12px', verticalAlign: 'top' }}>
                 {/* Name and title */}
-                <div style={{ marginBottom: '12px' }}>
+                <div style={{ marginBottom: '8px' }}>
                   <div
                     style={{
-                      fontSize: '20px',
+                      fontSize: '16px',
                       fontWeight: 'bold',
                       color: primaryColor,
-                      marginBottom: '4px',
+                      marginBottom: '2px',
                       lineHeight: '1.2',
                     }}
                   >
@@ -134,17 +131,17 @@ export const Corporate: TemplateComponent = (props: TemplateProps): ReactElement
                   </div>
                   <div
                     style={{
-                      fontSize: '14px',
+                      fontSize: '12px',
                       color: secondaryColor,
                       fontWeight: '500',
-                      marginBottom: '2px',
+                      marginBottom: '1px',
                     }}
                   >
                     {displayTitle}
                   </div>
                   <div
                     style={{
-                      fontSize: '14px',
+                      fontSize: '12px',
                       color: primaryColor,
                       fontWeight: '600',
                     }}
