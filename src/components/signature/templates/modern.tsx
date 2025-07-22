@@ -39,8 +39,9 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
           fontFamily: 'Arial, sans-serif',
           color: primaryColor,
           borderCollapse: 'collapse',
-          width: '100%',
-          maxWidth: '400px',
+          width: '600px',
+          maxWidth: '100%',
+          background: 'white',
         }}
       >
         <tbody>

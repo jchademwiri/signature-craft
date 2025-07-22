@@ -34,7 +34,16 @@ export const Minimal: TemplateComponent = (props: TemplateProps): ReactElement =
 
   return (
     <section id="minimal">
-      <div style={{ fontFamily: 'Arial, sans-serif', fontSize: '14px', lineHeight: '1.4' }}>
+      <div
+        style={{
+          fontFamily: 'Arial, sans-serif',
+          fontSize: '14px',
+          lineHeight: '1.4',
+          width: '600px',
+          maxWidth: '100%',
+          background: 'white',
+        }}
+      >
         {/* Logo - only if provided */}
         {logoData && (
           <div style={{ marginBottom: '6px' }}>

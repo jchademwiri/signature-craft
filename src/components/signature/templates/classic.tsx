@@ -25,7 +25,10 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
 
   return (
     <section id="classic">
-      <div className="text-xs space-y-1" style={{ color: primaryColor }}>
+      <div
+        className="text-xs space-y-1"
+        style={{ color: primaryColor, width: '600px', maxWidth: '100%', background: 'white' }}
+      >
         <div>
           <strong>{displayName}</strong>
           {title && <span style={{ color: secondaryColor }}> | {title}</span>}
@@ -72,9 +75,9 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
             <Image
               src={logoData}
               alt="Logo"
-              width={150}
+              width={80}
               height={0}
-              style={{ maxWidth: '150px', width: 'auto', height: 'auto' }}
+              style={{ maxWidth: '80px', width: 'auto', height: 'auto' }}
               unoptimized
             />
           </div>

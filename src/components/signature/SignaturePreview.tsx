@@ -76,7 +76,9 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
       font-size: 16px;
       line-height: 1.4;
       color: #333333;
-      background: #fff;
+      background: #ffffff;
+      width: 600px;
+      max-width: 100%;
     `;
 
     switch (templateId) {
@@ -184,13 +186,28 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
     <div className="space-y-6">
       {/* Hidden contenteditable divs for rich copy */}
       <div style={{ position: 'absolute', left: '-9999px', top: 0 }}>
-        <div ref={outlookRef} contentEditable suppressContentEditableWarning>
+        <div
+          ref={outlookRef}
+          contentEditable
+          suppressContentEditableWarning
+          style={{ background: 'white' }}
+        >
           {generateSignatureHTML(false)}
         </div>
-        <div ref={gmailRef} contentEditable suppressContentEditableWarning>
+        <div
+          ref={gmailRef}
+          contentEditable
+          suppressContentEditableWarning
+          style={{ background: 'white' }}
+        >
           {generateSignatureHTML(false)}
         </div>
-        <div ref={appleMailRef} contentEditable suppressContentEditableWarning>
+        <div
+          ref={appleMailRef}
+          contentEditable
+          suppressContentEditableWarning
+          style={{ background: 'white' }}
+        >
           {generateSignatureHTML(false)}
         </div>
       </div>
@@ -214,13 +231,13 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
 
         <TabsContent value="desktop" className="mt-4">
           <Card className="p-4 bg-white border-2 border-dashed border-gray-200">
-            <div className="min-h-[200px]">{generateSignatureHTML(false)}</div>
+            <div className="min-h-[200px] bg-white">{generateSignatureHTML(false)}</div>
           </Card>
         </TabsContent>
 
         <TabsContent value="mobile" className="mt-4">
           <Card className="p-4 bg-white border-2 border-dashed border-gray-200 max-w-sm mx-auto">
-            <div className="min-h-[200px]">{generateSignatureHTML(true)}</div>
+            <div className="min-h-[200px] bg-white">{generateSignatureHTML(true)}</div>
           </Card>
         </TabsContent>
       </Tabs>
