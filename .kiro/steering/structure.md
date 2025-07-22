@@ -5,6 +5,7 @@ inclusion: always
 # SignatureCraft MVP Project Structure & Organization
 
 ## Current Directory Structure (✅ IMPLEMENTED)
+
 ```
 signaturecraft-mvp/
 ├── .kiro/                    # Kiro AI configuration
@@ -17,31 +18,40 @@ signaturecraft-mvp/
 │   └── checklist.md          # Development checklist
 ├── src/                      # Source code
 │   ├── app/                  # Next.js App Router pages
+│   │   ├── (admin)/         # ✅ Admin preview environment
+│   │   │   └── preview/     # ✅ Template preview development environment
 │   │   ├── (auth)/          # ✅ Authentication pages group
 │   │   │   ├── login/page.tsx        # ✅ Login page
 │   │   │   ├── register/page.tsx     # ✅ Register page
 │   │   │   ├── reset-password/page.tsx # ✅ Password reset
+│   │   │   ├── verify-email/page.tsx # ✅ Email verification
 │   │   │   └── layout.tsx            # ✅ Auth layout
+│   │   ├── (dashboard)/     # ✅ Protected dashboard routes
+│   │   │   ├── builder/page.tsx      # ✅ Signature builder
+│   │   │   ├── dashboard/page.tsx    # ✅ User dashboard
+│   │   │   ├── settings/page.tsx     # ✅ User settings
+│   │   │   └── layout.tsx            # ✅ Dashboard layout
+│   │   ├── (site)/          # ✅ Public site pages
+│   │   │   ├── templates/page.tsx    # ✅ Template showcase
+│   │   │   ├── page.tsx              # ✅ Landing page
+│   │   │   └── layout.tsx            # ✅ Site layout
 │   │   ├── api/auth/[...all]/route.ts  # ✅ Better Auth handler
 │   │   ├── layout.tsx        # ✅ Root layout with theme provider
-│   │   ├── page.tsx          # ✅ Landing page with hero/features
 │   │   └── globals.css       # ✅ Global styles
 │   ├── components/           # React components
 │   │   ├── ui/              # ✅ ShadCN UI components
-│   │   │   ├── button.tsx
-│   │   │   ├── input.tsx
-│   │   │   ├── card.tsx
-│   │   │   ├── container.tsx
-│   │   │   ├── accordion.tsx
-│   │   │   ├── dropdown-menu.tsx
-│   │   │   ├── form.tsx
-│   │   │   ├── label.tsx
-│   │   │   ├── separator.tsx
-│   │   │   └── tabs.tsx
+│   │   │   ├── button.tsx, input.tsx, card.tsx, container.tsx
+│   │   │   ├── accordion.tsx, dropdown-menu.tsx, form.tsx
+│   │   │   ├── label.tsx, separator.tsx, tabs.tsx
+│   │   │   └── alert-dialog.tsx      # ✅ Alert dialog component
 │   │   ├── auth/            # ✅ Authentication components
 │   │   │   ├── LoginForm.tsx         # ✅ Login form with validation
 │   │   │   ├── RegisterForm.tsx      # ✅ Registration form
 │   │   │   └── ResetPasswordForm.tsx # ✅ Password reset form
+│   │   ├── navigation/      # ✅ Navigation components
+│   │   │   ├── admin/       # ✅ Admin navigation components
+│   │   │   ├── dashboard/   # ✅ Dashboard navigation components
+│   │   │   └── site/        # ✅ Site navigation components
 │   │   ├── ✅ hero-section.tsx       # Landing page hero
 │   │   ├── ✅ features-section.tsx   # Features showcase
 │   │   ├── ✅ pricing-section.tsx    # Pricing display
@@ -52,11 +62,13 @@ signaturecraft-mvp/
 │   │   ├── ✅ theme-provider.tsx     # Dark/light theme support
 │   │   ├── ✅ theme-toggle.tsx       # Theme switcher
 │   │   └── ✅ newsletter-signup.tsx  # Newsletter component
+│   ├── db/                  # ✅ Database configuration
+│   │   ├── index.ts         # ✅ NeonDB connection
+│   │   └── schema.ts        # ✅ Drizzle schema with Better Auth tables
 │   ├── lib/                 # ✅ Utilities and configuration
 │   │   ├── auth.ts          # ✅ Better Auth server configuration
 │   │   ├── auth-client.ts   # ✅ Better Auth client configuration
-│   │   ├── db.ts            # ✅ NeonDB connection
-│   │   └── schema.ts        # ✅ Drizzle schema with Better Auth tables
+│   │   └── utils.ts         # ✅ Utility functions
 │   ├── ✅ constant.ts       # Application constants
 │   └── ✅ middleware.ts     # Route protection middleware
 ├── emails/                  # ✅ React Email templates
@@ -118,6 +130,7 @@ signaturecraft-mvp/
 ```
 
 ## File Naming Conventions
+
 - **Pages**: Use `page.tsx` for App Router pages
 - **Components**: PascalCase for component files (e.g., `SignatureBuilder.tsx`)
 - **Utilities**: kebab-case for utility files (e.g., `auth-client.ts`)
@@ -125,6 +138,7 @@ signaturecraft-mvp/
 - **Types**: Use `.types.ts` suffix for type definition files
 
 ## Import Path Rules
+
 - **Absolute Imports**: Always use `@/` alias for src directory
 - **Component Imports**: `import { Button } from "@/components/ui/button"`
 - **Utility Imports**: `import { cn } from "@/lib/utils"`
@@ -134,18 +148,20 @@ signaturecraft-mvp/
 ## Component Organization Principles
 
 ### Authentication Components
+
 ```typescript
 // Login form with Better Auth integration
-import { authClient } from "@/lib/auth-client"
+import { authClient } from '@/lib/auth-client';
 
 export function LoginForm() {
   const handleLogin = async (data) => {
-    await authClient.signIn.email(data)
-  }
+    await authClient.signIn.email(data);
+  };
 }
 ```
 
 ### Signature Builder Components
+
 ```typescript
 // Form-based builder (not drag-and-drop)
 export function SignatureBuilder() {
@@ -160,36 +176,42 @@ export function SignatureBuilder() {
 ```
 
 ### Database Schema Location
+
 ```typescript
 // src/lib/schema.ts - Drizzle schema with Better Auth integration
-import { pgTable, uuid, varchar, text, timestamp, boolean } from 'drizzle-orm/pg-core'
+import { pgTable, uuid, varchar, text, timestamp, boolean } from 'drizzle-orm/pg-core';
 
 export const users = pgTable('users', {
   id: text('id').primaryKey(),
   name: text('name').notNull(),
   email: text('email').notNull().unique(),
-  emailVerified: boolean('email_verified').$defaultFn(() => false).notNull(),
+  emailVerified: boolean('email_verified')
+    .$defaultFn(() => false)
+    .notNull(),
   // ... other Better Auth fields
-})
+});
 
 export const signatures = pgTable('signatures', {
   id: uuid('id').primaryKey().defaultRandom(),
-  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  userId: text('user_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
   name: varchar('name', { length: 100 }).notNull(),
   // ... other signature fields
-})
+});
 ```
 
 ## API Route Structure
+
 ```typescript
 // src/app/api/signatures/route.ts
-import { auth } from "@/lib/auth/auth"
-import { NextRequest } from "next/server"
+import { auth } from '@/lib/auth/auth';
+import { NextRequest } from 'next/server';
 
 export async function GET(request: NextRequest) {
   const session = await auth.api.getSession({
-    headers: request.headers
-  })
+    headers: request.headers,
+  });
   // Handle GET request
 }
 
@@ -199,12 +221,14 @@ export async function POST(request: NextRequest) {
 ```
 
 ## Asset Management
+
 - **Logos**: Store in `/public/` for direct access
 - **Icons**: Use Lucide React icons or store in `/public/`
 - **Images**: Process client-side with Canvas API, store as base64
 - **Fonts**: Use Next.js font optimization
 
 ## Configuration Files
+
 - **Environment**: `.env.local` for local development
 - **TypeScript**: Strict mode enabled in `tsconfig.json`
 - **Tailwind**: Custom configuration in `tailwind.config.ts`
