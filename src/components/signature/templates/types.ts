@@ -1,4 +1,4 @@
-import { JSX } from "react";
+import { JSX } from 'react';
 
 /**
  * Props interface for all signature templates
@@ -8,18 +8,19 @@ export interface TemplateProps {
   // Required fields
   name: string;
   email: string;
-  
+
   // Optional fields
   title?: string;
   company?: string;
   phone?: string;
   website?: string;
-  
+  address?: string;
+
   // Visual customization
   logoData?: string;
   primaryColor?: string;
   secondaryColor?: string;
-  
+
   // Future extensibility fields
   socialLinks?: {
     linkedin?: string;
@@ -28,10 +29,10 @@ export interface TemplateProps {
     instagram?: string;
     [key: string]: string | undefined; // Allow for additional social platforms
   };
-  
+
   // Additional custom fields for future use
   additionalFields?: Record<string, string>;
-  
+
   // Custom styling options for future use
   customStyles?: {
     fontFamily?: string;
@@ -48,17 +49,17 @@ export interface TemplateMetadata {
   id: string;
   name: string;
   description: string;
-  
+
   // Display properties
   previewImage?: string; // Optional path to a static preview image
-  
+
   // Template categorization
   category?: 'professional' | 'creative' | 'minimal' | 'custom';
   tags?: string[]; // For filtering and searching templates
-  
+
   // Version control
   version?: string;
-  
+
   // Author information
   author?: {
     name: string;

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Monitor, Smartphone } from 'lucide-react';
 import { useRef } from 'react';
+import Link from 'next/link';
 
 interface SignaturePreviewProps {
   data: SignatureData;
@@ -83,15 +84,15 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
                 <tr>
                   <td style={{ paddingBottom: '4px' }}>
                     📧{' '}
-                    <a href={`mailto:${email || 'email@company.com'}`} style={linkStyles}>
+                    <Link href={`mailto:${email || 'email@company.com'}`} style={linkStyles}>
                       {email || 'email@company.com'}
-                    </a>
+                    </Link>
                     {phone && (
                       <>
                         {' | '}📞{' '}
-                        <a href={`tel:${phone}`} style={linkStyles}>
+                        <Link href={`tel:${phone}`} style={linkStyles}>
                           {phone}
-                        </a>
+                        </Link>
                       </>
                     )}
                   </td>
@@ -100,9 +101,9 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
                   <tr>
                     <td style={{ paddingBottom: '8px' }}>
                       🌐{' '}
-                      <a href={website} style={linkStyles}>
+                      <Link href={website} style={linkStyles}>
                         {website}
-                      </a>
+                      </Link>
                     </td>
                   </tr>
                 )}
@@ -165,9 +166,6 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
                         {company && <strong>{company}</strong>}
                       </div>
                     )}
-                    {address && (
-                      <div style={{ marginBottom: '8px', ...secondaryTextStyles }}>{address}</div>
-                    )}
                   </td>
                 </tr>
                 <tr>
@@ -181,9 +179,9 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
                       }}
                     >
                       📧{' '}
-                      <a href={`mailto:${email || 'email@company.com'}`} style={linkStyles}>
+                      <Link href={`mailto:${email || 'email@company.com'}`} style={linkStyles}>
                         {email || 'email@company.com'}
-                      </a>
+                      </Link>
                       {phone && (
                         <>
                           <span style={{ color: '#ccc' }}>|</span>
@@ -197,14 +195,21 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
                         <>
                           <span style={{ color: '#ccc' }}>|</span>
                           🌐{' '}
-                          <a href={website} style={linkStyles}>
+                          <Link href={website} style={linkStyles}>
                             {website}
-                          </a>
+                          </Link>
                         </>
                       )}
                     </div>
                   </td>
                 </tr>
+                {address && (
+                  <tr>
+                    <td colSpan={2} style={{ paddingTop: '6px', ...secondaryTextStyles }}>
+                      {address}
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -334,13 +339,20 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
                 <td style="vertical-align: top;">
                   <div style="margin-bottom: 4px;"><strong style="font-size: 18px;">${name || 'Your Name'}</strong></div>
                   ${title || company ? `<div style="margin-bottom: 8px; color: ${secondaryColor || '#004499'};">${title ? title : ''}${title && company ? ' at ' : ''}${company ? `<strong>${company}</strong>` : ''}</div>` : ''}
-                  ${address ? `<div style="margin-bottom: 8px; color: ${secondaryColor || '#004499'};">${address}</div>` : ''}
                 </td>
               </tr>
               <tr>
                 <td colspan="2" style="padding-top: 8px; border-top: 1px solid #e0e0e0;">
                   <div>📧 <a href="mailto:${email || 'email@company.com'}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${email || 'email@company.com'}</a>${phone ? ` <span style="color: #ccc;">|</span> 📞 <a href="tel:${phone}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${phone}</a>` : ''}${website ? ` <span style="color: #ccc;">|</span> 🌐 <a href="${website}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${website}</a>` : ''}</div>
                 </td>
+              </tr>
+              ${
+                address
+                  ? `<tr>
+                <td colspan="2" style="padding-top: 6px; color: ${secondaryColor || '#004499'};">${address}</td>
+              </tr>`
+                  : ''
+              }
               </tr>
             </tbody>
           </table>

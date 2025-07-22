@@ -14,6 +14,7 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
     email,
     phone,
     website,
+    address,
     logoData,
     primaryColor = '#000000',
     secondaryColor = '#666666',
@@ -70,19 +71,29 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
               colSpan={logoData ? 2 : 1}
               style={{ paddingTop: '8px', fontSize: '12px', color: secondaryColor }}
             >
-              {email && <span>Email: {email}</span>}
+              {email && <span>📧 {email}</span>}
               {phone && (
                 <span>
-                  {email ? ' | ' : ''}Phone: {phone}
+                  {email ? ' | ' : ''}📞 {phone}
                 </span>
               )}
               {website && (
                 <span>
-                  {email || phone ? ' | ' : ''}Web: {website}
+                  {email || phone ? ' | ' : ''}🌐 {website}
                 </span>
               )}
             </td>
           </tr>
+          {address && (
+            <tr>
+              <td
+                colSpan={logoData ? 2 : 1}
+                style={{ paddingTop: '6px', fontSize: '12px', color: secondaryColor }}
+              >
+                {address}
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </section>
