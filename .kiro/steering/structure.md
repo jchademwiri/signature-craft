@@ -105,13 +105,14 @@ signaturecraft-mvp/
 │   ├── TemplateSelector.tsx       # ✅ Template selection with visual previews
 │   ├── FormFields.tsx             # ✅ Contact info form with validation
 │   ├── LogoUpload.tsx             # ✅ Logo upload with drag-and-drop and error handling
-│   ├── BrandColors.tsx            # ✅ Color customization with picker interface
-│   └── templates/                 # Template system components
-│       ├── types.ts               # Template interfaces and types
-│       ├── index.ts               # Template registry system
-│       ├── classic.tsx            # Classic template implementation
-│       ├── modern.tsx             # Modern template implementation
-│       └── minimal.tsx            # Minimal template implementation
+│   └── BrandColors.tsx            # ✅ Color customization with picker interface
+├── src/templates/                 # ✅ Template system components (moved to top level)
+│   ├── types.ts                   # Template interfaces and types
+│   ├── index.ts                   # Template registry system
+│   ├── classic.tsx                # Classic template implementation
+│   ├── modern.tsx                 # Modern template implementation
+│   ├── minimal.tsx                # Minimal template implementation
+│   └── corporate.tsx              # Corporate template with circular profile image
 
 ## 🚧 PENDING IMPLEMENTATION (PHASE 3)
 ├── src/app/export/page.tsx         # Dedicated export page with comprehensive guides

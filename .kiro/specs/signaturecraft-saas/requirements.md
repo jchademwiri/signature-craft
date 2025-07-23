@@ -7,8 +7,9 @@ SignatureCraft is a lean, focused MVP for creating professional email signatures
 **Core Value Proposition**: "Professional email signatures in 3 clicks - no design skills required"
 
 **Primary User Journey**:
+
 1. Sign up → 2 minutes
-2. Build signature → 3 minutes  
+2. Build signature → 3 minutes
 3. Copy to email → 30 seconds
 4. Done ✅
 
@@ -49,12 +50,13 @@ SignatureCraft is a lean, focused MVP for creating professional email signatures
 
 #### Acceptance Criteria
 
-1. WHEN a user accesses the builder THEN the system SHALL provide exactly 3 template options (Classic, Modern, Minimal)
+1. WHEN a user accesses the builder THEN the system SHALL provide exactly 4 template options (Classic, Modern, Minimal, Corporate)
 2. WHEN a user selects a template THEN the system SHALL immediately update the preview with that template's layout
 3. WHEN a user switches between templates THEN the system SHALL preserve their entered information
 4. WHEN a user views the Classic template THEN the system SHALL display name, title, company, contact info, and logo in a traditional layout
 5. WHEN a user views the Modern template THEN the system SHALL display logo alongside name with contact info below
 6. WHEN a user views the Minimal template THEN the system SHALL display only essential information in a clean format
+7. WHEN a user views the Corporate template THEN the system SHALL display a professional layout with circular profile image, modern typography, and company branding
 
 ### Requirement 4: Copy-Paste Export System
 
@@ -115,6 +117,7 @@ SignatureCraft is a lean, focused MVP for creating professional email signatures
 ## Non-Functional Requirements
 
 ### Performance Requirements
+
 - Page load time: <3 seconds (measured via Vercel Analytics)
 - Time to First Contentful Paint: <1.5 seconds
 - Signature generation: <500ms
@@ -122,6 +125,7 @@ SignatureCraft is a lean, focused MVP for creating professional email signatures
 - Database queries: <100ms average response time
 
 ### Security Requirements
+
 - Authentication: Secure password hashing with Better Auth
 - Session management: HTTPOnly cookies, secure flags
 - Input validation: All user inputs sanitized
@@ -130,11 +134,13 @@ SignatureCraft is a lean, focused MVP for creating professional email signatures
 - XSS protection: Input sanitization, Content Security Policy
 
 ### Compatibility Requirements
+
 - Browser support: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
 - Email client compatibility: Gmail, Outlook (desktop/web/mobile), Apple Mail, Thunderbird, Yahoo Mail
 - Device support: Desktop (1920x1080+), Tablet (768px+), Mobile (360px+)
 
 ### Scalability Requirements
+
 - Concurrent users: Support 100+ simultaneous users
 - Database: Handle 10,000+ signature records
 - Storage: Efficient base64 logo storage (MVP approach)
@@ -143,6 +149,7 @@ SignatureCraft is a lean, focused MVP for creating professional email signatures
 ## Technical Requirements
 
 ### Frontend Stack
+
 - Framework: Next.js 15 with App Router
 - Language: TypeScript with strict mode
 - Styling: Tailwind CSS + ShadCN UI components
@@ -151,6 +158,7 @@ SignatureCraft is a lean, focused MVP for creating professional email signatures
 - Image processing: Client-side canvas manipulation
 
 ### Backend Stack
+
 - Database: NeonDB (PostgreSQL serverless)
 - Authentication: Better Auth
 - ORM: Drizzle ORM
@@ -158,6 +166,7 @@ SignatureCraft is a lean, focused MVP for creating professional email signatures
 - Storage: Base64 in database (MVP approach - no separate file storage)
 
 ### Architecture Decisions (MVP Simplifications)
+
 - No separate file storage service (store images as base64 in DB)
 - No email service integration (users copy/paste signatures)
 - No analytics tracking (focus on core functionality)
@@ -167,11 +176,13 @@ SignatureCraft is a lean, focused MVP for creating professional email signatures
 ## Business Requirements
 
 ### Target Market
+
 - Primary: South African professionals and SMBs
 - Focus: Individual users needing professional email signatures
 - Market size: 1.2M+ SMBs in South Africa
 
 ### Success Metrics
+
 - User acquisition: 200+ registered users in first 3 months
 - Activation rate: 70% create their first signature
 - Completion rate: 80% successfully export signature
@@ -179,6 +190,7 @@ SignatureCraft is a lean, focused MVP for creating professional email signatures
 - Technical performance: <3 second load times
 
 ### MVP Business Model
+
 - Free tier: 1 signature, basic templates, SignatureCraft branding
 - Validation focus: Prove product-market fit before monetization
 - Future: Pro tier at R99/month for unlimited signatures and premium features
