@@ -1,14 +1,39 @@
 'use client';
 
 import { useSession } from '@/lib/auth-client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TEMPLATES } from '@/templates';
 import { TemplateComponent, TemplateProps } from '@/templates/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Monitor, Smartphone } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Monitor, Smartphone, Save, Plus, Trash2, Upload, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+
+interface TestDataConfig {
+  id: string;
+  name: string;
+  description?: string;
+  testName: string;
+  testTitle?: string;
+  testCompany?: string;
+  testEmail: string;
+  testPhone?: string;
+  testWebsite?: string;
+  testLogoData?: string;
+  testPrimaryColor: string;
+  testSecondaryColor: string;
+  isDefault: boolean;
+}
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -19,7 +44,7 @@ const sidebarItems = [
   { label: 'Corporate', id: 'corporate' },
 ];
 
-const mockData: TemplateProps = {
+const defaultMockData: TemplateProps = {
   name: 'Sarah Johnson',
   title: 'Senior Product Manager',
   company: 'TechCorp Solutions',
@@ -35,6 +60,290 @@ export default function Preview() {
   const { data: session, isPending } = useSession();
   const [selected, setSelected] = useState<string>(sidebarItems[0].id);
   const [viewMode, setViewMode] = useState<'desktop' | 'mobile'>('desktop');
+
+  // Test data state
+  const [testConfigs, setTestConfigs] = useState<TestDataConfig[]>([]);
+  const [currentConfig, setCurrentConfig] = useState<string>('');
+  const [testData, setTestData] = useState<TemplateProps>(defaultMockData);
+  const [configName, setConfigName] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isUploadingLogo, setIsUploadingLogo] = useState(false);
+
+  // Load test configurations on mount
+  useEffect(() => {
+    if (session) {
+      loadTestConfigs();
+    }
+  }, [session]);
+
+  const loadTestConfigs = async () => {
+    try {
+      setIsLoading(true);
+      console.log('Loading test configs...');
+
+      const response = await fetch('/api/admin/test-data');
+      console.log('Load response status:', response.status);
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Loaded configs:', data.configs);
+        setTestConfigs(data.configs || []);
+
+        // Load default config if exists
+        const defaultConfig = data.configs?.find((config: TestDataConfig) => config.isDefault);
+        if (defaultConfig) {
+          loadTestConfig(defaultConfig);
+          setCurrentConfig(defaultConfig.id);
+        }
+      } else {
+        const errorData = await response.json();
+        console.error('Failed to load configs:', errorData);
+      }
+    } catch (error) {
+      console.error('Error loading test configs:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const loadTestConfig = (config: TestDataConfig) => {
+    setTestData({
+      name: config.testName,
+      title: config.testTitle || '',
+      company: config.testCompany || '',
+      email: config.testEmail,
+      phone: config.testPhone || '',
+      website: config.testWebsite || '',
+      logoData: config.testLogoData || '',
+      primaryColor: config.testPrimaryColor,
+      secondaryColor: config.testSecondaryColor,
+    });
+  };
+
+  const saveTestConfig = async () => {
+    if (!configName.trim()) {
+      alert('Please enter a configuration name');
+      return;
+    }
+
+    if (!testData.name || !testData.email) {
+      alert('Please fill in required fields: Name and Email');
+      return;
+    }
+
+    try {
+      setIsSaving(true);
+      console.log('Saving test config:', {
+        id: currentConfig || undefined,
+        name: configName,
+        testData,
+      });
+
+      const response = await fetch('/api/admin/test-data', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: currentConfig || undefined,
+          name: configName,
+          description: `Test data configuration: ${configName}`,
+          testName: testData.name,
+          testTitle: testData.title,
+          testCompany: testData.company,
+          testEmail: testData.email,
+          testPhone: testData.phone,
+          testWebsite: testData.website,
+          testLogoData: testData.logoData,
+          testPrimaryColor: testData.primaryColor,
+          testSecondaryColor: testData.secondaryColor,
+          isDefault: false,
+        }),
+      });
+
+      console.log('Response status:', response.status);
+      const responseData = await response.json();
+      console.log('Response data:', responseData);
+
+      if (response.ok) {
+        await loadTestConfigs();
+        setCurrentConfig(responseData.config.id);
+        alert('Test configuration saved successfully!');
+      } else {
+        console.error('Save failed:', responseData);
+        alert(`Failed to save: ${responseData.error || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Error saving test config:', error);
+      alert(
+        `Failed to save test configuration: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const deleteTestConfig = async (configId: string) => {
+    if (!confirm('Are you sure you want to delete this configuration?')) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/admin/test-data/${configId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        await loadTestConfigs();
+        if (currentConfig === configId) {
+          setCurrentConfig('');
+          setTestData(defaultMockData);
+        }
+        alert('Configuration deleted successfully!');
+      }
+    } catch (error) {
+      console.error('Error deleting test config:', error);
+      alert('Failed to delete configuration');
+    }
+  };
+
+  const handleTestDataChange = (field: keyof TemplateProps, value: string) => {
+    setTestData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const loadPresetData = (preset: 'default' | 'minimal' | 'noLogo') => {
+    switch (preset) {
+      case 'default':
+        setTestData(defaultMockData);
+        break;
+      case 'minimal':
+        setTestData({
+          name: 'John Doe',
+          title: '',
+          company: '',
+          email: 'john@example.com',
+          phone: '',
+          website: '',
+          logoData: '',
+          primaryColor: '#000000',
+          secondaryColor: '#666666',
+        });
+        break;
+      case 'noLogo':
+        setTestData({
+          ...defaultMockData,
+          logoData: '',
+        });
+        break;
+    }
+  };
+
+  // Logo upload functions
+  const handleLogoUpload = async (file: File) => {
+    if (!file) return;
+
+    // Validate file type
+    const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml'];
+    if (!allowedTypes.includes(file.type)) {
+      alert('Please upload a PNG, JPG, or SVG file');
+      return;
+    }
+
+    // Validate file size (2MB max)
+    const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+    if (file.size > maxSize) {
+      alert('File size must be less than 2MB');
+      return;
+    }
+
+    try {
+      setIsUploadingLogo(true);
+
+      // Convert to base64
+      const base64 = await fileToBase64(file);
+
+      // If it's not SVG, resize the image
+      if (file.type !== 'image/svg+xml') {
+        const resizedBase64 = await resizeImage(base64, 150, 150);
+        handleTestDataChange('logoData', resizedBase64);
+      } else {
+        handleTestDataChange('logoData', base64);
+      }
+
+      console.log('Logo uploaded successfully');
+    } catch (error) {
+      console.error('Error uploading logo:', error);
+      alert('Failed to upload logo. Please try again.');
+    } finally {
+      setIsUploadingLogo(false);
+    }
+  };
+
+  const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
+  const resizeImage = (base64: string, maxWidth: number, maxHeight: number): Promise<string> => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d')!;
+
+        // Calculate new dimensions
+        let { width, height } = img;
+        if (width > height) {
+          if (width > maxWidth) {
+            height = (height * maxWidth) / width;
+            width = maxWidth;
+          }
+        } else {
+          if (height > maxHeight) {
+            width = (width * maxHeight) / height;
+            height = maxHeight;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        // Draw and resize
+        ctx.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/png', 0.9));
+      };
+      img.src = base64;
+    });
+  };
+
+  const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      handleLogoUpload(file);
+    }
+  };
+
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    if (file) {
+      handleLogoUpload(file);
+    }
+  };
+
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
+
+  const removeLogo = () => {
+    handleTestDataChange('logoData', '');
+  };
 
   if (!isDev && !isPending && !session) {
     return (
@@ -131,7 +440,7 @@ export default function Preview() {
                         viewMode === 'mobile' && 'max-w-[375px] mx-auto p-4'
                       )}
                     >
-                      <Template {...mockData} showMobile={viewMode === 'mobile'} />
+                      <Template {...testData} showMobile={viewMode === 'mobile'} />
                     </div>
                     <div className="mt-4 text-center">
                       <span className="text-sm text-muted-foreground">
@@ -147,71 +456,169 @@ export default function Preview() {
                   <CardHeader>
                     <CardTitle>Test Data</CardTitle>
                     <CardDescription>
-                      Edit sample data to test how templates look with different information
+                      Edit and save test data configurations for template testing
                     </CardDescription>
+                    {session && (
+                      <div className="text-xs text-green-600">
+                        ✓ Logged in as: {session.user.email}
+                      </div>
+                    )}
+                    {!session && !isPending && (
+                      <div className="text-xs text-red-600">✗ Not logged in</div>
+                    )}
+                    {isPending && (
+                      <div className="text-xs text-yellow-600">⏳ Checking session...</div>
+                    )}
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-4">
-                      <div className="flex items-center space-x-2 mb-4">
-                        <Button
-                          size="sm"
-                          onClick={() => {
-                            // Reset to default data
-                            window.location.reload();
-                          }}
-                        >
-                          Reset to Default
+                    <div className="space-y-6">
+                      {/* Configuration Management */}
+                      <div className="space-y-4">
+                        <div className="flex items-center space-x-2">
+                          <Select
+                            value={currentConfig}
+                            onValueChange={(value) => {
+                              setCurrentConfig(value);
+                              const config = testConfigs.find((c) => c.id === value);
+                              if (config) {
+                                loadTestConfig(config);
+                                setConfigName(config.name);
+                              }
+                            }}
+                          >
+                            <SelectTrigger className="w-48">
+                              <SelectValue placeholder="Select configuration" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {testConfigs.map((config) => (
+                                <SelectItem key={config.id} value={config.id}>
+                                  {config.name} {config.isDefault && '(Default)'}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+
+                          {currentConfig && (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => deleteTestConfig(currentConfig)}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          )}
+                        </div>
+
+                        <div className="flex items-center space-x-2">
+                          <Input
+                            placeholder="Configuration name"
+                            value={configName}
+                            onChange={(e) => setConfigName(e.target.value)}
+                            className="w-48"
+                          />
+                          <Button
+                            size="sm"
+                            onClick={saveTestConfig}
+                            disabled={isSaving || !configName.trim()}
+                          >
+                            {isSaving ? (
+                              <>Saving...</>
+                            ) : (
+                              <>
+                                <Save className="h-4 w-4 mr-1" />
+                                Save Config
+                              </>
+                            )}
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => {
+                              console.log('Current test data:', testData);
+                              console.log('Config name:', configName);
+                              console.log('Current config:', currentConfig);
+                            }}
+                          >
+                            Debug Data
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={async () => {
+                              try {
+                                const response = await fetch('/api/admin/test-simple', {
+                                  method: 'POST',
+                                  headers: { 'Content-Type': 'application/json' },
+                                  body: JSON.stringify({
+                                    testData,
+                                    configName,
+                                    timestamp: new Date().toISOString(),
+                                  }),
+                                });
+                                const data = await response.json();
+                                console.log('Simple test result:', data);
+                                alert(`Simple test: ${data.status}`);
+                              } catch (error) {
+                                console.error('Simple test failed:', error);
+                                alert(`Simple test failed: ${error}`);
+                              }
+                            }}
+                          >
+                            Test API
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* Quick Presets */}
+                      <div className="flex items-center space-x-2 pb-4 border-b">
+                        <Button size="sm" onClick={() => loadPresetData('default')}>
+                          Default Data
                         </Button>
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() => {
-                            // Set minimal data
-                            console.log('Set minimal data');
-                          }}
+                          onClick={() => loadPresetData('minimal')}
                         >
                           Minimal Data
                         </Button>
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() => {
-                            // Set no logo data
-                            console.log('Set no logo data');
-                          }}
+                          onClick={() => loadPresetData('noLogo')}
                         >
                           No Logo
                         </Button>
                       </div>
 
+                      {/* Form Fields */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-4">
                           <div>
-                            <label className="text-sm font-medium">Full Name *</label>
-                            <input
-                              type="text"
-                              className="w-full mt-1 px-3 py-2 border rounded-md"
-                              defaultValue={mockData.name}
+                            <Label htmlFor="testName">Full Name *</Label>
+                            <Input
+                              id="testName"
+                              value={testData.name}
+                              onChange={(e) => handleTestDataChange('name', e.target.value)}
                               placeholder="John Doe"
                             />
                           </div>
 
                           <div>
-                            <label className="text-sm font-medium">Job Title</label>
-                            <input
-                              type="text"
-                              className="w-full mt-1 px-3 py-2 border rounded-md"
-                              defaultValue={mockData.title}
+                            <Label htmlFor="testTitle">Job Title</Label>
+                            <Input
+                              id="testTitle"
+                              value={testData.title || ''}
+                              onChange={(e) => handleTestDataChange('title', e.target.value)}
                               placeholder="Software Developer"
                             />
                           </div>
 
                           <div>
-                            <label className="text-sm font-medium">Company</label>
-                            <input
-                              type="text"
-                              className="w-full mt-1 px-3 py-2 border rounded-md"
-                              defaultValue={mockData.company}
+                            <Label htmlFor="testCompany">Company</Label>
+                            <Input
+                              id="testCompany"
+                              value={testData.company || ''}
+                              onChange={(e) => handleTestDataChange('company', e.target.value)}
                               placeholder="Acme Corp"
                             />
                           </div>
@@ -219,103 +626,174 @@ export default function Preview() {
 
                         <div className="space-y-4">
                           <div>
-                            <label className="text-sm font-medium">Email *</label>
-                            <input
+                            <Label htmlFor="testEmail">Email *</Label>
+                            <Input
+                              id="testEmail"
                               type="email"
-                              className="w-full mt-1 px-3 py-2 border rounded-md"
-                              defaultValue={mockData.email}
+                              value={testData.email}
+                              onChange={(e) => handleTestDataChange('email', e.target.value)}
                               placeholder="john@company.com"
                             />
                           </div>
 
                           <div>
-                            <label className="text-sm font-medium">Phone</label>
-                            <input
+                            <Label htmlFor="testPhone">Phone</Label>
+                            <Input
+                              id="testPhone"
                               type="tel"
-                              className="w-full mt-1 px-3 py-2 border rounded-md"
-                              defaultValue={mockData.phone}
+                              value={testData.phone || ''}
+                              onChange={(e) => handleTestDataChange('phone', e.target.value)}
                               placeholder="+27 11 123 4567"
                             />
                           </div>
 
                           <div>
-                            <label className="text-sm font-medium">Website</label>
-                            <input
+                            <Label htmlFor="testWebsite">Website</Label>
+                            <Input
+                              id="testWebsite"
                               type="url"
-                              className="w-full mt-1 px-3 py-2 border rounded-md"
-                              defaultValue={mockData.website}
+                              value={testData.website || ''}
+                              onChange={(e) => handleTestDataChange('website', e.target.value)}
                               placeholder="www.company.com"
                             />
                           </div>
                         </div>
                       </div>
 
-                      <div className="space-y-4">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div>
-                            <label className="text-sm font-medium">Primary Color</label>
-                            <div className="flex items-center space-x-2 mt-1">
-                              <div
-                                className="w-8 h-8 rounded border"
-                                style={{ backgroundColor: mockData.primaryColor }}
-                              />
-                              <input
-                                type="color"
-                                className="w-16 h-8 border rounded"
-                                defaultValue={mockData.primaryColor}
-                              />
-                              <input
-                                type="text"
-                                className="flex-1 px-3 py-2 border rounded-md"
-                                defaultValue={mockData.primaryColor}
-                                placeholder="#4285f4"
-                              />
-                            </div>
-                          </div>
-
-                          <div>
-                            <label className="text-sm font-medium">Secondary Color</label>
-                            <div className="flex items-center space-x-2 mt-1">
-                              <div
-                                className="w-8 h-8 rounded border"
-                                style={{ backgroundColor: mockData.secondaryColor }}
-                              />
-                              <input
-                                type="color"
-                                className="w-16 h-8 border rounded"
-                                defaultValue={mockData.secondaryColor}
-                              />
-                              <input
-                                type="text"
-                                className="flex-1 px-3 py-2 border rounded-md"
-                                defaultValue={mockData.secondaryColor}
-                                placeholder="#9aa0a6"
-                              />
-                            </div>
+                      {/* Colors */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor="primaryColor">Primary Color</Label>
+                          <div className="flex items-center space-x-2 mt-1">
+                            <div
+                              className="w-8 h-8 rounded border"
+                              style={{ backgroundColor: testData.primaryColor }}
+                            />
+                            <Input
+                              id="primaryColor"
+                              type="color"
+                              value={testData.primaryColor}
+                              onChange={(e) => handleTestDataChange('primaryColor', e.target.value)}
+                              className="w-16 h-8"
+                            />
+                            <Input
+                              value={testData.primaryColor}
+                              onChange={(e) => handleTestDataChange('primaryColor', e.target.value)}
+                              placeholder="#4285f4"
+                              className="flex-1"
+                            />
                           </div>
                         </div>
 
                         <div>
-                          <label className="text-sm font-medium">Logo</label>
-                          <div className="mt-1 border-2 border-dashed border-gray-300 rounded-md p-4 text-center">
-                            <div className="text-sm text-muted-foreground">
-                              Drag and drop your logo here, or click to browse
+                          <Label htmlFor="secondaryColor">Secondary Color</Label>
+                          <div className="flex items-center space-x-2 mt-1">
+                            <div
+                              className="w-8 h-8 rounded border"
+                              style={{ backgroundColor: testData.secondaryColor }}
+                            />
+                            <Input
+                              id="secondaryColor"
+                              type="color"
+                              value={testData.secondaryColor}
+                              onChange={(e) =>
+                                handleTestDataChange('secondaryColor', e.target.value)
+                              }
+                              className="w-16 h-8"
+                            />
+                            <Input
+                              value={testData.secondaryColor}
+                              onChange={(e) =>
+                                handleTestDataChange('secondaryColor', e.target.value)
+                              }
+                              placeholder="#9aa0a6"
+                              className="flex-1"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Logo Upload */}
+                      <div>
+                        <Label>Logo</Label>
+                        {testData.logoData ? (
+                          <div className="mt-1 border rounded-md p-4">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center space-x-2">
+                                <div className="w-12 h-12 bg-gray-100 rounded flex items-center justify-center overflow-hidden">
+                                  <img
+                                    src={testData.logoData}
+                                    alt="Logo preview"
+                                    className="max-w-full max-h-full object-contain"
+                                  />
+                                </div>
+                                <div className="text-sm">Logo uploaded</div>
+                              </div>
+                              <Button size="sm" variant="outline" onClick={removeLogo}>
+                                <X className="h-4 w-4 mr-1" />
+                                Remove
+                              </Button>
                             </div>
-                            <Button variant="outline" size="sm" className="mt-2">
+                          </div>
+                        ) : (
+                          <div
+                            className="mt-1 border-2 border-dashed border-gray-300 rounded-md p-4 text-center"
+                            onDragOver={handleDragOver}
+                            onDrop={handleDrop}
+                          >
+                            <input
+                              type="file"
+                              id="logo-upload"
+                              className="hidden"
+                              accept="image/png,image/jpeg,image/jpg,image/svg+xml"
+                              onChange={handleFileInputChange}
+                            />
+                            <div className="text-sm text-muted-foreground">
+                              {isUploadingLogo
+                                ? 'Processing logo...'
+                                : 'Drag and drop your logo here, or click to browse'}
+                            </div>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="mt-2"
+                              onClick={() => document.getElementById('logo-upload')?.click()}
+                              disabled={isUploadingLogo}
+                            >
+                              <Upload className="h-4 w-4 mr-1" />
                               Choose File
                             </Button>
                             <div className="text-xs text-muted-foreground mt-1">
                               PNG, JPG, SVG up to 2MB
                             </div>
                           </div>
-                        </div>
+                        )}
                       </div>
 
+                      {/* Status */}
                       <div className="pt-4 border-t">
-                        <div className="text-sm text-muted-foreground">
-                          <strong>Note:</strong> This is a development environment for testing
-                          templates. Changes here don't affect the actual preview data yet - this
-                          would be connected to live preview updates in a full implementation.
+                        <div className="flex items-center justify-between">
+                          <div className="text-sm text-muted-foreground">
+                            <strong>Status:</strong> Changes are applied to preview in real-time.
+                            Save configurations to persist your test data across sessions.
+                          </div>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={async () => {
+                              try {
+                                const response = await fetch('/api/admin/test-connection');
+                                const data = await response.json();
+                                console.log('Connection test:', data);
+                                alert(`Connection test: ${JSON.stringify(data, null, 2)}`);
+                              } catch (error) {
+                                console.error('Connection test failed:', error);
+                                alert(`Connection test failed: ${error}`);
+                              }
+                            }}
+                          >
+                            Test Connection
+                          </Button>
                         </div>
                       </div>
                     </div>
