@@ -22,6 +22,9 @@ interface FeedbackModalProps {
   description?: string;
   type?: FeedbackType;
   showContactForm?: boolean;
+  showConfirmation?: boolean;
+  onConfirm?: () => void;
+  onCancel?: () => void;
   onSubmitFeedback?: (email: string, message: string) => void;
 }
 
@@ -32,6 +35,9 @@ export function FeedbackModal({
   description,
   type = 'info',
   showContactForm = false,
+  showConfirmation = false,
+  onConfirm,
+  onCancel,
   onSubmitFeedback,
 }: FeedbackModalProps) {
   const [email, setEmail] = useState('');
@@ -88,7 +94,9 @@ export function FeedbackModal({
           {getIcon()}
           <DialogHeader className="flex-1">
             <DialogTitle>{title}</DialogTitle>
-            {description && <DialogDescription>{description}</DialogDescription>}
+            {description && (
+              <DialogDescription className="whitespace-pre-wrap">{description}</DialogDescription>
+            )}
           </DialogHeader>
         </div>
 
@@ -118,13 +126,37 @@ export function FeedbackModal({
         )}
 
         <DialogFooter className="sm:justify-end">
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Close
-          </Button>
-          {showContactForm && (
-            <Button onClick={handleSubmit} disabled={isSubmitting || !email || !message}>
-              {isSubmitting ? 'Sending...' : 'Send Feedback'}
-            </Button>
+          {showConfirmation ? (
+            <>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  if (onCancel) onCancel();
+                  onOpenChange(false);
+                }}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={() => {
+                  if (onConfirm) onConfirm();
+                }}
+              >
+                Confirm
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button variant="outline" onClick={() => onOpenChange(false)}>
+                Close
+              </Button>
+              {showContactForm && (
+                <Button onClick={handleSubmit} disabled={isSubmitting || !email || !message}>
+                  {isSubmitting ? 'Sending...' : 'Send Feedback'}
+                </Button>
+              )}
+            </>
           )}
         </DialogFooter>
       </DialogContent>

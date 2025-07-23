@@ -102,6 +102,12 @@ export default function Preview() {
     setFeedbackTitle(title);
     setFeedbackDescription(description);
     setFeedbackModalOpen(true);
+
+    // Reset confirmation state when showing non-confirmation feedback
+    if (!showDeleteConfirm) {
+      setShowDeleteConfirm(false);
+      setConfigToDelete(null);
+    }
   };
 
   // Handle feedback submission
@@ -236,11 +242,21 @@ export default function Preview() {
     }
   };
 
-  const deleteTestConfig = async (configId: string) => {
-    if (!confirm('Are you sure you want to delete this configuration?')) {
-      return;
-    }
+  // State for confirmation dialog
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [configToDelete, setConfigToDelete] = useState<string | null>(null);
 
+  const confirmDeleteConfig = (configId: string) => {
+    setConfigToDelete(configId);
+    showFeedback(
+      'error',
+      'Confirm Deletion',
+      'Are you sure you want to delete this configuration?'
+    );
+    setShowDeleteConfirm(true);
+  };
+
+  const deleteTestConfig = async (configId: string) => {
     try {
       const response = await fetch(`/api/admin/test-data/${configId}`, {
         method: 'DELETE',
@@ -259,6 +275,9 @@ export default function Preview() {
     } catch (error) {
       console.error('Error deleting test config:', error);
       showFeedback('error', 'Delete Error', 'An error occurred while deleting the configuration.');
+    } finally {
+      setConfigToDelete(null);
+      setShowDeleteConfirm(false);
     }
   };
 
@@ -558,7 +577,7 @@ export default function Preview() {
                             <Button
                               size="sm"
                               variant="outline"
-                              onClick={() => deleteTestConfig(currentConfig)}
+                              onClick={() => confirmDeleteConfig(currentConfig)}
                             >
                               <Trash2 className="h-4 w-4" />
                             </Button>
@@ -593,6 +612,24 @@ export default function Preview() {
                               console.log('Current test data:', testData);
                               console.log('Config name:', configName);
                               console.log('Current config:', currentConfig);
+
+                              // Show debug info in feedback modal
+                              const debugInfo = `
+Config Name: ${configName || 'Not set'}
+Current Config ID: ${currentConfig || 'Not set'}
+Test Data:
+- Name: ${testData.name}
+- Title: ${testData.title || 'Not set'}
+- Company: ${testData.company || 'Not set'}
+- Email: ${testData.email}
+- Phone: ${testData.phone || 'Not set'}
+- Website: ${testData.website || 'Not set'}
+- Logo: ${testData.logoData ? 'Present' : 'Not set'}
+- Primary Color: ${testData.primaryColor}
+- Secondary Color: ${testData.secondaryColor}
+                              `;
+
+                              showFeedback('info', 'Debug Information', debugInfo);
                             }}
                           >
                             Debug Data
@@ -912,6 +949,16 @@ export default function Preview() {
         title={feedbackTitle}
         description={feedbackDescription}
         type={feedbackType}
+        showConfirmation={showDeleteConfirm}
+        onConfirm={() => {
+          if (configToDelete) {
+            deleteTestConfig(configToDelete);
+          }
+        }}
+        onCancel={() => {
+          setShowDeleteConfirm(false);
+          setConfigToDelete(null);
+        }}
         showContactForm={feedbackType === 'info'}
         onSubmitFeedback={handleFeedbackSubmit}
       />
