@@ -16,7 +16,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Monitor, Smartphone, Save, Plus, Trash2, Upload, X } from 'lucide-react';
+import {
+  Monitor,
+  Smartphone,
+  Save,
+  Plus,
+  Trash2,
+  Upload,
+  X,
+  CheckCircle,
+  AlertCircle,
+  Info,
+  MessageSquare,
+} from 'lucide-react';
+import { FeedbackModal } from '@/components/feedback-modal';
 import { cn } from '@/lib/utils';
 
 interface TestDataConfig {
@@ -70,12 +83,38 @@ export default function Preview() {
   const [isSaving, setIsSaving] = useState(false);
   const [isUploadingLogo, setIsUploadingLogo] = useState(false);
 
+  // Feedback modal state
+  const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
+  const [feedbackType, setFeedbackType] = useState<'success' | 'error' | 'info'>('success');
+  const [feedbackTitle, setFeedbackTitle] = useState('');
+  const [feedbackDescription, setFeedbackDescription] = useState('');
+
   // Load test configurations on mount
   useEffect(() => {
     if (session) {
       loadTestConfigs();
     }
   }, [session]);
+
+  // Show feedback modal
+  const showFeedback = (type: 'success' | 'error' | 'info', title: string, description: string) => {
+    setFeedbackType(type);
+    setFeedbackTitle(title);
+    setFeedbackDescription(description);
+    setFeedbackModalOpen(true);
+  };
+
+  // Handle feedback submission
+  const handleFeedbackSubmit = async (email: string, message: string) => {
+    console.log('Feedback submitted:', { email, message });
+    // In a real app, you would send this to your backend
+    // For now, we'll just log it and show a success message
+    showFeedback(
+      'success',
+      'Thank you for your feedback!',
+      'We appreciate your input and will review it shortly.'
+    );
+  };
 
   const loadTestConfigs = async () => {
     try {
@@ -99,14 +138,19 @@ export default function Preview() {
       } else {
         const errorData = await response.json();
         console.error('Failed to load configs:', errorData);
+        showFeedback('error', 'Loading Failed', 'Could not load your saved configurations.');
       }
     } catch (error) {
       console.error('Error loading test configs:', error);
+      showFeedback(
+        'error',
+        'Loading Error',
+        'An unexpected error occurred while loading configurations.'
+      );
     } finally {
       setIsLoading(false);
     }
   };
-
   const loadTestConfig = (config: TestDataConfig) => {
     setTestData({
       name: config.testName,
@@ -123,12 +167,16 @@ export default function Preview() {
 
   const saveTestConfig = async () => {
     if (!configName.trim()) {
-      alert('Please enter a configuration name');
+      showFeedback('error', 'Missing Information', 'Please enter a configuration name');
       return;
     }
 
     if (!testData.name || !testData.email) {
-      alert('Please fill in required fields: Name and Email');
+      showFeedback(
+        'error',
+        'Missing Information',
+        'Please fill in required fields: Name and Email'
+      );
       return;
     }
 
@@ -167,14 +215,20 @@ export default function Preview() {
       if (response.ok) {
         await loadTestConfigs();
         setCurrentConfig(responseData.config.id);
-        alert('Test configuration saved successfully!');
+        showFeedback('success', 'Saved Successfully', 'Your test configuration has been saved.');
       } else {
         console.error('Save failed:', responseData);
-        alert(`Failed to save: ${responseData.error || 'Unknown error'}`);
+        showFeedback(
+          'error',
+          'Save Failed',
+          responseData.error || 'Unknown error occurred while saving.'
+        );
       }
     } catch (error) {
       console.error('Error saving test config:', error);
-      alert(
+      showFeedback(
+        'error',
+        'Save Error',
         `Failed to save test configuration: ${error instanceof Error ? error.message : 'Unknown error'}`
       );
     } finally {
@@ -198,11 +252,13 @@ export default function Preview() {
           setCurrentConfig('');
           setTestData(defaultMockData);
         }
-        alert('Configuration deleted successfully!');
+        showFeedback('success', 'Deleted Successfully', 'The configuration has been deleted.');
+      } else {
+        showFeedback('error', 'Delete Failed', 'Could not delete the configuration.');
       }
     } catch (error) {
       console.error('Error deleting test config:', error);
-      alert('Failed to delete configuration');
+      showFeedback('error', 'Delete Error', 'An error occurred while deleting the configuration.');
     }
   };
 
@@ -247,17 +303,16 @@ export default function Preview() {
     // Validate file type
     const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml'];
     if (!allowedTypes.includes(file.type)) {
-      alert('Please upload a PNG, JPG, or SVG file');
+      showFeedback('error', 'Invalid File Type', 'Please upload a PNG, JPG, or SVG file');
       return;
     }
 
     // Validate file size (2MB max)
     const maxSize = 2 * 1024 * 1024; // 2MB in bytes
     if (file.size > maxSize) {
-      alert('File size must be less than 2MB');
+      showFeedback('error', 'File Too Large', 'File size must be less than 2MB');
       return;
     }
-
     try {
       setIsUploadingLogo(true);
 
@@ -273,9 +328,14 @@ export default function Preview() {
       }
 
       console.log('Logo uploaded successfully');
+      showFeedback(
+        'success',
+        'Logo Uploaded',
+        'Your logo has been uploaded and added to the signature.'
+      );
     } catch (error) {
       console.error('Error uploading logo:', error);
-      alert('Failed to upload logo. Please try again.');
+      showFeedback('error', 'Upload Failed', 'Failed to upload logo. Please try again.');
     } finally {
       setIsUploadingLogo(false);
     }
@@ -310,7 +370,6 @@ export default function Preview() {
             height = maxHeight;
           }
         }
-
         canvas.width = width;
         canvas.height = height;
 
@@ -404,7 +463,6 @@ export default function Preview() {
                 <TabsTrigger value="data">Test Data</TabsTrigger>
                 <TabsTrigger value="export">Export Test</TabsTrigger>
               </TabsList>
-
               <TabsContent value="preview">
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between">
@@ -450,7 +508,6 @@ export default function Preview() {
                   </CardContent>
                 </Card>
               </TabsContent>
-
               <TabsContent value="data">
                 <Card>
                   <CardHeader>
@@ -497,7 +554,6 @@ export default function Preview() {
                               ))}
                             </SelectContent>
                           </Select>
-
                           {currentConfig && (
                             <Button
                               size="sm"
@@ -557,10 +613,18 @@ export default function Preview() {
                                 });
                                 const data = await response.json();
                                 console.log('Simple test result:', data);
-                                alert(`Simple test: ${data.status}`);
+                                showFeedback(
+                                  'success',
+                                  'API Test Result',
+                                  `Simple test: ${data.status}`
+                                );
                               } catch (error) {
                                 console.error('Simple test failed:', error);
-                                alert(`Simple test failed: ${error}`);
+                                showFeedback(
+                                  'error',
+                                  'API Test Failed',
+                                  `Simple test failed: ${error}`
+                                );
                               }
                             }}
                           >
@@ -568,7 +632,6 @@ export default function Preview() {
                           </Button>
                         </div>
                       </div>
-
                       {/* Quick Presets */}
                       <div className="flex items-center space-x-2 pb-4 border-b">
                         <Button size="sm" onClick={() => loadPresetData('default')}>
@@ -623,7 +686,6 @@ export default function Preview() {
                             />
                           </div>
                         </div>
-
                         <div className="space-y-4">
                           <div>
                             <Label htmlFor="testEmail">Email *</Label>
@@ -684,7 +746,6 @@ export default function Preview() {
                             />
                           </div>
                         </div>
-
                         <div>
                           <Label htmlFor="secondaryColor">Secondary Color</Label>
                           <div className="flex items-center space-x-2 mt-1">
@@ -777,23 +838,47 @@ export default function Preview() {
                             <strong>Status:</strong> Changes are applied to preview in real-time.
                             Save configurations to persist your test data across sessions.
                           </div>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={async () => {
-                              try {
-                                const response = await fetch('/api/admin/test-connection');
-                                const data = await response.json();
-                                console.log('Connection test:', data);
-                                alert(`Connection test: ${JSON.stringify(data, null, 2)}`);
-                              } catch (error) {
-                                console.error('Connection test failed:', error);
-                                alert(`Connection test failed: ${error}`);
-                              }
-                            }}
-                          >
-                            Test Connection
-                          </Button>
+                          <div className="flex items-center space-x-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={async () => {
+                                try {
+                                  const response = await fetch('/api/admin/test-connection');
+                                  const data = await response.json();
+                                  console.log('Connection test:', data);
+                                  showFeedback(
+                                    'info',
+                                    'Connection Test Result',
+                                    `Status: ${data.status}\nAuth: ${data.auth}\nDatabase: ${data.database}\nUser ID: ${data.userId}`
+                                  );
+                                } catch (error) {
+                                  console.error('Connection test failed:', error);
+                                  showFeedback(
+                                    'error',
+                                    'Connection Test Failed',
+                                    `Connection test failed: ${error}`
+                                  );
+                                }
+                              }}
+                            >
+                              Test Connection
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => {
+                                showFeedback(
+                                  'info',
+                                  'Send Feedback',
+                                  'We value your input! Please share your thoughts or report any issues you encounter.'
+                                );
+                              }}
+                            >
+                              <MessageSquare className="h-4 w-4 mr-1" />
+                              Feedback
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -820,6 +905,16 @@ export default function Preview() {
           </div>
         </div>
       </div>
+
+      <FeedbackModal
+        open={feedbackModalOpen}
+        onOpenChange={setFeedbackModalOpen}
+        title={feedbackTitle}
+        description={feedbackDescription}
+        type={feedbackType}
+        showContactForm={feedbackType === 'info'}
+        onSubmitFeedback={handleFeedbackSubmit}
+      />
     </main>
   );
 }
