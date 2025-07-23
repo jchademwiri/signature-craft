@@ -67,13 +67,13 @@ export const signatures = pgTable('signatures', {
   email: varchar('email', { length: 255 }).notNull(),
   phone: varchar('phone', { length: 50 }),
   website: varchar('website', { length: 255 }),
+  address: varchar('address', { length: 255 }),
   logoData: text('logo_data'),
   primaryColor: varchar('primary_color', { length: 20 }),
   secondaryColor: varchar('secondary_color', { length: 20 }),
   templateId: varchar('template_id', { length: 20 }).default('classic'),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
-  address: varchar('address', { length: 255 }),
 });
 
 // Test data configurations for preview environment
@@ -91,6 +91,7 @@ export const testDataConfigs = pgTable('test_data_configs', {
   testEmail: varchar('test_email', { length: 255 }).notNull(),
   testPhone: varchar('test_phone', { length: 50 }),
   testWebsite: varchar('test_website', { length: 255 }),
+  testAddress: varchar('test_address', { length: 255 }),
   testLogoData: text('test_logo_data'),
   testPrimaryColor: varchar('test_primary_color', { length: 20 }).default('#4285f4'),
   testSecondaryColor: varchar('test_secondary_color', { length: 20 }).default('#9aa0a6'),

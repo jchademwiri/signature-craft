@@ -14,6 +14,7 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
     email,
     phone,
     website,
+    address,
     logoData,
     primaryColor = '#000000',
     secondaryColor = '#666666',
@@ -74,6 +75,11 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
             >
               {website}
             </a>
+          </div>
+        )}
+        {address && (
+          <div style={{ color: secondaryColor, fontSize: '12px', marginBottom: '3px' }}>
+            📍 <span style={{ color: primaryColor }}>{address}</span>
           </div>
         )}
         {logoData && (

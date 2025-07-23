@@ -13,6 +13,7 @@ export const Minimal: TemplateComponent = (props: TemplateProps): ReactElement =
     company,
     email,
     phone,
+    address,
     primaryColor = '#000000',
     secondaryColor = '#666666',
     logoData,
@@ -87,6 +88,13 @@ export const Minimal: TemplateComponent = (props: TemplateProps): ReactElement =
             </>
           )}
         </div>
+
+        {/* Address - if provided */}
+        {address && (
+          <div style={{ fontSize: '12px', color: secondaryColor, marginTop: '3px' }}>
+            📍 {address}
+          </div>
+        )}
 
         {/* Logo - at the bottom for minimal template */}
         {logoData && (

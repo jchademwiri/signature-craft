@@ -42,6 +42,7 @@ interface TestDataConfig {
   testEmail: string;
   testPhone?: string;
   testWebsite?: string;
+  testAddress?: string;
   testLogoData?: string;
   testPrimaryColor: string;
   testSecondaryColor: string;
@@ -64,6 +65,7 @@ const defaultMockData: TemplateProps = {
   email: 'sarah.johnson@techcorp.com',
   phone: '+27 11 123 4567',
   website: 'www.techcorp.co.za',
+  address: '123 Main Street, Sandton, Johannesburg',
   logoData: '/logo.svg',
   primaryColor: '#4285f4',
   secondaryColor: '#9aa0a6',
@@ -165,6 +167,7 @@ export default function Preview() {
       email: config.testEmail,
       phone: config.testPhone || '',
       website: config.testWebsite || '',
+      address: config.testAddress || '',
       logoData: config.testLogoData || '',
       primaryColor: config.testPrimaryColor,
       secondaryColor: config.testSecondaryColor,
@@ -207,6 +210,7 @@ export default function Preview() {
           testEmail: testData.email,
           testPhone: testData.phone,
           testWebsite: testData.website,
+          testAddress: testData.address,
           testLogoData: testData.logoData,
           testPrimaryColor: testData.primaryColor,
           testSecondaryColor: testData.secondaryColor,
@@ -301,6 +305,7 @@ export default function Preview() {
           email: 'john@example.com',
           phone: '',
           website: '',
+          address: '',
           logoData: '',
           primaryColor: '#000000',
           secondaryColor: '#666666',
@@ -624,6 +629,7 @@ Test Data:
 - Email: ${testData.email}
 - Phone: ${testData.phone || 'Not set'}
 - Website: ${testData.website || 'Not set'}
+- Address: ${testData.address || 'Not set'}
 - Logo: ${testData.logoData ? 'Present' : 'Not set'}
 - Primary Color: ${testData.primaryColor}
 - Secondary Color: ${testData.secondaryColor}
@@ -754,6 +760,16 @@ Test Data:
                               value={testData.website || ''}
                               onChange={(e) => handleTestDataChange('website', e.target.value)}
                               placeholder="www.company.com"
+                            />
+                          </div>
+
+                          <div>
+                            <Label htmlFor="testAddress">Address</Label>
+                            <Input
+                              id="testAddress"
+                              value={testData.address || ''}
+                              onChange={(e) => handleTestDataChange('address', e.target.value)}
+                              placeholder="123 Main St, City, Country"
                             />
                           </div>
                         </div>
