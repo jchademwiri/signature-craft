@@ -75,276 +75,718 @@ export const Corporate: TemplateComponent = (props: TemplateProps): ReactElement
                       />
                     </td>
                   )}
-                  <td style={{ verticalAlign: 'middle' }}>
-                    <div
-                      style={{
-                        fontSize: '22px',
-                        fontWeight: '700',
-                        color: primaryColor,
-                        margin: '0 0 4px 0',
-                        letterSpacing: '-0.5px',
-                      }}
-                    >
-                      {name}
-                    </div>
-                    {(title || company) && (
-                      <div
+                </tr>
+                <td style={{ verticalAlign: 'middle' }}>
+                  {/* Email & Website row */}
+                  {(email || website) && (
+                    <tr>
+                      <td style={{ paddingBottom: '12px', fontSize: '14px' }}>
+                        <table cellPadding="0" cellSpacing="0" border={0} style={{ width: '100%' }}>
+                          <tbody>
+                            <tr>
+                              {/* Email */}
+                              {email && (
+                                <td
+                                  style={{
+                                    verticalAlign: 'top',
+                                    paddingRight: website ? '32px' : '0',
+                                  }}
+                                >
+                                  <table cellPadding="0" cellSpacing="0" border={0}>
+                                    <tbody>
+                                      {/* Email & Website row */}
+                                      {(email || website) && (
+                                        <tr>
+                                          <td
+                                            style={{
+                                              padding: '0 24px 12px 24px',
+                                              fontSize: '14px',
+                                            }}
+                                          >
+                                            <table
+                                              cellPadding="0"
+                                              cellSpacing="0"
+                                              border={0}
+                                              style={{ width: '100%' }}
+                                            >
+                                              <tbody>
+                                                <tr>
+                                                  {/* Email */}
+                                                  {email && (
+                                                    <td
+                                                      style={{
+                                                        verticalAlign: 'top',
+                                                        paddingRight: website ? '32px' : '0',
+                                                      }}
+                                                    >
+                                                      <table
+                                                        cellPadding="0"
+                                                        cellSpacing="0"
+                                                        border={0}
+                                                      >
+                                                        <tbody>
+                                                          <tr>
+                                                            <td
+                                                              style={{
+                                                                width: '20px',
+                                                                verticalAlign: 'top',
+                                                                paddingTop: '2px',
+                                                              }}
+                                                            >
+                                                              <div
+                                                                style={{
+                                                                  width: '16px',
+                                                                  height: '16px',
+                                                                  backgroundColor: accentColor,
+                                                                  borderRadius: '3px',
+                                                                  display: 'inline-block',
+                                                                  textAlign: 'center',
+                                                                  lineHeight: '16px',
+                                                                  fontSize: '10px',
+                                                                  color: '#ffffff',
+                                                                  fontWeight: 'bold',
+                                                                }}
+                                                              >
+                                                                @
+                                                              </div>
+                                                            </td>
+                                                            <td
+                                                              style={{
+                                                                paddingLeft: '12px',
+                                                                verticalAlign: 'top',
+                                                              }}
+                                                            >
+                                                              <a
+                                                                href={`mailto:${email}`}
+                                                                style={{
+                                                                  color: primaryColor,
+                                                                  textDecoration: 'none',
+                                                                  fontWeight: '500',
+                                                                  borderBottom: `1px solid ${borderColor}`,
+                                                                  paddingBottom: '1px',
+                                                                }}
+                                                              >
+                                                                {email}
+                                                              </a>
+                                                            </td>
+                                                          </tr>
+                                                        </tbody>
+                                                      </table>
+                                                    </td>
+                                                  )}
+                                                  {/* Website */}
+                                                  {website && (
+                                                    <td style={{ verticalAlign: 'top' }}>
+                                                      <table
+                                                        cellPadding="0"
+                                                        cellSpacing="0"
+                                                        border={0}
+                                                      >
+                                                        <tbody>
+                                                          <tr>
+                                                            <td
+                                                              style={{
+                                                                width: '20px',
+                                                                verticalAlign: 'top',
+                                                                paddingTop: '2px',
+                                                              }}
+                                                            >
+                                                              <div
+                                                                style={{
+                                                                  width: '16px',
+                                                                  height: '16px',
+                                                                  backgroundColor: accentColor,
+                                                                  borderRadius: '3px',
+                                                                  display: 'inline-block',
+                                                                  textAlign: 'center',
+                                                                  lineHeight: '16px',
+                                                                  fontSize: '10px',
+                                                                  color: '#ffffff',
+                                                                  fontWeight: 'bold',
+                                                                }}
+                                                              >
+                                                                🌐
+                                                              </div>
+                                                            </td>
+                                                            <td
+                                                              style={{
+                                                                paddingLeft: '12px',
+                                                                verticalAlign: 'top',
+                                                              }}
+                                                            >
+                                                              <a
+                                                                href={
+                                                                  website
+                                                                    ? website.startsWith('http')
+                                                                      ? website
+                                                                      : `https://${website}`
+                                                                    : '#'
+                                                                }
+                                                                style={{
+                                                                  color: accentColor,
+                                                                  textDecoration: 'none',
+                                                                  fontWeight: '500',
+                                                                  borderBottom: `1px solid ${borderColor}`,
+                                                                  paddingBottom: '1px',
+                                                                }}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                              >
+                                                                {(website ?? '').replace(
+                                                                  /^https?:\/\//,
+                                                                  ''
+                                                                )}
+                                                              </a>
+                                                            </td>
+                                                          </tr>
+                                                        </tbody>
+                                                      </table>
+                                                    </td>
+                                                  )}
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </td>
+                                        </tr>
+                                      )}
+
+                                      {/* Office Phone & Mobile Phone row */}
+                                      {(officePhone || mobilePhone) && (
+                                        <tr>
+                                          <td
+                                            style={{
+                                              padding: '0 24px 12px 24px',
+                                              fontSize: '14px',
+                                            }}
+                                          >
+                                            <table
+                                              cellPadding="0"
+                                              cellSpacing="0"
+                                              border={0}
+                                              style={{ width: '100%' }}
+                                            >
+                                              <tbody>
+                                                <tr>
+                                                  {/* Office Phone */}
+                                                  {officePhone && (
+                                                    <td
+                                                      style={{
+                                                        verticalAlign: 'top',
+                                                        paddingRight: mobilePhone ? '32px' : '0',
+                                                      }}
+                                                    >
+                                                      <table
+                                                        cellPadding="0"
+                                                        cellSpacing="0"
+                                                        border={0}
+                                                      >
+                                                        <tbody>
+                                                          <tr>
+                                                            <td
+                                                              style={{
+                                                                width: '20px',
+                                                                verticalAlign: 'top',
+                                                                paddingTop: '2px',
+                                                              }}
+                                                            >
+                                                              <div
+                                                                style={{
+                                                                  width: '16px',
+                                                                  height: '16px',
+                                                                  backgroundColor: secondaryColor,
+                                                                  borderRadius: '3px',
+                                                                  display: 'inline-block',
+                                                                  textAlign: 'center',
+                                                                  lineHeight: '16px',
+                                                                  fontSize: '10px',
+                                                                  color: '#ffffff',
+                                                                  fontWeight: 'bold',
+                                                                }}
+                                                              >
+                                                                ☎
+                                                              </div>
+                                                            </td>
+                                                            <td
+                                                              style={{
+                                                                paddingLeft: '12px',
+                                                                verticalAlign: 'top',
+                                                              }}
+                                                            >
+                                                              <a
+                                                                href={`tel:${officePhone}`}
+                                                                style={{
+                                                                  color: secondaryColor,
+                                                                  textDecoration: 'none',
+                                                                  fontWeight: '500',
+                                                                }}
+                                                              >
+                                                                {officePhone}
+                                                              </a>
+                                                            </td>
+                                                          </tr>
+                                                        </tbody>
+                                                      </table>
+                                                    </td>
+                                                  )}
+                                                  {/* Mobile Phone */}
+                                                  {mobilePhone && (
+                                                    <td style={{ verticalAlign: 'top' }}>
+                                                      <table
+                                                        cellPadding="0"
+                                                        cellSpacing="0"
+                                                        border={0}
+                                                      >
+                                                        <tbody>
+                                                          <tr>
+                                                            <td
+                                                              style={{
+                                                                width: '20px',
+                                                                verticalAlign: 'top',
+                                                                paddingTop: '2px',
+                                                              }}
+                                                            >
+                                                              <div
+                                                                style={{
+                                                                  width: '16px',
+                                                                  height: '16px',
+                                                                  backgroundColor: secondaryColor,
+                                                                  borderRadius: '3px',
+                                                                  display: 'inline-block',
+                                                                  textAlign: 'center',
+                                                                  lineHeight: '16px',
+                                                                  fontSize: '10px',
+                                                                  color: '#ffffff',
+                                                                  fontWeight: 'bold',
+                                                                }}
+                                                              >
+                                                                ☎
+                                                              </div>
+                                                            </td>
+                                                            <td
+                                                              style={{
+                                                                paddingLeft: '12px',
+                                                                verticalAlign: 'top',
+                                                              }}
+                                                            >
+                                                              <a
+                                                                href={`tel:${mobilePhone}`}
+                                                                style={{
+                                                                  color: secondaryColor,
+                                                                  textDecoration: 'none',
+                                                                  fontWeight: '500',
+                                                                }}
+                                                              >
+                                                                {mobilePhone}
+                                                              </a>
+                                                            </td>
+                                                          </tr>
+                                                        </tbody>
+                                                      </table>
+                                                    </td>
+                                                  )}
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </td>
+                                        </tr>
+                                      )}
+
+                                      {/* Address row */}
+                                      {address && (
+                                        <tr>
+                                          <td
+                                            style={{
+                                              padding: '0 24px 12px 24px',
+                                              fontSize: '14px',
+                                            }}
+                                          >
+                                            <table cellPadding="0" cellSpacing="0" border={0}>
+                                              <tbody>
+                                                <tr>
+                                                  <td
+                                                    style={{
+                                                      width: '20px',
+                                                      verticalAlign: 'top',
+                                                      paddingTop: '2px',
+                                                    }}
+                                                  >
+                                                    <div
+                                                      style={{
+                                                        width: '16px',
+                                                        height: '16px',
+                                                        backgroundColor: secondaryColor,
+                                                        borderRadius: '3px',
+                                                        display: 'inline-block',
+                                                        textAlign: 'center',
+                                                        lineHeight: '16px',
+                                                        fontSize: '10px',
+                                                        color: '#ffffff',
+                                                        fontWeight: 'bold',
+                                                      }}
+                                                    >
+                                                      📍
+                                                    </div>
+                                                  </td>
+                                                  <td
+                                                    style={{
+                                                      paddingLeft: '12px',
+                                                      verticalAlign: 'top',
+                                                    }}
+                                                  >
+                                                    <span
+                                                      style={{
+                                                        color: secondaryColor,
+                                                        fontWeight: '400',
+                                                        fontSize: '13px',
+                                                      }}
+                                                    >
+                                                      {address}
+                                                    </span>
+                                                  </td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </td>
+                                        </tr>
+                                      )}
+                                      <tr>
+                                        <td
+                                          style={{
+                                            width: '20px',
+                                            verticalAlign: 'top',
+                                            paddingTop: '2px',
+                                          }}
+                                        >
+                                          <div
+                                            style={{
+                                              width: '16px',
+                                              height: '16px',
+                                              backgroundColor: accentColor,
+                                              borderRadius: '3px',
+                                              display: 'inline-block',
+                                              textAlign: 'center',
+                                              lineHeight: '16px',
+                                              fontSize: '10px',
+                                              color: '#ffffff',
+                                              fontWeight: 'bold',
+                                            }}
+                                          >
+                                            @
+                                          </div>
+                                        </td>
+                                        <td style={{ paddingLeft: '12px', verticalAlign: 'top' }}>
+                                          <a
+                                            href={`mailto:${email}`}
+                                            style={{
+                                              color: primaryColor,
+                                              textDecoration: 'none',
+                                              fontWeight: '500',
+                                              borderBottom: `1px solid ${borderColor}`,
+                                              paddingBottom: '1px',
+                                            }}
+                                          >
+                                            {email}
+                                          </a>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              )}
+                              {/* Website */}
+                              {website && (
+                                <td style={{ verticalAlign: 'top' }}>
+                                  <table cellPadding="0" cellSpacing="0" border={0}>
+                                    <tbody>
+                                      <tr>
+                                        <td
+                                          style={{
+                                            width: '20px',
+                                            verticalAlign: 'top',
+                                            paddingTop: '2px',
+                                          }}
+                                        >
+                                          <div
+                                            style={{
+                                              width: '16px',
+                                              height: '16px',
+                                              backgroundColor: accentColor,
+                                              borderRadius: '3px',
+                                              display: 'inline-block',
+                                              textAlign: 'center',
+                                              lineHeight: '16px',
+                                              fontSize: '10px',
+                                              color: '#ffffff',
+                                              fontWeight: 'bold',
+                                            }}
+                                          >
+                                            🌐
+                                          </div>
+                                        </td>
+                                        <td style={{ paddingLeft: '12px', verticalAlign: 'top' }}>
+                                          <a
+                                            href={
+                                              website
+                                                ? website.startsWith('http')
+                                                  ? website
+                                                  : `https://${website}`
+                                                : '#'
+                                            }
+                                            style={{
+                                              color: accentColor,
+                                              textDecoration: 'none',
+                                              fontWeight: '500',
+                                              borderBottom: `1px solid ${borderColor}`,
+                                              paddingBottom: '1px',
+                                            }}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                          >
+                                            {(website ?? '').replace(/^https?:\/\//, '')}
+                                          </a>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              )}
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  )}
+
+                  {/* Office Phone & Mobile Phone row */}
+                  {(officePhone || mobilePhone) && (
+                    <tr>
+                      <td style={{ paddingBottom: '12px', fontSize: '14px' }}>
+                        <table cellPadding="0" cellSpacing="0" border={0} style={{ width: '100%' }}>
+                          <tbody>
+                            <tr>
+                              {/* Office Phone */}
+                              {officePhone && (
+                                <td
+                                  style={{
+                                    verticalAlign: 'top',
+                                    paddingRight: mobilePhone ? '32px' : '0',
+                                  }}
+                                >
+                                  <table cellPadding="0" cellSpacing="0" border={0}>
+                                    <tbody>
+                                      <tr>
+                                        <td
+                                          style={{
+                                            width: '20px',
+                                            verticalAlign: 'top',
+                                            paddingTop: '2px',
+                                          }}
+                                        >
+                                          <div
+                                            style={{
+                                              width: '16px',
+                                              height: '16px',
+                                              backgroundColor: secondaryColor,
+                                              borderRadius: '3px',
+                                              display: 'inline-block',
+                                              textAlign: 'center',
+                                              lineHeight: '16px',
+                                              fontSize: '10px',
+                                              color: '#ffffff',
+                                              fontWeight: 'bold',
+                                            }}
+                                          >
+                                            ☎
+                                          </div>
+                                        </td>
+                                        <td style={{ paddingLeft: '12px', verticalAlign: 'top' }}>
+                                          <a
+                                            href={`tel:${officePhone}`}
+                                            style={{
+                                              color: secondaryColor,
+                                              textDecoration: 'none',
+                                              fontWeight: '500',
+                                            }}
+                                          >
+                                            {officePhone}
+                                          </a>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              )}
+                              {/* Mobile Phone */}
+                              {mobilePhone && (
+                                <td style={{ verticalAlign: 'top' }}>
+                                  <table cellPadding="0" cellSpacing="0" border={0}>
+                                    <tbody>
+                                      <tr>
+                                        <td
+                                          style={{
+                                            width: '20px',
+                                            verticalAlign: 'top',
+                                            paddingTop: '2px',
+                                          }}
+                                        >
+                                          <div
+                                            style={{
+                                              width: '16px',
+                                              height: '16px',
+                                              backgroundColor: secondaryColor,
+                                              borderRadius: '3px',
+                                              display: 'inline-block',
+                                              textAlign: 'center',
+                                              lineHeight: '16px',
+                                              fontSize: '10px',
+                                              color: '#ffffff',
+                                              fontWeight: 'bold',
+                                            }}
+                                          >
+                                            ☎
+                                          </div>
+                                        </td>
+                                        <td style={{ paddingLeft: '12px', verticalAlign: 'top' }}>
+                                          <a
+                                            href={`tel:${mobilePhone}`}
+                                            style={{
+                                              color: secondaryColor,
+                                              textDecoration: 'none',
+                                              fontWeight: '500',
+                                            }}
+                                          >
+                                            {mobilePhone}
+                                          </a>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              )}
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  )}
+
+                  {/* Address row */}
+                  {address && (
+                    <tr>
+                      <td
                         style={{
-                          fontSize: '15px',
-                          color: secondaryColor,
-                          fontWeight: '500',
-                          margin: '0',
+                          fontSize: '14px',
                         }}
                       >
-                        {title && <span>{title}</span>}
-                        {title && company && (
-                          <span
-                            style={{
-                              color: accentColor,
-                              fontWeight: '600',
-                            }}
-                          >
-                            &nbsp;@&nbsp;
-                          </span>
-                        )}
-                        {company && (
-                          <span style={{ color: primaryColor, fontWeight: '600' }}>{company}</span>
-                        )}
-                      </div>
-                    )}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
+                        <table cellPadding="0" cellSpacing="0" border={0}>
+                          <tbody>
+                            <tr>
+                              <td
+                                style={{
+                                  width: '20px',
+                                  verticalAlign: 'top',
+                                  paddingTop: '2px',
+                                }}
+                              >
+                                <div
+                                  style={{
+                                    width: '16px',
+                                    height: '16px',
+                                    backgroundColor: accentColor,
+                                    borderRadius: '3px',
+                                    display: 'inline-block',
+                                    textAlign: 'center',
+                                    lineHeight: '16px',
+                                    fontSize: '10px',
+                                    color: '#ffffff',
+                                    fontWeight: 'bold',
+                                  }}
+                                >
+                                  🌐
+                                </div>
+                              </td>
+                              <td style={{ paddingLeft: '12px', verticalAlign: 'top' }}>
+                                <a
+                                  href={
+                                    website
+                                      ? website.startsWith('http')
+                                        ? website
+                                        : `https://${website}`
+                                      : '#'
+                                  }
+                                  style={{
+                                    color: accentColor,
+                                    textDecoration: 'none',
+                                    fontWeight: '500',
+                                    borderBottom: `1px solid ${borderColor}`,
+                                    paddingBottom: '1px',
+                                  }}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  {(website ?? '').replace(/^https?:\/\//, '')}
+                                </a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  )}
 
-        {/* Contact information section */}
-        <tr>
-          <td style={{ padding: '20px 24px' }}>
-            <table cellPadding="0" cellSpacing="0" border={0} style={{ width: '100%' }}>
-              <tbody>
-                {/* Email row */}
-                <tr>
-                  <td
-                    style={{
-                      paddingBottom: '12px',
-                      fontSize: '14px',
-                    }}
-                  >
-                    <table cellPadding="0" cellSpacing="0" border={0}>
-                      <tbody>
-                        <tr>
-                          <td
-                            style={{
-                              width: '20px',
-                              verticalAlign: 'top',
-                              paddingTop: '2px',
-                            }}
-                          >
-                            <div
-                              style={{
-                                width: '16px',
-                                height: '16px',
-                                backgroundColor: accentColor,
-                                borderRadius: '3px',
-                                display: 'inline-block',
-                                textAlign: 'center',
-                                lineHeight: '16px',
-                                fontSize: '10px',
-                                color: '#ffffff',
-                                fontWeight: 'bold',
-                              }}
-                            >
-                              @
-                            </div>
-                          </td>
-                          <td style={{ paddingLeft: '12px', verticalAlign: 'top' }}>
-                            <a
-                              href={`mailto:${email}`}
-                              style={{
-                                color: primaryColor,
-                                textDecoration: 'none',
-                                fontWeight: '500',
-                                borderBottom: `1px solid ${borderColor}`,
-                                paddingBottom: '1px',
-                              }}
-                            >
-                              {email}
-                            </a>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </td>
-                </tr>
-
-                {/* Phone row */}
-                {mobilePhone && (
-                  <tr>
-                    <td
-                      style={{
-                        paddingBottom: '12px',
-                        fontSize: '14px',
-                      }}
-                    >
-                      <table cellPadding="0" cellSpacing="0" border={0}>
-                        <tbody>
-                          <tr>
-                            <td
-                              style={{
-                                width: '20px',
-                                verticalAlign: 'top',
-                                paddingTop: '2px',
-                              }}
-                            >
-                              <div
+                  {/* Address row */}
+                  {address && (
+                    <tr>
+                      <td
+                        style={{
+                          fontSize: '14px',
+                        }}
+                      >
+                        <table cellPadding="0" cellSpacing="0" border={0}>
+                          <tbody>
+                            <tr>
+                              <td
                                 style={{
-                                  width: '16px',
-                                  height: '16px',
-                                  backgroundColor: secondaryColor,
-                                  borderRadius: '3px',
-                                  display: 'inline-block',
-                                  textAlign: 'center',
-                                  lineHeight: '16px',
-                                  fontSize: '10px',
-                                  color: '#ffffff',
-                                  fontWeight: 'bold',
+                                  width: '20px',
+                                  verticalAlign: 'top',
+                                  paddingTop: '2px',
                                 }}
                               >
-                                ☎
-                              </div>
-                            </td>
-                            <td style={{ paddingLeft: '12px', verticalAlign: 'top' }}>
-                              <a
-                                href={`tel:${mobilePhone}`}
-                                style={{
-                                  color: secondaryColor,
-                                  textDecoration: 'none',
-                                  fontWeight: '500',
-                                }}
-                              >
-                                {mobilePhone}
-                              </a>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
-                )}
-
-                {/* Website row */}
-                {website && (
-                  <tr>
-                    <td
-                      style={{
-                        paddingBottom: '12px',
-                        fontSize: '14px',
-                      }}
-                    >
-                      <table cellPadding="0" cellSpacing="0" border={0}>
-                        <tbody>
-                          <tr>
-                            <td
-                              style={{
-                                width: '20px',
-                                verticalAlign: 'top',
-                                paddingTop: '2px',
-                              }}
-                            >
-                              <div
-                                style={{
-                                  width: '16px',
-                                  height: '16px',
-                                  backgroundColor: accentColor,
-                                  borderRadius: '3px',
-                                  display: 'inline-block',
-                                  textAlign: 'center',
-                                  lineHeight: '16px',
-                                  fontSize: '10px',
-                                  color: '#ffffff',
-                                  fontWeight: 'bold',
-                                }}
-                              >
-                                🌐
-                              </div>
-                            </td>
-                            <td style={{ paddingLeft: '12px', verticalAlign: 'top' }}>
-                              <a
-                                href={website.startsWith('http') ? website : `https://${website}`}
-                                style={{
-                                  color: accentColor,
-                                  textDecoration: 'none',
-                                  fontWeight: '500',
-                                  borderBottom: `1px solid ${borderColor}`,
-                                  paddingBottom: '1px',
-                                }}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                {website.replace(/^https?:\/\//, '')}
-                              </a>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
-                )}
-
-                {/* Address row */}
-                {address && (
-                  <tr>
-                    <td
-                      style={{
-                        fontSize: '14px',
-                      }}
-                    >
-                      <table cellPadding="0" cellSpacing="0" border={0}>
-                        <tbody>
-                          <tr>
-                            <td
-                              style={{
-                                width: '20px',
-                                verticalAlign: 'top',
-                                paddingTop: '2px',
-                              }}
-                            >
-                              <div
-                                style={{
-                                  width: '16px',
-                                  height: '16px',
-                                  backgroundColor: secondaryColor,
-                                  borderRadius: '3px',
-                                  display: 'inline-block',
-                                  textAlign: 'center',
-                                  lineHeight: '16px',
-                                  fontSize: '10px',
-                                  color: '#ffffff',
-                                  fontWeight: 'bold',
-                                }}
-                              >
-                                📍
-                              </div>
-                            </td>
-                            <td style={{ paddingLeft: '12px', verticalAlign: 'top' }}>
-                              <span
-                                style={{
-                                  color: secondaryColor,
-                                  fontWeight: '400',
-                                  fontSize: '13px',
-                                }}
-                              >
-                                {address}
-                              </span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
-                )}
+                                <div
+                                  style={{
+                                    width: '16px',
+                                    height: '16px',
+                                    backgroundColor: secondaryColor,
+                                    borderRadius: '3px',
+                                    display: 'inline-block',
+                                    textAlign: 'center',
+                                    lineHeight: '16px',
+                                    fontSize: '10px',
+                                    color: '#ffffff',
+                                    fontWeight: 'bold',
+                                  }}
+                                >
+                                  📍
+                                </div>
+                              </td>
+                              <td style={{ paddingLeft: '12px', verticalAlign: 'top' }}>
+                                <span
+                                  style={{
+                                    color: secondaryColor,
+                                    fontWeight: '400',
+                                    fontSize: '13px',
+                                  }}
+                                >
+                                  {address}
+                                </span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  )}
+                </td>
               </tbody>
             </table>
           </td>
