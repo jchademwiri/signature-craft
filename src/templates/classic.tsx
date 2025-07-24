@@ -30,59 +30,61 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
       border={0}
       style={{
         fontFamily: 'Arial, sans-serif',
-        fontSize: '15px',
-        lineHeight: '1.4',
+        fontSize: '16px',
+        lineHeight: '1.6',
         color: primaryColor,
         width: '100%',
-        maxWidth: '400px',
+        maxWidth: '440px',
         background: 'white',
-        padding: '8px',
+        padding: '18px',
       }}
     >
       <tbody>
         {/* Name, title, company */}
         <tr>
-          <td style={{ paddingBottom: '3px' }}>
-            <strong style={{ fontSize: '15px', color: primaryColor }}>{displayName}</strong>
-            {title && <span style={{ color: secondaryColor, fontSize: '13px' }}> | {title}</span>}
+          <td style={{ paddingBottom: '6px' }}>
+            <strong style={{ fontSize: '20px', color: primaryColor, letterSpacing: '0.01em' }}>{displayName}</strong>
+            {title && <span style={{ color: secondaryColor, fontSize: '15px', fontWeight: 500 }}> | {title}</span>}
           </td>
         </tr>
         {company && (
           <tr>
-            <td style={{ paddingBottom: '3px' }}>
-              <strong style={{ fontSize: '13px' }}>{company}</strong>
+            <td style={{ paddingBottom: '6px' }}>
+              <strong style={{ fontSize: '15px', color: secondaryColor }}>{company}</strong>
             </td>
           </tr>
         )}
         {/* Contact info */}
         <tr>
-          <td style={{ color: secondaryColor, fontSize: '12px', paddingBottom: '3px' }}>
-            📧{' '}
-            <a
-              href={`mailto:${displayEmail}`}
-              style={{ color: primaryColor, textDecoration: 'none' }}
-            >
-              {displayEmail}
-            </a>
-            {phone && (
-              <>
-                {' | '}📞{' '}
-                <a href={`tel:${phone}`} style={{ color: primaryColor, textDecoration: 'none' }}>
-                  {phone}
-                </a>
-              </>
-            )}
+          <td style={{ color: secondaryColor, fontSize: '15px', paddingBottom: '6px' }}>
+            <div style={{ marginBottom: '4px' }}>
+              📧{' '}
+              <a
+                href={`mailto:${displayEmail}`}
+                style={{ color: primaryColor, textDecoration: 'none', fontSize: '16px', fontWeight: 500 }}
+              >
+                {displayEmail}
+              </a>
+              {phone && (
+                <>
+                  {' | '}📞{' '}
+                  <a href={`tel:${phone}`} style={{ color: primaryColor, textDecoration: 'none', fontSize: '16px', fontWeight: 500 }}>
+                    {phone}
+                  </a>
+                </>
+              )}
+            </div>
           </td>
         </tr>
         {website && (
           <tr>
-            <td style={{ color: secondaryColor, fontSize: '12px', paddingBottom: '3px' }}>
+            <td style={{ color: secondaryColor, fontSize: '15px', paddingBottom: '6px' }}>
               🌐{' '}
               <a
                 href={website.startsWith('http') ? website : `https://${website}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ color: primaryColor, textDecoration: 'none' }}
+                style={{ color: primaryColor, textDecoration: 'none', fontSize: '16px', fontWeight: 500 }}
               >
                 {website}
               </a>
@@ -91,22 +93,24 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
         )}
         {address && (
           <tr>
-            <td style={{ color: secondaryColor, fontSize: '12px', paddingBottom: '3px' }}>
-              📍 <span style={{ color: primaryColor }}>{address}</span>
+            <td style={{ color: secondaryColor, fontSize: '15px', paddingBottom: '6px' }}>
+              📍 <span style={{ color: primaryColor, fontWeight: 500 }}>{address}</span>
             </td>
           </tr>
         )}
         {logoData && (
           <tr>
-            <td style={{ paddingTop: '8px' }}>
+            <td style={{ paddingTop: '12px' }}>
               <img
                 src={logoData}
                 alt="Company Logo"
                 style={{
-                  maxWidth: '90px',
-                  height: 'auto',
+                  maxWidth: '48px',
+                  width: '48px',
+                  height: '48px',
+                  objectFit: 'contain',
                   display: 'block',
-                  borderRadius: '4px',
+                  borderRadius: '6px',
                 }}
               />
             </td>

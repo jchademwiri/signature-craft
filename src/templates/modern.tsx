@@ -35,10 +35,11 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
     <section id="modern">
       <div
         style={{
-          padding: '8px',
+          padding: '20px',
           fontFamily: 'Arial, sans-serif',
           width: '100%',
-          maxWidth: '400px',
+          maxWidth: '440px',
+          background: 'white',
         }}
       >
         <table
@@ -54,8 +55,8 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
               {logoData && (
                 <td
                   style={{
-                    verticalAlign: 'top',
-                    paddingRight: '12px',
+                    verticalAlign: 'middle',
+                    paddingRight: '18px',
                     width: 'auto',
                     paddingTop: '0px',
                   }}
@@ -63,23 +64,39 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
                   <img
                     src={logoData}
                     alt="Logo"
-                    style={{ maxWidth: '70px', width: 'auto', height: 'auto', display: 'block' }}
+                    style={{
+                      maxWidth: '48px',
+                      width: '48px',
+                      height: '48px',
+                      objectFit: 'contain',
+                      display: 'block',
+                      borderRadius: '6px',
+                      boxShadow: '0 1px 4px rgba(0,0,0,0.07)',
+                    }}
                   />
                 </td>
               )}
-              <td style={{ verticalAlign: 'middle' }}>
+              <td style={{ verticalAlign: 'middle', paddingBottom: '6px' }}>
                 <div
                   style={{
                     fontWeight: 'bold',
-                    fontSize: '15px',
-                    marginBottom: '2px',
+                    fontSize: '19px',
+                    marginBottom: '4px',
                     color: primaryColor,
+                    letterSpacing: '0.02em',
                   }}
                 >
                   {displayName}
                 </div>
                 {titleCompanyText && (
-                  <div style={{ color: secondaryColor, fontSize: '13px', marginBottom: '2px' }}>
+                  <div
+                    style={{
+                      color: secondaryColor,
+                      fontSize: '15px',
+                      marginBottom: '4px',
+                      fontWeight: 500,
+                    }}
+                  >
                     {titleCompanyText}
                   </div>
                 )}
@@ -88,50 +105,70 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
             <tr>
               <td
                 colSpan={logoData ? 2 : 1}
-                style={{ paddingTop: '6px', fontSize: '12px', color: secondaryColor }}
+                style={{ paddingTop: '10px', fontSize: '14px', color: secondaryColor }}
               >
-                <div style={{ marginBottom: '2px' }}>
-                  📧{' '}
-                  <a
-                    href={`mailto:${displayEmail}`}
-                    style={{ color: primaryColor, textDecoration: 'none' }}
-                  >
-                    {displayEmail}
-                  </a>
+                <div style={{ marginBottom: '6px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '16px' }}>
+                  {/* Email */}
+                  <span>
+                    📧{' '}
+                    <a
+                      href={`mailto:${displayEmail}`}
+                      style={{
+                        color: primaryColor,
+                        textDecoration: 'none',
+                        fontSize: '15px',
+                        fontWeight: 500,
+                      }}
+                    >
+                      {displayEmail}
+                    </a>
+                  </span>
+                  {/* Phone */}
+                  {phone && (
+                    <span>
+                      📞{' '}
+                      <a
+                        href={`tel:${phone}`}
+                        style={{
+                          color: primaryColor,
+                          textDecoration: 'none',
+                          fontSize: '15px',
+                          fontWeight: 500,
+                        }}
+                      >
+                        {phone}
+                      </a>
+                    </span>
+                  )}
+                  {/* Website */}
+                  {website && (
+                    <span>
+                      🌐{' '}
+                      <a
+                        href={website.startsWith('http') ? website : `https://${website}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          color: primaryColor,
+                          textDecoration: 'none',
+                          fontSize: '15px',
+                          fontWeight: 500,
+                        }}
+                      >
+                        {website}
+                      </a>
+                    </span>
+                  )}
                 </div>
-                {phone && (
-                  <div style={{ marginBottom: '2px' }}>
-                    📞{' '}
-                    <a
-                      href={`tel:${phone}`}
-                      style={{ color: primaryColor, textDecoration: 'none' }}
-                    >
-                      {phone}
-                    </a>
-                  </div>
-                )}
-                {website && (
-                  <div style={{ marginBottom: '2px' }}>
-                    🌐{' '}
-                    <a
-                      href={website.startsWith('http') ? website : `https://${website}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ color: primaryColor, textDecoration: 'none' }}
-                    >
-                      {website}
-                    </a>
-                  </div>
-                )}
               </td>
             </tr>
             {address && (
               <tr>
                 <td
                   colSpan={logoData ? 2 : 1}
-                  style={{ paddingTop: '8px', fontSize: '14px', color: secondaryColor }}
+                  style={{ paddingTop: '14px', fontSize: '15px', color: secondaryColor }}
                 >
-                  📍 {address}
+                  📍 <span style={{ color: primaryColor, fontWeight: 500 }}>{address}</span>
                 </td>
               </tr>
             )}
