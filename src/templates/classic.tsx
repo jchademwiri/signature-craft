@@ -29,127 +29,73 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
       cellSpacing="0"
       border={0}
       style={{
-        fontFamily: '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif',
+        fontFamily: 'Arial, sans-serif',
         fontSize: '15px',
-        lineHeight: '1.6',
+        lineHeight: '1.4',
         color: primaryColor,
-        maxWidth: '450px',
         width: '100%',
-        backgroundColor: '#ffffff',
+        maxWidth: '400px',
+        background: 'white',
+        padding: '8px',
       }}
     >
       <tbody>
-        {/* Name and title section */}
+        {/* Name, title, company */}
         <tr>
-          <td style={{ paddingBottom: '8px' }}>
-            <div
-              style={{
-                fontSize: '20px',
-                fontWeight: '700',
-                color: primaryColor,
-                marginBottom: '4px',
-                letterSpacing: '-0.3px',
-              }}
+          <td style={{ paddingBottom: '3px' }}>
+            <strong style={{ fontSize: '15px', color: primaryColor }}>{displayName}</strong>
+            {title && <span style={{ color: secondaryColor, fontSize: '13px' }}> | {title}</span>}
+          </td>
+        </tr>
+        {company && (
+          <tr>
+            <td style={{ paddingBottom: '3px' }}>
+              <strong style={{ fontSize: '13px' }}>{company}</strong>
+            </td>
+          </tr>
+        )}
+        {/* Contact info */}
+        <tr>
+          <td style={{ color: secondaryColor, fontSize: '12px', paddingBottom: '3px' }}>
+            📧{' '}
+            <a
+              href={`mailto:${displayEmail}`}
+              style={{ color: primaryColor, textDecoration: 'none' }}
             >
-              {displayName}
-              {title && (
-                <span
-                  style={{
-                    color: secondaryColor,
-                    fontSize: '16px',
-                    fontWeight: '500',
-                    marginLeft: '8px',
-                  }}
-                >
-                  | {title}
-                </span>
-              )}
-            </div>
-            {company && (
-              <div
-                style={{
-                  fontSize: '16px',
-                  fontWeight: '600',
-                  color: primaryColor,
-                  marginBottom: '2px',
-                  paddingBottom: '8px',
-                  borderBottom: `2px solid ${primaryColor}20`,
-                }}
-              >
-                {company}
-              </div>
+              {displayEmail}
+            </a>
+            {phone && (
+              <>
+                {' | '}📞{' '}
+                <a href={`tel:${phone}`} style={{ color: primaryColor, textDecoration: 'none' }}>
+                  {phone}
+                </a>
+              </>
             )}
           </td>
         </tr>
-
-        {/* Contact information section */}
-        <tr>
-          <td style={{ paddingBottom: '12px' }}>
-            <div style={{ fontSize: '15px', lineHeight: '1.8' }}>
-              {/* Email and Website on same row */}
-              <div style={{ marginBottom: '6px' }}>
-                <span style={{ color: secondaryColor, marginRight: '8px' }}>📧</span>
-                <a
-                  href={`mailto:${displayEmail}`}
-                  style={{
-                    color: primaryColor,
-                    textDecoration: 'none',
-                    fontWeight: '500',
-                    borderBottom: `1px solid transparent`,
-                  }}
-                >
-                  {displayEmail}
-                </a>
-                {website && (
-                  <>
-                    <span style={{ color: secondaryColor, margin: '0 8px' }}> | </span>
-                    <span style={{ color: secondaryColor, marginRight: '8px' }}>🌐</span>
-                    <a
-                      href={website.startsWith('http') ? website : `https://${website}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        color: primaryColor,
-                        textDecoration: 'none',
-                        fontWeight: '500',
-                        borderBottom: `1px solid transparent`,
-                      }}
-                    >
-                      {website.replace(/^https?:\/\//, '')}
-                    </a>
-                  </>
-                )}
-              </div>
-
-              {/* Phone */}
-              {phone && (
-                <div style={{ marginBottom: '6px' }}>
-                  <span style={{ color: secondaryColor, marginRight: '8px' }}>📞</span>
-                  <a
-                    href={`tel:${phone}`}
-                    style={{
-                      color: primaryColor,
-                      textDecoration: 'none',
-                      fontWeight: '500',
-                    }}
-                  >
-                    {phone}
-                  </a>
-                </div>
-              )}
-
-              {/* Address */}
-              {address && (
-                <div style={{ marginBottom: '6px' }}>
-                  <span style={{ color: secondaryColor, marginRight: '8px' }}>📍</span>
-                  <span style={{ color: secondaryColor, fontSize: '14px' }}>{address}</span>
-                </div>
-              )}
-            </div>
-          </td>
-        </tr>
-
-        {/* Logo section */}
+        {website && (
+          <tr>
+            <td style={{ color: secondaryColor, fontSize: '12px', paddingBottom: '3px' }}>
+              🌐{' '}
+              <a
+                href={website.startsWith('http') ? website : `https://${website}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: primaryColor, textDecoration: 'none' }}
+              >
+                {website}
+              </a>
+            </td>
+          </tr>
+        )}
+        {address && (
+          <tr>
+            <td style={{ color: secondaryColor, fontSize: '12px', paddingBottom: '3px' }}>
+              📍 <span style={{ color: primaryColor }}>{address}</span>
+            </td>
+          </tr>
+        )}
         {logoData && (
           <tr>
             <td style={{ paddingTop: '8px' }}>
