@@ -11,19 +11,17 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
     title,
     company,
     email,
-    phone,
+    mobilePhone,
+    officePhone,
     website,
     address,
     logoData,
-    primaryColor = '#000000',
-    secondaryColor = '#666666',
+    primaryColor = '#1a202c',
+    secondaryColor = '#4a5568',
   } = props;
 
-  // Use default values for required fields if not provided
   const displayName = name || 'Your Name';
   const displayEmail = email || 'email@company.com';
-
-  // Handle different combinations of title and company
   const titleCompanyText = (() => {
     if (title && company) return `${title} at ${company}`;
     if (title) return title;
@@ -132,11 +130,11 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
                     </a>
                   </span>
                   {/* Phone */}
-                  {phone && (
+                  {mobilePhone && (
                     <span>
                       📞{' '}
                       <a
-                        href={`tel:${phone}`}
+                        href={`tel:${mobilePhone}`}
                         style={{
                           color: primaryColor,
                           textDecoration: 'none',
@@ -144,7 +142,24 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
                           fontWeight: 500,
                         }}
                       >
-                        {phone}
+                        {mobilePhone}
+                      </a>
+                    </span>
+                  )}
+                  {/* Office Phone */}
+                  {officePhone && (
+                    <span>
+                      🏢📞{' '}
+                      <a
+                        href={`tel:${officePhone}`}
+                        style={{
+                          color: primaryColor,
+                          textDecoration: 'none',
+                          fontWeight: 500,
+                          fontSize: '15px',
+                        }}
+                      >
+                        {officePhone}
                       </a>
                     </span>
                   )}

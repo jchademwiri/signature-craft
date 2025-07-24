@@ -10,7 +10,8 @@ export const Corporate: TemplateComponent = (props: TemplateProps): ReactElement
     title,
     company,
     email,
-    phone,
+    mobilePhone,
+    officePhone,
     website,
     logoData,
     address,
@@ -179,7 +180,7 @@ export const Corporate: TemplateComponent = (props: TemplateProps): ReactElement
                 </tr>
 
                 {/* Phone row */}
-                {phone && (
+                {mobilePhone && (
                   <tr>
                     <td
                       style={{
@@ -216,14 +217,14 @@ export const Corporate: TemplateComponent = (props: TemplateProps): ReactElement
                             </td>
                             <td style={{ paddingLeft: '12px', verticalAlign: 'top' }}>
                               <a
-                                href={`tel:${phone}`}
+                                href={`tel:${mobilePhone}`}
                                 style={{
                                   color: secondaryColor,
                                   textDecoration: 'none',
                                   fontWeight: '500',
                                 }}
                               >
-                                {phone}
+                                {mobilePhone}
                               </a>
                             </td>
                           </tr>

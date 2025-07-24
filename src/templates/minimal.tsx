@@ -10,7 +10,8 @@ export const Minimal: TemplateComponent = (props: TemplateProps): ReactElement =
     title,
     company,
     email,
-    phone,
+    mobilePhone,
+    officePhone,
     address,
     primaryColor = '#2d3748',
     secondaryColor = '#718096',
@@ -125,7 +126,7 @@ export const Minimal: TemplateComponent = (props: TemplateProps): ReactElement =
               >
                 {displayEmail}
               </a>
-              {phone && (
+              {mobilePhone && (
                 <>
                   <span
                     style={{
@@ -136,14 +137,36 @@ export const Minimal: TemplateComponent = (props: TemplateProps): ReactElement =
                     &nbsp;&nbsp;•&nbsp;&nbsp;
                   </span>
                   <a
-                    href={`tel:${phone}`}
+                    href={`tel:${mobilePhone}`}
                     style={{
                       color: secondaryColor,
                       textDecoration: 'none',
                       fontWeight: '400',
                     }}
                   >
-                    {phone}
+                    {mobilePhone}
+                  </a>
+                </>
+              )}
+              {officePhone && (
+                <>
+                  <span
+                    style={{
+                      color: '#cbd5e0',
+                      fontSize: '14px',
+                    }}
+                  >
+                    &nbsp;&nbsp;•&nbsp;&nbsp;
+                  </span>
+                  <a
+                    href={`tel:${officePhone}`}
+                    style={{
+                      color: primaryColor,
+                      textDecoration: 'none',
+                      fontWeight: '400',
+                    }}
+                  >
+                    {officePhone}
                   </a>
                 </>
               )}

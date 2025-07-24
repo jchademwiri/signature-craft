@@ -14,7 +14,8 @@ export interface SignatureData {
   title: string;
   company: string;
   email: string;
-  phone: string;
+  mobilePhone?: string;
+  officePhone?: string;
   website: string;
   logoData?: string;
   templateId: 'classic' | 'modern' | 'minimal' | 'corporate';
@@ -30,7 +31,8 @@ export function SignatureBuilder({ editId }: { editId?: string }) {
     title: '',
     company: '',
     email: '',
-    phone: '',
+    mobilePhone: '',
+    officePhone: '',
     website: '',
     address: '',
     logoData: '/logo.svg',

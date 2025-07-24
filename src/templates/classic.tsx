@@ -11,15 +11,14 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
     title,
     company,
     email,
-    phone,
+    mobilePhone,
+    officePhone,
     website,
     address,
     logoData,
     primaryColor = '#1a202c',
     secondaryColor = '#4a5568',
   } = props;
-
-  // Use default values for required fields if not provided
   const displayName = name || 'Your Name';
   const displayEmail = email || 'email@company.com';
 
@@ -77,11 +76,11 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
               >
                 {displayEmail}
               </a>
-              {phone && (
+              {mobilePhone && (
                 <>
                   {' | '}📞{' '}
                   <a
-                    href={`tel:${phone}`}
+                    href={`tel:${mobilePhone}`}
                     style={{
                       color: primaryColor,
                       textDecoration: 'none',
@@ -89,7 +88,23 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
                       fontWeight: 500,
                     }}
                   >
-                    {phone}
+                    {mobilePhone}
+                  </a>
+                </>
+              )}
+              {officePhone && (
+                <>
+                  {' | '}🏢📞{' '}
+                  <a
+                    href={`tel:${officePhone}`}
+                    style={{
+                      color: secondaryColor,
+                      textDecoration: 'none',
+                      fontSize: '16px',
+                      fontWeight: 500,
+                    }}
+                  >
+                    {officePhone}
                   </a>
                 </>
               )}

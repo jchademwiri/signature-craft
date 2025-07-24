@@ -40,7 +40,8 @@ interface TestDataConfig {
   testTitle?: string;
   testCompany?: string;
   testEmail: string;
-  testPhone?: string;
+  testMobilePhone?: string;
+  testOfficePhone?: string;
   testWebsite?: string;
   testAddress?: string;
   testLogoData?: string;
@@ -63,7 +64,8 @@ const defaultMockData: TemplateProps = {
   title: 'Senior Product Manager',
   company: 'TechCorp Solutions',
   email: 'sarah.johnson@techcorp.com',
-  phone: '+27 11 123 4567',
+  mobilePhone: '+27 11 123 4567',
+  officePhone: '+27 11 765 4321',
   website: 'www.techcorp.co.za',
   address: '123 Main Street, Sandton, Johannesburg',
   logoData: '/logo.svg',
@@ -165,7 +167,8 @@ export default function Preview() {
       title: config.testTitle || '',
       company: config.testCompany || '',
       email: config.testEmail,
-      phone: config.testPhone || '',
+      mobilePhone: config.testMobilePhone || '',
+      officePhone: config.testOfficePhone || '',
       website: config.testWebsite || '',
       address: config.testAddress || '',
       logoData: config.testLogoData || '',
@@ -208,7 +211,8 @@ export default function Preview() {
           testTitle: testData.title,
           testCompany: testData.company,
           testEmail: testData.email,
-          testPhone: testData.phone,
+          testMobilePhone: testData.mobilePhone,
+          testOfficePhone: testData.officePhone,
           testWebsite: testData.website,
           testAddress: testData.address,
           testLogoData: testData.logoData,
@@ -303,7 +307,7 @@ export default function Preview() {
           title: '',
           company: '',
           email: 'john@example.com',
-          phone: '',
+          mobilePhone: '',
           website: '',
           address: '',
           logoData: '',
@@ -627,7 +631,8 @@ Test Data:
 - Title: ${testData.title || 'Not set'}
 - Company: ${testData.company || 'Not set'}
 - Email: ${testData.email}
-- Phone: ${testData.phone || 'Not set'}
+- Mobile Phone: ${testData.mobilePhone || 'Not set'}
+- Office Phone: ${testData.officePhone || 'Not set'}
 - Website: ${testData.website || 'Not set'}
 - Address: ${testData.address || 'Not set'}
 - Logo: ${testData.logoData ? 'Present' : 'Not set'}
@@ -746,8 +751,8 @@ Test Data:
                             <Input
                               id="testPhone"
                               type="tel"
-                              value={testData.phone || ''}
-                              onChange={(e) => handleTestDataChange('phone', e.target.value)}
+                              value={testData.mobilePhone || ''}
+                              onChange={(e) => handleTestDataChange('mobilePhone', e.target.value)}
                               placeholder="+27 11 123 4567"
                             />
                           </div>
