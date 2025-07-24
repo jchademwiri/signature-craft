@@ -98,7 +98,7 @@ export async function POST(request: NextRequest) {
       logoData,
       primaryColor,
       secondaryColor,
-      templateId = 'classic',
+      templateId = 'corporate', //set defult template
     } = body;
     /* eslint-enable @typescript-eslint/no-unused-vars */
 

@@ -1,10 +1,8 @@
 import { TemplateProps, TemplateComponent, TemplateMetadata } from './types';
 import { ReactElement } from 'react';
-import Image from 'next/image';
 
 /**
- * Minimal email signature template
- * A clean, simple layout focusing on essential information only
+ * Minimal email signature template - refined and elegant with perfect spacing
  */
 export const Minimal: TemplateComponent = (props: TemplateProps): ReactElement => {
   const {
@@ -14,111 +12,214 @@ export const Minimal: TemplateComponent = (props: TemplateProps): ReactElement =
     email,
     phone,
     address,
-    primaryColor = '#000000',
-    secondaryColor = '#666666',
+    primaryColor = '#2d3748',
+    secondaryColor = '#718096',
     logoData,
+    website,
   } = props;
 
   // Use default values for required fields if not provided
   const displayName = name || 'Your Name';
   const displayEmail = email || 'email@company.com';
 
-  // Build title and company line
+  // Build title and company line with elegant separator
   const titleCompanyLine = (() => {
-    if (title && company) return `${title}, ${company}`;
+    if (title && company) return `${title} • ${company}`;
     if (title) return title;
     if (company) return company;
     return '';
   })();
 
   return (
-    <section id="minimal">
-      <div
-        style={{
-          fontFamily: 'Arial, sans-serif',
-          fontSize: '13px',
-          lineHeight: '1.4',
-          width: '100%',
-          maxWidth: '400px',
-          background: 'white',
-          padding: '8px',
-        }}
-      >
-        {/* Name - always displayed and required */}
-        <div
-          style={{ fontWeight: 'bold', color: primaryColor, marginBottom: '2px', fontSize: '15px' }}
-        >
-          {displayName}
-        </div>
-
-        {/* Title and Company line - only if at least one exists */}
-        {titleCompanyLine && (
-          <div style={{ color: secondaryColor, marginBottom: '3px', fontSize: '13px' }}>
-            {titleCompanyLine}
-          </div>
-        )}
+    <table
+      cellPadding="0"
+      cellSpacing="0"
+      border={0}
+      style={{
+        fontFamily: '"Inter", "Helvetica Neue", Arial, sans-serif',
+        fontSize: '15px',
+        lineHeight: '1.6',
+        color: '#2d3748',
+        maxWidth: '600px',
+        width: '100%',
+        backgroundColor: '#ffffff',
+      }}
+    >
+      <tbody>
+        {/* Logo and Name section */}
+        <tr>
+          <td style={{ paddingBottom: '16px' }}>
+            <table cellPadding="0" cellSpacing="0" border={0} style={{ width: '100%' }}>
+              <tbody>
+                <tr>
+                  {logoData && (
+                    <td
+                      style={{
+                        verticalAlign: 'middle',
+                        paddingRight: '12px',
+                        width: 'auto',
+                      }}
+                    >
+                      <img
+                        src={logoData}
+                        alt="Logo"
+                        style={{
+                          width: '40px',
+                          height: '40px',
+                          borderRadius: '6px',
+                          display: 'block',
+                          objectFit: 'cover',
+                        }}
+                      />
+                    </td>
+                  )}
+                  <td style={{ verticalAlign: 'middle' }}>
+                    <div
+                      style={{
+                        fontSize: '20px',
+                        fontWeight: '600',
+                        color: primaryColor,
+                        margin: '0',
+                        letterSpacing: '-0.2px',
+                      }}
+                    >
+                      {displayName}
+                    </div>
+                    {titleCompanyLine && (
+                      <div
+                        style={{
+                          fontSize: '15px',
+                          color: secondaryColor,
+                          fontWeight: '400',
+                          margin: '2px 0 0 0',
+                          lineHeight: '1.4',
+                        }}
+                      >
+                        {titleCompanyLine}
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
 
         {/* Contact information */}
-        <div style={{ fontSize: '12px', color: secondaryColor }}>
-          <a
-            href={`mailto:${displayEmail}`}
-            style={{ color: primaryColor, textDecoration: 'none' }}
-          >
-            {displayEmail}
-          </a>
-          {phone && (
-            <>
-              {' | '}
-              <a href={`tel:${phone}`} style={{ color: primaryColor, textDecoration: 'none' }}>
-                {phone}
-              </a>
-            </>
-          )}
-          {props.website && (
-            <>
-              {' | '}
+        <tr>
+          <td style={{ paddingBottom: address ? '12px' : '8px' }}>
+            <div
+              style={{
+                fontSize: '15px',
+                color: secondaryColor,
+                lineHeight: '1.5',
+              }}
+            >
               <a
-                href={props.website.startsWith('http') ? props.website : `https://${props.website}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ color: primaryColor, textDecoration: 'none' }}
+                href={`mailto:${displayEmail}`}
+                style={{
+                  color: primaryColor,
+                  textDecoration: 'none',
+                  fontWeight: '500',
+                }}
               >
-                {props.website}
+                {displayEmail}
               </a>
-            </>
-          )}
-        </div>
+              {phone && (
+                <>
+                  <span
+                    style={{
+                      color: '#cbd5e0',
+                      fontSize: '14px',
+                    }}
+                  >
+                    &nbsp;&nbsp;•&nbsp;&nbsp;
+                  </span>
+                  <a
+                    href={`tel:${phone}`}
+                    style={{
+                      color: secondaryColor,
+                      textDecoration: 'none',
+                      fontWeight: '400',
+                    }}
+                  >
+                    {phone}
+                  </a>
+                </>
+              )}
+              {website && (
+                <>
+                  <span
+                    style={{
+                      color: '#cbd5e0',
+                      fontSize: '14px',
+                    }}
+                  >
+                    &nbsp;&nbsp;•&nbsp;&nbsp;
+                  </span>
+                  <a
+                    href={website.startsWith('http') ? website : `https://${website}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      color: primaryColor,
+                      textDecoration: 'none',
+                      fontWeight: '500',
+                    }}
+                  >
+                    {website.replace(/^https?:\/\//, '')}
+                  </a>
+                </>
+              )}
+            </div>
+          </td>
+        </tr>
 
         {/* Address - if provided */}
         {address && (
-          <div style={{ fontSize: '12px', color: secondaryColor, marginTop: '3px' }}>
-            📍 {address}
-          </div>
+          <tr>
+            <td>
+              <div
+                style={{
+                  fontSize: '14px',
+                  color: secondaryColor,
+                  fontWeight: '400',
+                  lineHeight: '1.4',
+                }}
+              >
+                {address}
+              </div>
+            </td>
+          </tr>
         )}
 
-        {/* Logo - at the bottom for minimal template */}
-        {logoData && (
-          <div style={{ marginTop: '6px' }}>
-            <img
-              src={logoData}
-              alt="Logo"
-              style={{ maxWidth: '70px', width: 'auto', height: 'auto', display: 'block' }}
-            />
-          </div>
-        )}
-      </div>
-    </section>
+        {/* Subtle accent line */}
+        <tr>
+          <td style={{ paddingTop: '12px' }}>
+            <div
+              style={{
+                width: '40px',
+                height: '2px',
+                backgroundColor: primaryColor,
+                opacity: '0.3',
+                borderRadius: '1px',
+              }}
+            ></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   );
 };
 
 // Define comprehensive metadata for the template
 const minimalMetadata: TemplateMetadata = {
   id: 'minimal',
-  name: 'Minimal',
-  description: 'A clean, simple layout focusing on essential information only',
+  name: 'Minimal Refined',
+  description: 'An elegant minimal design with perfect typography and subtle accent details',
   category: 'minimal',
-  tags: ['clean', 'simple', 'essential', 'compact'],
-  version: '1.0.0',
+  tags: ['clean', 'elegant', 'refined', 'typography', 'subtle', 'modern'],
+  version: '2.0.0',
   author: {
     name: 'SignatureCraft Team',
   },

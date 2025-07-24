@@ -33,8 +33,8 @@ export function SignatureBuilder({ editId }: { editId?: string }) {
     phone: '',
     website: '',
     address: '',
-    logoData: undefined,
-    templateId: 'classic',
+    logoData: '/logo.svg',
+    templateId: 'corporate', //set defult template
     primaryColor: '#0066cc',
     secondaryColor: '#004499',
   });
