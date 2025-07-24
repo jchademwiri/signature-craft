@@ -97,12 +97,6 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
                     fontWeight: '500',
                     borderBottom: `1px solid transparent`,
                   }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.borderBottom = `1px solid ${primaryColor}`;
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.borderBottom = '1px solid transparent';
-                  }}
                 >
                   {displayEmail}
                 </a>
@@ -119,12 +113,6 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
                         textDecoration: 'none',
                         fontWeight: '500',
                         borderBottom: `1px solid transparent`,
-                      }}
-                      onMouseOver={(e) => {
-                        e.currentTarget.style.borderBottom = `1px solid ${primaryColor}`;
-                      }}
-                      onMouseOut={(e) => {
-                        e.currentTarget.style.borderBottom = '1px solid transparent';
                       }}
                     >
                       {website.replace(/^https?:\/\//, '')}
