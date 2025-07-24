@@ -2,7 +2,7 @@ import { TemplateProps, TemplateComponent, TemplateMetadata } from './types';
 import { ReactElement } from 'react';
 
 /**
- * Classic email signature template
+ * Classic email signature template - modernized with better spacing and typography
  * A traditional signature layout with contact details stacked vertically
  */
 export const Classic: TemplateComponent = (props: TemplateProps): ReactElement => {
@@ -15,8 +15,8 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
     website,
     address,
     logoData,
-    primaryColor = '#000000',
-    secondaryColor = '#666666',
+    primaryColor = '#1a202c',
+    secondaryColor = '#4a5568',
   } = props;
 
   // Use default values for required fields if not provided
@@ -24,85 +24,173 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
   const displayEmail = email || 'email@company.com';
 
   return (
-    <section id="classic">
-      <div
-        className="text-sm"
-        style={{
-          color: primaryColor,
-          width: '100%',
-          maxWidth: '400px',
-          background: 'white',
-          padding: '8px',
-          fontFamily: 'Arial, sans-serif',
-          lineHeight: '1.4',
-        }}
-      >
-        <div style={{ marginBottom: '3px' }}>
-          <strong style={{ fontSize: '15px', color: primaryColor }}>{displayName}</strong>
-          {title && <span style={{ color: secondaryColor, fontSize: '13px' }}> | {title}</span>}
-        </div>
-        {company && (
-          <div style={{ marginBottom: '3px' }}>
-            <strong style={{ fontSize: '13px' }}>{company}</strong>
-          </div>
-        )}
-        <div style={{ color: secondaryColor, fontSize: '12px', marginBottom: '3px' }}>
-          📧{' '}
-          <a
-            href={`mailto:${displayEmail}`}
-            style={{ color: primaryColor, textDecoration: 'none' }}
-          >
-            {displayEmail}
-          </a>
-          {phone && (
-            <>
-              {' | '}📞{' '}
-              <a href={`tel:${phone}`} style={{ color: primaryColor, textDecoration: 'none' }}>
-                {phone}
-              </a>
-            </>
-          )}
-        </div>
-        {website && (
-          <div style={{ color: secondaryColor, fontSize: '12px', marginBottom: '3px' }}>
-            🌐{' '}
-            <a
-              href={website.startsWith('http') ? website : `https://${website}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: primaryColor, textDecoration: 'none' }}
+    <table
+      cellPadding="0"
+      cellSpacing="0"
+      border={0}
+      style={{
+        fontFamily: '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif',
+        fontSize: '15px',
+        lineHeight: '1.6',
+        color: primaryColor,
+        maxWidth: '450px',
+        width: '100%',
+        backgroundColor: '#ffffff',
+      }}
+    >
+      <tbody>
+        {/* Name and title section */}
+        <tr>
+          <td style={{ paddingBottom: '8px' }}>
+            <div
+              style={{
+                fontSize: '20px',
+                fontWeight: '700',
+                color: primaryColor,
+                marginBottom: '4px',
+                letterSpacing: '-0.3px',
+              }}
             >
-              {website}
-            </a>
-          </div>
-        )}
-        {address && (
-          <div style={{ color: secondaryColor, fontSize: '12px', marginBottom: '3px' }}>
-            📍 <span style={{ color: primaryColor }}>{address}</span>
-          </div>
-        )}
+              {displayName}
+              {title && (
+                <span
+                  style={{
+                    color: secondaryColor,
+                    fontSize: '16px',
+                    fontWeight: '500',
+                    marginLeft: '8px',
+                  }}
+                >
+                  | {title}
+                </span>
+              )}
+            </div>
+            {company && (
+              <div
+                style={{
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  color: primaryColor,
+                  marginBottom: '2px',
+                  paddingBottom: '8px',
+                  borderBottom: `2px solid ${primaryColor}20`,
+                }}
+              >
+                {company}
+              </div>
+            )}
+          </td>
+        </tr>
+
+        {/* Contact information section */}
+        <tr>
+          <td style={{ paddingBottom: '12px' }}>
+            <div style={{ fontSize: '15px', lineHeight: '1.8' }}>
+              {/* Email and Website on same row */}
+              <div style={{ marginBottom: '6px' }}>
+                <span style={{ color: secondaryColor, marginRight: '8px' }}>📧</span>
+                <a
+                  href={`mailto:${displayEmail}`}
+                  style={{
+                    color: primaryColor,
+                    textDecoration: 'none',
+                    fontWeight: '500',
+                    borderBottom: `1px solid transparent`,
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.borderBottom = `1px solid ${primaryColor}`;
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.borderBottom = '1px solid transparent';
+                  }}
+                >
+                  {displayEmail}
+                </a>
+                {website && (
+                  <>
+                    <span style={{ color: secondaryColor, margin: '0 8px' }}> | </span>
+                    <span style={{ color: secondaryColor, marginRight: '8px' }}>🌐</span>
+                    <a
+                      href={website.startsWith('http') ? website : `https://${website}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        color: primaryColor,
+                        textDecoration: 'none',
+                        fontWeight: '500',
+                        borderBottom: `1px solid transparent`,
+                      }}
+                      onMouseOver={(e) => {
+                        e.currentTarget.style.borderBottom = `1px solid ${primaryColor}`;
+                      }}
+                      onMouseOut={(e) => {
+                        e.currentTarget.style.borderBottom = '1px solid transparent';
+                      }}
+                    >
+                      {website.replace(/^https?:\/\//, '')}
+                    </a>
+                  </>
+                )}
+              </div>
+
+              {/* Phone */}
+              {phone && (
+                <div style={{ marginBottom: '6px' }}>
+                  <span style={{ color: secondaryColor, marginRight: '8px' }}>📞</span>
+                  <a
+                    href={`tel:${phone}`}
+                    style={{
+                      color: primaryColor,
+                      textDecoration: 'none',
+                      fontWeight: '500',
+                    }}
+                  >
+                    {phone}
+                  </a>
+                </div>
+              )}
+
+              {/* Address */}
+              {address && (
+                <div style={{ marginBottom: '6px' }}>
+                  <span style={{ color: secondaryColor, marginRight: '8px' }}>📍</span>
+                  <span style={{ color: secondaryColor, fontSize: '14px' }}>{address}</span>
+                </div>
+              )}
+            </div>
+          </td>
+        </tr>
+
+        {/* Logo section */}
         {logoData && (
-          <div style={{ marginTop: '6px' }}>
-            <img
-              src={logoData}
-              alt="Logo"
-              style={{ maxWidth: '80px', height: 'auto', display: 'block' }}
-            />
-          </div>
+          <tr>
+            <td style={{ paddingTop: '8px' }}>
+              <img
+                src={logoData}
+                alt="Company Logo"
+                style={{
+                  maxWidth: '90px',
+                  height: 'auto',
+                  display: 'block',
+                  borderRadius: '4px',
+                }}
+              />
+            </td>
+          </tr>
         )}
-      </div>
-    </section>
+      </tbody>
+    </table>
   );
 };
 
 // Define comprehensive metadata for the template
 const classicMetadata: TemplateMetadata = {
   id: 'classic',
-  name: 'Classic',
-  description: 'A traditional signature layout with contact details stacked vertically',
+  name: 'Classic Professional',
+  description: 'A modernized traditional layout with clean typography and generous spacing',
   category: 'professional',
-  tags: ['traditional', 'vertical', 'simple'],
-  version: '1.0.0',
+  tags: ['traditional', 'vertical', 'clean', 'modern', 'professional'],
+  version: '2.0.0',
   author: {
     name: 'SignatureCraft Team',
   },
