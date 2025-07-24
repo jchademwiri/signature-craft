@@ -13,7 +13,8 @@ const mockData: TemplateProps = {
   title: 'Senior Product Manager',
   company: 'TechCorp Solutions',
   email: 'sarah.johnson@techcorp.com',
-  phone: '+27 11 123 4567',
+  mobilePhone: '+27 11 123 4567',
+  officePhone: '+27 21 765 4321',
   website: 'www.techcorp.co.za',
   address: 'Cape Town, South Africa',
   logoData: '/logo.svg', // Using the actual logo

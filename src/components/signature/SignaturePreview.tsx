@@ -33,7 +33,8 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
     // Create template props from signature data
     const templateProps: TemplateProps = {
       ...data,
-      officePhone: data.officePhone,
+      mobilePhone: data.mobilePhone ?? '',
+      officePhone: data.officePhone ?? '',
       showMobile: isMobile,
     };
 
