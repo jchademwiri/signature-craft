@@ -43,8 +43,15 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
         {/* Name, title, company */}
         <tr>
           <td style={{ paddingBottom: '6px' }}>
-            <strong style={{ fontSize: '20px', color: primaryColor, letterSpacing: '0.01em' }}>{displayName}</strong>
-            {title && <span style={{ color: secondaryColor, fontSize: '15px', fontWeight: 500 }}> | {title}</span>}
+            <strong style={{ fontSize: '20px', color: primaryColor, letterSpacing: '0.01em' }}>
+              {displayName}
+            </strong>
+            {title && (
+              <span style={{ color: secondaryColor, fontSize: '15px', fontWeight: 500 }}>
+                {' '}
+                | {title}
+              </span>
+            )}
           </td>
         </tr>
         {company && (
@@ -61,14 +68,27 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
               📧{' '}
               <a
                 href={`mailto:${displayEmail}`}
-                style={{ color: primaryColor, textDecoration: 'none', fontSize: '16px', fontWeight: 500 }}
+                style={{
+                  color: primaryColor,
+                  textDecoration: 'none',
+                  fontSize: '16px',
+                  fontWeight: 500,
+                }}
               >
                 {displayEmail}
               </a>
               {phone && (
                 <>
                   {' | '}📞{' '}
-                  <a href={`tel:${phone}`} style={{ color: primaryColor, textDecoration: 'none', fontSize: '16px', fontWeight: 500 }}>
+                  <a
+                    href={`tel:${phone}`}
+                    style={{
+                      color: primaryColor,
+                      textDecoration: 'none',
+                      fontSize: '16px',
+                      fontWeight: 500,
+                    }}
+                  >
                     {phone}
                   </a>
                 </>
@@ -84,7 +104,12 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
                 href={website.startsWith('http') ? website : `https://${website}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ color: primaryColor, textDecoration: 'none', fontSize: '16px', fontWeight: 500 }}
+                style={{
+                  color: primaryColor,
+                  textDecoration: 'none',
+                  fontSize: '16px',
+                  fontWeight: 500,
+                }}
               >
                 {website}
               </a>

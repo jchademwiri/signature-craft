@@ -107,7 +107,15 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
                 colSpan={logoData ? 2 : 1}
                 style={{ paddingTop: '10px', fontSize: '14px', color: secondaryColor }}
               >
-                <div style={{ marginBottom: '6px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '16px' }}>
+                <div
+                  style={{
+                    marginBottom: '6px',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    alignItems: 'center',
+                    gap: '16px',
+                  }}
+                >
                   {/* Email */}
                   <span>
                     📧{' '}
