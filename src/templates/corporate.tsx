@@ -1,11 +1,8 @@
-// src/components/signature/templates/corporate.tsx
-import Image from 'next/image';
 import { TemplateProps, TemplateComponent, TemplateMetadata } from './types';
 import { ReactElement } from 'react';
 
 /**
- * Corporate email signature template
- * A professional layout with circular profile image, modern typography, and corporate branding
+ * Corporate email signature template - modern premium design with email compatibility
  */
 export const Corporate: TemplateComponent = (props: TemplateProps): ReactElement => {
   const {
@@ -15,284 +12,368 @@ export const Corporate: TemplateComponent = (props: TemplateProps): ReactElement
     email,
     phone,
     website,
-    address,
     logoData,
-    primaryColor = '#2563eb',
-    secondaryColor = '#64748b',
-    socialLinks,
+    address,
+    primaryColor = '#1a365d',
+    secondaryColor = '#4a5568',
   } = props;
 
-  // Use default values for required fields if not provided
-  const displayName = name || 'Your Name';
-  const displayEmail = email || 'email@company.com';
-  const displayTitle = title || 'Your Title';
-  const displayCompany = company || 'Your Company';
-
-  // Social media icons (using Unicode symbols as fallback)
-  const socialIcons = {
-    linkedin: '💼',
-    twitter: '🐦',
-    facebook: '📘',
-    instagram: '📷',
-    youtube: '📺',
-  };
+  // Premium color palette
+  const accentColor = '#3182ce';
+  const lightGray = '#f7fafc';
+  const borderColor = '#e2e8f0';
 
   return (
-    <section id="corporate">
-      <div
-        style={{
-          fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-          width: '100%',
-          maxWidth: '400px',
-          background: 'white',
-          padding: '8px',
-          margin: '0',
-        }}
-      >
-        <table
-          style={{
-            borderCollapse: 'collapse',
-            width: '100%',
-            backgroundColor: '#ffffff',
-            border: `1px solid #e2e8f0`,
-            borderRadius: '6px',
-            overflow: 'hidden',
-          }}
-        >
-          <tbody>
-            {/* Main content row */}
-            <tr>
-              {/* Left section with profile image */}
-              <td
-                style={{
-                  width: '80px',
-                  padding: '12px',
-                  verticalAlign: 'top',
-                  backgroundColor: '#f8fafc',
-                  borderRight: `2px solid ${primaryColor}`,
-                }}
-              >
-                <div
-                  style={{
-                    width: '60px',
-                    height: '60px',
-                    borderRadius: '50%',
-                    backgroundColor: primaryColor,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white',
-                    fontSize: '20px',
-                    fontWeight: 'bold',
-                    margin: '0 auto',
-                    border: '2px solid white',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                  }}
-                >
-                  {/* If logoData is provided, use it as profile image, otherwise show initials */}
-                  {logoData ? (
-                    <img
-                      src={logoData}
-                      alt="Profile"
+    <table
+      cellPadding="0"
+      cellSpacing="0"
+      border={0}
+      style={{
+        fontFamily: '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif',
+        fontSize: '14px',
+        lineHeight: '1.5',
+        color: '#2d3748',
+        maxWidth: '520px',
+        width: '100%',
+        backgroundColor: '#ffffff',
+        borderRadius: '8px',
+        overflow: 'hidden',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+      }}
+    >
+      <tbody>
+        {/* Header section with logo and name */}
+        <tr>
+          <td
+            style={{
+              padding: '24px 24px 16px 24px',
+              backgroundColor: lightGray,
+              borderBottom: `2px solid ${primaryColor}`,
+            }}
+          >
+            <table cellPadding="0" cellSpacing="0" border={0} style={{ width: '100%' }}>
+              <tbody>
+                <tr>
+                  {logoData && (
+                    <td
                       style={{
-                        width: '56px',
-                        height: '56px',
-                        borderRadius: '50%',
-                        objectFit: 'cover',
-                      }}
-                    />
-                  ) : (
-                    <span>
-                      {displayName
-                        .split(' ')
-                        .map((n) => n[0])
-                        .join('')
-                        .toUpperCase()
-                        .substring(0, 2)}
-                    </span>
-                  )}
-                </div>
-              </td>
-
-              {/* Right section with contact info */}
-              <td style={{ padding: '12px', verticalAlign: 'top' }}>
-                {/* Name and title */}
-                <div style={{ marginBottom: '8px' }}>
-                  <div
-                    style={{
-                      fontSize: '16px',
-                      fontWeight: 'bold',
-                      color: primaryColor,
-                      marginBottom: '2px',
-                      lineHeight: '1.2',
-                    }}
-                  >
-                    {displayName}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: '12px',
-                      color: secondaryColor,
-                      fontWeight: '500',
-                      marginBottom: '1px',
-                    }}
-                  >
-                    {displayTitle}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: '12px',
-                      color: primaryColor,
-                      fontWeight: '600',
-                    }}
-                  >
-                    {displayCompany}
-                  </div>
-                </div>
-
-                {/* Contact information */}
-                <div style={{ fontSize: '13px', lineHeight: '1.4' }}>
-                  {/* Email */}
-                  <div style={{ marginBottom: '6px', display: 'flex', alignItems: 'center' }}>
-                    <span style={{ color: primaryColor, marginRight: '8px', fontSize: '14px' }}>
-                      📧
-                    </span>
-                    <a
-                      href={`mailto:${displayEmail}`}
-                      style={{
-                        color: secondaryColor,
-                        textDecoration: 'none',
-                        fontSize: '13px',
+                        verticalAlign: 'middle',
+                        paddingRight: '16px',
+                        width: 'auto',
                       }}
                     >
-                      {displayEmail}
-                    </a>
-                  </div>
-
-                  {/* Phone */}
-                  {phone && (
-                    <div style={{ marginBottom: '6px', display: 'flex', alignItems: 'center' }}>
-                      <span style={{ color: primaryColor, marginRight: '8px', fontSize: '14px' }}>
-                        📞
-                      </span>
-                      <a
-                        href={`tel:${phone}`}
+                      <img
+                        src={logoData}
+                        alt="Company Logo"
                         style={{
+                          width: '60px',
+                          height: '60px',
+                          display: 'block',
+                          objectFit: 'cover',
+                        }}
+                      />
+                    </td>
+                  )}
+                  <td style={{ verticalAlign: 'middle' }}>
+                    <div
+                      style={{
+                        fontSize: '22px',
+                        fontWeight: '700',
+                        color: primaryColor,
+                        margin: '0 0 4px 0',
+                        letterSpacing: '-0.5px',
+                      }}
+                    >
+                      {name}
+                    </div>
+                    {(title || company) && (
+                      <div
+                        style={{
+                          fontSize: '15px',
                           color: secondaryColor,
-                          textDecoration: 'none',
-                          fontSize: '13px',
+                          fontWeight: '500',
+                          margin: '0',
                         }}
                       >
-                        {phone}
-                      </a>
-                    </div>
-                  )}
-
-                  {/* Website */}
-                  {website && (
-                    <div style={{ marginBottom: '6px', display: 'flex', alignItems: 'center' }}>
-                      <span style={{ color: primaryColor, marginRight: '8px', fontSize: '14px' }}>
-                        🌐
-                      </span>
-                      <a
-                        href={website.startsWith('http') ? website : `https://${website}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          color: secondaryColor,
-                          textDecoration: 'none',
-                          fontSize: '13px',
-                        }}
-                      >
-                        {website}
-                      </a>
-                    </div>
-                  )}
-
-                  {/* Address */}
-                  {address && (
-                    <div style={{ marginBottom: '6px', display: 'flex', alignItems: 'flex-start' }}>
-                      <span style={{ color: primaryColor, marginRight: '8px', fontSize: '14px' }}>
-                        📍
-                      </span>
-                      <span style={{ color: secondaryColor, fontSize: '13px', lineHeight: '1.3' }}>
-                        {address}
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Social media links */}
-                {socialLinks && Object.keys(socialLinks).some((key) => socialLinks[key]) && (
-                  <div
-                    style={{
-                      marginTop: '15px',
-                      paddingTop: '12px',
-                      borderTop: '1px solid #e2e8f0',
-                    }}
-                  >
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                      <span style={{ fontSize: '12px', color: secondaryColor, marginRight: '4px' }}>
-                        Connect:
-                      </span>
-                      {Object.entries(socialLinks).map(([platform, url]) => {
-                        if (!url) return null;
-                        return (
-                          <a
-                            key={platform}
-                            href={url.startsWith('http') ? url : `https://${url}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                        {title && <span>{title}</span>}
+                        {title && company && (
+                          <span
                             style={{
-                              display: 'inline-block',
-                              width: '24px',
-                              height: '24px',
-                              backgroundColor: primaryColor,
-                              borderRadius: '4px',
-                              textAlign: 'center',
-                              lineHeight: '24px',
-                              textDecoration: 'none',
-                              fontSize: '12px',
-                              color: 'white',
+                              color: accentColor,
+                              margin: '0 8px',
+                              fontWeight: '600',
                             }}
                           >
-                            {socialIcons[platform as keyof typeof socialIcons] || '🔗'}
-                          </a>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-              </td>
-            </tr>
+                            @
+                          </span>
+                        )}
+                        {company && (
+                          <span style={{ color: primaryColor, fontWeight: '600' }}>{company}</span>
+                        )}
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
 
-            {/* Bottom accent bar */}
-            <tr>
-              <td
-                colSpan={2}
-                style={{
-                  height: '4px',
-                  backgroundColor: primaryColor,
-                  padding: '0',
-                }}
-              ></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+        {/* Contact information section */}
+        <tr>
+          <td style={{ padding: '20px 24px' }}>
+            <table cellPadding="0" cellSpacing="0" border={0} style={{ width: '100%' }}>
+              <tbody>
+                {/* Email row */}
+                <tr>
+                  <td
+                    style={{
+                      paddingBottom: '12px',
+                      fontSize: '14px',
+                    }}
+                  >
+                    <table cellPadding="0" cellSpacing="0" border={0}>
+                      <tbody>
+                        <tr>
+                          <td
+                            style={{
+                              width: '20px',
+                              verticalAlign: 'top',
+                              paddingTop: '2px',
+                            }}
+                          >
+                            <div
+                              style={{
+                                width: '16px',
+                                height: '16px',
+                                backgroundColor: accentColor,
+                                borderRadius: '3px',
+                                display: 'inline-block',
+                                textAlign: 'center',
+                                lineHeight: '16px',
+                                fontSize: '10px',
+                                color: '#ffffff',
+                                fontWeight: 'bold',
+                              }}
+                            >
+                              @
+                            </div>
+                          </td>
+                          <td style={{ paddingLeft: '12px', verticalAlign: 'top' }}>
+                            <a
+                              href={`mailto:${email}`}
+                              style={{
+                                color: primaryColor,
+                                textDecoration: 'none',
+                                fontWeight: '500',
+                                borderBottom: `1px solid ${borderColor}`,
+                                paddingBottom: '1px',
+                              }}
+                            >
+                              {email}
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+
+                {/* Phone row */}
+                {phone && (
+                  <tr>
+                    <td
+                      style={{
+                        paddingBottom: '12px',
+                        fontSize: '14px',
+                      }}
+                    >
+                      <table cellPadding="0" cellSpacing="0" border={0}>
+                        <tbody>
+                          <tr>
+                            <td
+                              style={{
+                                width: '20px',
+                                verticalAlign: 'top',
+                                paddingTop: '2px',
+                              }}
+                            >
+                              <div
+                                style={{
+                                  width: '16px',
+                                  height: '16px',
+                                  backgroundColor: secondaryColor,
+                                  borderRadius: '3px',
+                                  display: 'inline-block',
+                                  textAlign: 'center',
+                                  lineHeight: '16px',
+                                  fontSize: '10px',
+                                  color: '#ffffff',
+                                  fontWeight: 'bold',
+                                }}
+                              >
+                                ☎
+                              </div>
+                            </td>
+                            <td style={{ paddingLeft: '12px', verticalAlign: 'top' }}>
+                              <a
+                                href={`tel:${phone}`}
+                                style={{
+                                  color: secondaryColor,
+                                  textDecoration: 'none',
+                                  fontWeight: '500',
+                                }}
+                              >
+                                {phone}
+                              </a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                )}
+
+                {/* Website row */}
+                {website && (
+                  <tr>
+                    <td
+                      style={{
+                        paddingBottom: '12px',
+                        fontSize: '14px',
+                      }}
+                    >
+                      <table cellPadding="0" cellSpacing="0" border={0}>
+                        <tbody>
+                          <tr>
+                            <td
+                              style={{
+                                width: '20px',
+                                verticalAlign: 'top',
+                                paddingTop: '2px',
+                              }}
+                            >
+                              <div
+                                style={{
+                                  width: '16px',
+                                  height: '16px',
+                                  backgroundColor: accentColor,
+                                  borderRadius: '3px',
+                                  display: 'inline-block',
+                                  textAlign: 'center',
+                                  lineHeight: '16px',
+                                  fontSize: '10px',
+                                  color: '#ffffff',
+                                  fontWeight: 'bold',
+                                }}
+                              >
+                                🌐
+                              </div>
+                            </td>
+                            <td style={{ paddingLeft: '12px', verticalAlign: 'top' }}>
+                              <a
+                                href={website.startsWith('http') ? website : `https://${website}`}
+                                style={{
+                                  color: accentColor,
+                                  textDecoration: 'none',
+                                  fontWeight: '500',
+                                  borderBottom: `1px solid ${borderColor}`,
+                                  paddingBottom: '1px',
+                                }}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {website.replace(/^https?:\/\//, '')}
+                              </a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                )}
+
+                {/* Address row */}
+                {address && (
+                  <tr>
+                    <td
+                      style={{
+                        fontSize: '14px',
+                      }}
+                    >
+                      <table cellPadding="0" cellSpacing="0" border={0}>
+                        <tbody>
+                          <tr>
+                            <td
+                              style={{
+                                width: '20px',
+                                verticalAlign: 'top',
+                                paddingTop: '2px',
+                              }}
+                            >
+                              <div
+                                style={{
+                                  width: '16px',
+                                  height: '16px',
+                                  backgroundColor: secondaryColor,
+                                  borderRadius: '3px',
+                                  display: 'inline-block',
+                                  textAlign: 'center',
+                                  lineHeight: '16px',
+                                  fontSize: '10px',
+                                  color: '#ffffff',
+                                  fontWeight: 'bold',
+                                }}
+                              >
+                                📍
+                              </div>
+                            </td>
+                            <td style={{ paddingLeft: '12px', verticalAlign: 'top' }}>
+                              <span
+                                style={{
+                                  color: secondaryColor,
+                                  fontWeight: '400',
+                                  fontSize: '13px',
+                                }}
+                              >
+                                {address}
+                              </span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </td>
+        </tr>
+
+        {/* Footer accent */}
+        <tr>
+          <td
+            style={{
+              height: '4px',
+              backgroundColor: primaryColor,
+              background: `linear-gradient(90deg, ${primaryColor} 0%, ${accentColor} 100%)`,
+            }}
+          ></td>
+        </tr>
+      </tbody>
+    </table>
   );
 };
 
 // Define comprehensive metadata for the template
 const corporateMetadata: TemplateMetadata = {
   id: 'corporate',
-  name: 'Corporate',
+  name: 'Corporate Premium',
   description:
-    'A professional corporate layout with circular profile image, modern typography, and company branding',
+    'A sophisticated premium corporate design with card-style layout, custom icons, and elegant typography',
   category: 'professional',
-  tags: ['corporate', 'professional', 'modern', 'branded', 'circular-image'],
-  version: '1.0.0',
+  tags: ['corporate', 'premium', 'modern', 'card-style', 'sophisticated', 'executive'],
+  version: '2.0.0',
   author: {
     name: 'SignatureCraft Team',
   },
