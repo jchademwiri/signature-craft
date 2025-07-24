@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { TemplateProps, TemplateComponent, TemplateMetadata } from './types';
 import { ReactElement } from 'react';
 
