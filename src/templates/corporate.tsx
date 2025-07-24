@@ -100,11 +100,10 @@ export const Corporate: TemplateComponent = (props: TemplateProps): ReactElement
                           <span
                             style={{
                               color: accentColor,
-                              margin: '0 8px',
                               fontWeight: '600',
                             }}
                           >
-                            @
+                            &nbsp;@&nbsp;
                           </span>
                         )}
                         {company && (
@@ -354,11 +353,15 @@ export const Corporate: TemplateComponent = (props: TemplateProps): ReactElement
         <tr>
           <td
             style={{
-              height: '4px',
-              backgroundColor: primaryColor,
-              background: `linear-gradient(90deg, ${primaryColor} 0%, ${accentColor} 100%)`,
+              padding: '0',
+              borderTop: `3px solid ${primaryColor}`,
+              fontSize: '1px',
+              lineHeight: '1px',
+              height: '3px',
             }}
-          ></td>
+          >
+            &nbsp;
+          </td>
         </tr>
       </tbody>
     </table>
