@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 };
 
 import { ThemeProvider } from '@/components/theme-provider';
-import { Toaster } from '@/components/ui/toaster';
+import { Toaster } from '@/components/ui/sonner';
 
 export default function SiteLayout({
   children,

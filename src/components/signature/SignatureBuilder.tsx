@@ -8,7 +8,7 @@ import { FormFields } from './FormFields';
 import { SignaturePreview } from './SignaturePreview';
 import { TemplateSelector } from './TemplateSelector';
 import { BrandColors } from './BrandColors';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 export interface SignatureData {
   name: string;
@@ -27,7 +27,7 @@ export interface SignatureData {
 
 export function SignatureBuilder({ editId }: { editId?: string }) {
   const router = useRouter();
-  const { toast } = useToast();
+
   const [signatureData, setSignatureData] = useState<SignatureData>({
     name: '',
     title: '',
@@ -78,11 +78,7 @@ export function SignatureBuilder({ editId }: { editId?: string }) {
 
   const handleSave = async () => {
     if (!signatureData.name || !signatureData.email) {
-      toast({
-        variant: 'destructive',
-        title: 'Missing Information',
-        description: 'Please fill in your name and email address.',
-      });
+      toast.error('Please fill in your name and email address.');
       return;
     }
 
@@ -106,19 +102,11 @@ export function SignatureBuilder({ editId }: { editId?: string }) {
         router.push(`/dashboard?${message}=true`);
       } else {
         const error = await response.json();
-        toast({
-          variant: 'destructive',
-          title: 'Error',
-          description: error.error || 'Failed to save signature',
-        });
+        toast.error(error.error || 'Failed to save signature');
       }
     } catch (error) {
       console.error('Error saving signature:', error);
-      toast({
-        variant: 'destructive',
-        title: 'Error',
-        description: 'Failed to save signature. Please try again.',
-      });
+      toast.error('Failed to save signature. Please try again.');
     } finally {
       setIsSaving(false);
     }
@@ -173,7 +161,12 @@ export function SignatureBuilder({ editId }: { editId?: string }) {
             <CardTitle>Live Preview</CardTitle>
           </CardHeader>
           <CardContent className="flex-1 overflow-y-auto">
-            <SignaturePreview data={signatureData} onSave={handleSave} isSaving={isSaving} />
+            <SignaturePreview
+              data={signatureData}
+              onSave={handleSave}
+              isSaving={isSaving}
+              isEditing={!!editId}
+            />
           </CardContent>
         </Card>
       </div>

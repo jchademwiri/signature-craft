@@ -12,9 +12,15 @@ interface SignaturePreviewProps {
   data: SignatureData;
   onSave?: () => void;
   isSaving?: boolean;
+  isEditing?: boolean;
 }
 
-export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewProps) {
+export function SignaturePreview({
+  data,
+  onSave,
+  isSaving,
+  isEditing = false,
+}: SignaturePreviewProps) {
   const [copyFeedback, setCopyFeedback] = useState<string | null>(null);
   const outlookRef = useRef<HTMLDivElement>(null!);
   const gmailRef = useRef<HTMLDivElement>(null!);
@@ -316,7 +322,7 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
             disabled={isSaving || !data.name || !data.email}
             className="w-full h-12 lg:h-11 transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 text-white"
             size="lg"
-            aria-label="Save your email signature"
+            aria-label={isEditing ? 'Update your email signature' : 'Save your email signature'}
           >
             {isSaving ? (
               <>
@@ -324,12 +330,12 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
                 Saving...
               </>
             ) : (
-              <>💾 Save Signature</>
+              <>{isEditing ? '✏️ Update Signature' : '💾 Save Signature'}</>
             )}
           </Button>
           {(!data.name || !data.email) && (
             <p className="text-xs text-muted-foreground text-center">
-              Please fill in your name and email to save
+              Please fill in your name and email to {isEditing ? 'update' : 'save'}
             </p>
           )}
         </div>

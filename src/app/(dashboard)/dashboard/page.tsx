@@ -2,7 +2,7 @@
 
 import { useSession, signOut } from '@/lib/auth-client';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Container } from '@/components/ui/container';
@@ -19,7 +19,7 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
 } from '@/components/ui/alert-dialog';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 interface Signature {
   id: string;
@@ -35,11 +35,12 @@ export default function DashboardPage() {
   const { data: session, isPending } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { toast } = useToast();
+
   const [signatures, setSignatures] = useState<Signature[]>([]);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [dialogOpenId, setDialogOpenId] = useState<string | null>(null);
+  const toastShownRef = useRef(false);
 
   useEffect(() => {
     if (!isPending && !session) {
@@ -58,24 +59,19 @@ export default function DashboardPage() {
     const saved = searchParams.get('saved');
     const updated = searchParams.get('updated');
 
-    if (saved === 'true') {
-      toast({
-        variant: 'success',
-        title: 'Success!',
-        description: 'Your signature has been created successfully.',
-      });
-      // Clean up the URL
-      router.replace('/dashboard', { scroll: false });
-    } else if (updated === 'true') {
-      toast({
-        variant: 'success',
-        title: 'Success!',
-        description: 'Your signature has been updated successfully.',
-      });
+    if ((saved === 'true' || updated === 'true') && !toastShownRef.current) {
+      toastShownRef.current = true;
+
+      if (saved === 'true') {
+        toast.success('Your signature has been created successfully.');
+      } else if (updated === 'true') {
+        toast.success('Your signature has been updated successfully.');
+      }
+
       // Clean up the URL
       router.replace('/dashboard', { scroll: false });
     }
-  }, [searchParams, toast, router]);
+  }, [searchParams, router]);
 
   const fetchSignatures = async () => {
     try {
