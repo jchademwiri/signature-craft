@@ -1,7 +1,7 @@
 'use client';
 
 import { useSession, signOut } from '@/lib/auth-client';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -19,6 +19,7 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
 } from '@/components/ui/alert-dialog';
+import { useToast } from '@/hooks/use-toast';
 
 interface Signature {
   id: string;
@@ -33,6 +34,8 @@ interface Signature {
 export default function DashboardPage() {
   const { data: session, isPending } = useSession();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const { toast } = useToast();
   const [signatures, setSignatures] = useState<Signature[]>([]);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -49,6 +52,30 @@ export default function DashboardPage() {
       fetchSignatures();
     }
   }, [session]);
+
+  useEffect(() => {
+    // Show success messages based on query parameters
+    const saved = searchParams.get('saved');
+    const updated = searchParams.get('updated');
+
+    if (saved === 'true') {
+      toast({
+        variant: 'success',
+        title: 'Success!',
+        description: 'Your signature has been created successfully.',
+      });
+      // Clean up the URL
+      router.replace('/dashboard', { scroll: false });
+    } else if (updated === 'true') {
+      toast({
+        variant: 'success',
+        title: 'Success!',
+        description: 'Your signature has been updated successfully.',
+      });
+      // Clean up the URL
+      router.replace('/dashboard', { scroll: false });
+    }
+  }, [searchParams, toast, router]);
 
   const fetchSignatures = async () => {
     try {

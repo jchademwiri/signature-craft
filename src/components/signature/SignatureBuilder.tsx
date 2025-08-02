@@ -8,6 +8,7 @@ import { FormFields } from './FormFields';
 import { SignaturePreview } from './SignaturePreview';
 import { TemplateSelector } from './TemplateSelector';
 import { BrandColors } from './BrandColors';
+import { useToast } from '@/hooks/use-toast';
 
 export interface SignatureData {
   name: string;
@@ -26,6 +27,7 @@ export interface SignatureData {
 
 export function SignatureBuilder({ editId }: { editId?: string }) {
   const router = useRouter();
+  const { toast } = useToast();
   const [signatureData, setSignatureData] = useState<SignatureData>({
     name: '',
     title: '',
@@ -76,14 +78,22 @@ export function SignatureBuilder({ editId }: { editId?: string }) {
 
   const handleSave = async () => {
     if (!signatureData.name || !signatureData.email) {
-      alert('Please fill in your name and email address');
+      toast({
+        variant: 'destructive',
+        title: 'Missing Information',
+        description: 'Please fill in your name and email address.',
+      });
       return;
     }
 
     setIsSaving(true);
     try {
-      const response = await fetch('/api/signatures', {
-        method: 'POST',
+      const isEditing = !!editId;
+      const url = isEditing ? `/api/signatures?id=${editId}` : '/api/signatures';
+      const method = isEditing ? 'PUT' : 'POST';
+
+      const response = await fetch(url, {
+        method,
         headers: {
           'Content-Type': 'application/json',
         },
@@ -92,14 +102,23 @@ export function SignatureBuilder({ editId }: { editId?: string }) {
 
       if (response.ok) {
         // Navigate to dashboard with success message
-        router.push('/dashboard?saved=true');
+        const message = isEditing ? 'updated' : 'saved';
+        router.push(`/dashboard?${message}=true`);
       } else {
         const error = await response.json();
-        alert(error.error || 'Failed to save signature');
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description: error.error || 'Failed to save signature',
+        });
       }
     } catch (error) {
       console.error('Error saving signature:', error);
-      alert('Failed to save signature. Please try again.');
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Failed to save signature. Please try again.',
+      });
     } finally {
       setIsSaving(false);
     }
