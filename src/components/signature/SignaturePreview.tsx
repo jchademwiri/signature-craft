@@ -12,9 +12,15 @@ interface SignaturePreviewProps {
   data: SignatureData;
   onSave?: () => void;
   isSaving?: boolean;
+  isEditing?: boolean;
 }
 
-export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewProps) {
+export function SignaturePreview({
+  data,
+  onSave,
+  isSaving,
+  isEditing = false,
+}: SignaturePreviewProps) {
   const [copyFeedback, setCopyFeedback] = useState<string | null>(null);
   const outlookRef = useRef<HTMLDivElement>(null!);
   const gmailRef = useRef<HTMLDivElement>(null!);
@@ -33,6 +39,8 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
     // Create template props from signature data
     const templateProps: TemplateProps = {
       ...data,
+      mobilePhone: data.mobilePhone ?? '',
+      officePhone: data.officePhone ?? '',
       showMobile: isMobile,
     };
 
@@ -61,7 +69,8 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
       title,
       company,
       email,
-      phone,
+      mobilePhone,
+      officePhone,
       website,
       logoData,
       primaryColor,
@@ -88,7 +97,7 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
               <tr><td style="padding-bottom: 8px;"><strong style="font-size: 18px;">${name || 'Your Name'}</strong>${title ? ` | ${title}` : ''}</td></tr>
               ${company ? `<tr><td style="padding-bottom: 4px;"><strong>${company}</strong></td></tr>` : ''}
               ${address ? `<tr><td style="padding-bottom: 4px; color: ${secondaryColor || '#004499'};">${address}</td></tr>` : ''}
-              <tr><td style="padding-bottom: 4px;">📧 <a href="mailto:${email || 'email@company.com'}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${email || 'email@company.com'}</a>${phone ? ` | 📞 <a href="tel:${phone}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${phone}</a>` : ''}</td></tr>
+              <tr><td style="padding-bottom: 4px;">📧 <a href="mailto:${email || 'email@company.com'}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${email || 'email@company.com'}</a>${mobilePhone ? ` | 📞 <a href="tel:${mobilePhone}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${mobilePhone}</a>` : ''}</td></tr>
               ${website ? `<tr><td style="padding-bottom: 8px;">🌐 <a href="${website}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${website}</a></td></tr>` : ''}
               ${logoData ? `<tr><td style="padding-top: 8px;"><img src="${logoData}" alt="Company Logo" style="max-width: 150px; height: auto; display: block;" /></td></tr>` : ''}
             </tbody>
@@ -110,7 +119,7 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
               </tr>
               <tr>
                 <td colspan="2" style="padding-top: 8px; border-top: 1px solid #e0e0e0;">
-                  <div>📧 <a href="mailto:${email || 'email@company.com'}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${email || 'email@company.com'}</a>${phone ? ` <span style="color: #ccc;">|</span> 📞 <a href="tel:${phone}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${phone}</a>` : ''}${website ? ` <span style="color: #ccc;">|</span> 🌐 <a href="${website}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${website}</a>` : ''}</div>
+                  <div>📧 <a href="mailto:${email || 'email@company.com'}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${email || 'email@company.com'}</a>${mobilePhone ? ` <span style="color: #ccc;">|</span> 📞 <a href="tel:${mobilePhone}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${mobilePhone}</a>` : ''}${website ? ` <span style="color: #ccc;">|</span> 🌐 <a href="${website}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${website}</a>` : ''}</div>
                 </td>
               </tr>
               ${
@@ -129,7 +138,7 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
           <div style="margin-bottom: 4px;"><strong style="font-size: 18px;">${name || 'Your Name'}</strong></div>
           ${title || company ? `<div style="margin-bottom: 4px; color: ${secondaryColor || '#004499'};">${title ? title : ''}${title && company ? ', ' : ''}${company ? company : ''}</div>` : ''}
           ${address ? `<div style="margin-bottom: 4px; color: ${secondaryColor || '#004499'};">${address}</div>` : ''}
-          <div style="margin-bottom: 4px;"><a href="mailto:${email || 'email@company.com'}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${email || 'email@company.com'}</a>${phone ? ` | <a href="tel:${phone}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${phone}</a>` : ''}</div>
+          <div style="margin-bottom: 4px;"><a href="mailto:${email || 'email@company.com'}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${email || 'email@company.com'}</a>${mobilePhone ? ` | <a href="tel:${mobilePhone}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${mobilePhone}</a>` : ''}</div>
           ${website ? `<div style="margin-bottom: 4px;"><a href="${website}" style="color: ${primaryColor || '#0066cc'}; text-decoration: none;">${website}</a></div>` : ''}
           ${logoData ? `<div style="margin-top: 8px;"><img src="${logoData}" alt="Company Logo" style="max-width: 120px; height: auto; display: block;" /></div>` : ''}
         </div>`;
@@ -165,10 +174,10 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
                       <a href="mailto:${email || 'email@company.com'}" style="color: ${secondaryColor || '#64748b'}; text-decoration: none; font-size: 13px;">${email || 'email@company.com'}</a>
                     </div>
                     ${
-                      phone
+                      mobilePhone
                         ? `<div style="margin-bottom: 6px; display: flex; align-items: center;">
                       <span style="color: ${primaryColor || '#2563eb'}; margin-right: 8px; font-size: 14px;">📞</span>
-                      <a href="tel:${phone}" style="color: ${secondaryColor || '#64748b'}; text-decoration: none; font-size: 13px;">${phone}</a>
+                      <a href="tel:${mobilePhone}" style="color: ${secondaryColor || '#64748b'}; text-decoration: none; font-size: 13px;">${mobilePhone}</a>
                     </div>`
                         : ''
                     }
@@ -313,7 +322,7 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
             disabled={isSaving || !data.name || !data.email}
             className="w-full h-12 lg:h-11 transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 text-white"
             size="lg"
-            aria-label="Save your email signature"
+            aria-label={isEditing ? 'Update your email signature' : 'Save your email signature'}
           >
             {isSaving ? (
               <>
@@ -321,12 +330,12 @@ export function SignaturePreview({ data, onSave, isSaving }: SignaturePreviewPro
                 Saving...
               </>
             ) : (
-              <>💾 Save Signature</>
+              <>{isEditing ? '✏️ Update Signature' : '💾 Save Signature'}</>
             )}
           </Button>
           {(!data.name || !data.email) && (
             <p className="text-xs text-muted-foreground text-center">
-              Please fill in your name and email to save
+              Please fill in your name and email to {isEditing ? 'update' : 'save'}
             </p>
           )}
         </div>

@@ -27,7 +27,8 @@ export async function GET(request: NextRequest) {
           title: signatures.title,
           company: signatures.company,
           email: signatures.email,
-          phone: signatures.phone,
+          mobilePhone: signatures.mobilePhone,
+          officePhone: signatures.officePhone,
           website: signatures.website,
           address: signatures.address,
           logoData: signatures.logoData,
@@ -55,7 +56,8 @@ export async function GET(request: NextRequest) {
         title: signatures.title,
         company: signatures.company,
         email: signatures.email,
-        phone: signatures.phone,
+        mobilePhone: signatures.mobilePhone,
+        officePhone: signatures.officePhone,
         website: signatures.website,
         address: signatures.address,
         logoData: signatures.logoData,
@@ -92,7 +94,8 @@ export async function POST(request: NextRequest) {
       title,
       company,
       email,
-      phone,
+      mobilePhone,
+      officePhone,
       website,
       address,
       logoData,
@@ -115,7 +118,8 @@ export async function POST(request: NextRequest) {
       title,
       company,
       email,
-      phone,
+      mobilePhone,
+      officePhone,
       website,
       address,
       logoData,
@@ -129,6 +133,79 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(newSignature[0], { status: 201 });
   } catch (error) {
     console.error('Error creating signature:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+}
+
+export async function PUT(request: NextRequest) {
+  try {
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
+
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+
+    if (!id) {
+      return NextResponse.json({ error: 'Signature ID is required' }, { status: 400 });
+    }
+
+    const body = await request.json();
+    const {
+      name,
+      title,
+      company,
+      email,
+      mobilePhone,
+      officePhone,
+      website,
+      address,
+      logoData,
+      primaryColor,
+      secondaryColor,
+      templateId = 'corporate',
+    } = body;
+
+    // Basic validation
+    if (!name || !email) {
+      return NextResponse.json({ error: 'Name and email are required' }, { status: 400 });
+    }
+
+    // Update values object
+    const updateValues = {
+      name,
+      title,
+      company,
+      email,
+      mobilePhone,
+      officePhone,
+      website,
+      address,
+      logoData,
+      templateId,
+      ...(primaryColor ? { primaryColor } : {}),
+      ...(secondaryColor ? { secondaryColor } : {}),
+      updatedAt: new Date(),
+    };
+
+    // Only update if the signature belongs to the user
+    const updatedSignature = await db
+      .update(signatures)
+      .set(updateValues)
+      .where(and(eq(signatures.id, id), eq(signatures.userId, session.user.id)))
+      .returning();
+
+    if (!updatedSignature.length) {
+      return NextResponse.json({ error: 'Signature not found or not authorized' }, { status: 404 });
+    }
+
+    return NextResponse.json(updatedSignature[0]);
+  } catch (error) {
+    console.error('Error updating signature:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { LogoUpload } from "./LogoUpload";
-import { SignatureData } from "./SignatureBuilder";
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
+import { LogoUpload } from './LogoUpload';
+import { SignatureData } from './SignatureBuilder';
 
 interface FormFieldsProps {
   data: SignatureData;
@@ -19,7 +19,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
         <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
           Required Information
         </h3>
-        
+
         <div className="space-y-2">
           <Label htmlFor="name">Full Name *</Label>
           <Input
@@ -27,10 +27,10 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             type="text"
             placeholder="John Smith"
             value={data.name}
-            onChange={(e) => onChange("name", e.target.value)}
+            onChange={(e) => onChange('name', e.target.value)}
             className="h-12 lg:h-10 text-base lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
             aria-required="true"
-            aria-describedby={data.name ? undefined : "name-help"}
+            aria-describedby={data.name ? undefined : 'name-help'}
             required
           />
           {!data.name && (
@@ -47,10 +47,10 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             type="email"
             placeholder="john@company.com"
             value={data.email}
-            onChange={(e) => onChange("email", e.target.value)}
+            onChange={(e) => onChange('email', e.target.value)}
             className="h-12 lg:h-10 text-base lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
             aria-required="true"
-            aria-describedby={data.email ? undefined : "email-help"}
+            aria-describedby={data.email ? undefined : 'email-help'}
             required
           />
           {!data.email && (
@@ -76,7 +76,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             type="text"
             placeholder="Marketing Manager"
             value={data.title}
-            onChange={(e) => onChange("title", e.target.value)}
+            onChange={(e) => onChange('title', e.target.value)}
             className="h-12 lg:h-10 text-base lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
           />
         </div>
@@ -88,12 +88,10 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             type="text"
             placeholder="Acme Corporation"
             value={data.company}
-            onChange={(e) => onChange("company", e.target.value)}
+            onChange={(e) => onChange('company', e.target.value)}
             className="h-12 lg:h-10 text-base lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
           />
         </div>
-
-
       </div>
 
       <Separator />
@@ -105,18 +103,28 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
         </h3>
 
         <div className="space-y-2">
-          <Label htmlFor="phone">Phone Number</Label>
+          <Label htmlFor="mobilePhone">Mobile Phone</Label>
           <Input
-            id="phone"
+            id="mobilePhone"
             type="tel"
-            placeholder="+27 11 123 4567"
-            value={data.phone}
-            onChange={(e) => onChange("phone", e.target.value)}
+            placeholder="+27 82 123 4567"
+            value={data.mobilePhone || ''}
+            onChange={(e) => onChange('mobilePhone', e.target.value)}
             className="h-12 lg:h-10 text-base lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
           />
         </div>
 
-
+        <div className="space-y-2">
+          <Label htmlFor="officePhone">Office Phone</Label>
+          <Input
+            id="officePhone"
+            type="tel"
+            placeholder="+27 11 123 4567"
+            value={data.officePhone || ''}
+            onChange={(e) => onChange('officePhone', e.target.value)}
+            className="h-12 lg:h-10 text-base lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
+          />
+        </div>
 
         <div className="space-y-2">
           <Label htmlFor="website">Website</Label>
@@ -125,7 +133,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             type="url"
             placeholder="https://www.company.com"
             value={data.website}
-            onChange={(e) => onChange("website", e.target.value)}
+            onChange={(e) => onChange('website', e.target.value)}
             className="h-12 lg:h-10 text-base lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
           />
         </div>
@@ -137,12 +145,10 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
             type="text"
             placeholder="123 Main St, City, Country"
             value={data.address}
-            onChange={(e) => onChange("address", e.target.value)}
+            onChange={(e) => onChange('address', e.target.value)}
             className="h-12 lg:h-10 text-base lg:text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
           />
         </div>
-
-
       </div>
 
       <Separator />
@@ -154,7 +160,7 @@ export function FormFields({ data, onChange }: FormFieldsProps) {
         </h3>
         <LogoUpload
           logoData={data.logoData}
-          onLogoChange={(logoData) => onChange("logoData", logoData || "")}
+          onLogoChange={(logoData) => onChange('logoData', logoData || '')}
         />
       </div>
     </div>

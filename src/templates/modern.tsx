@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 
 /**
  * Modern email signature template
- * A contemporary layout with logo and name side by side
+ * Professional layout with left-aligned info and right-aligned contact details
  */
 export const Modern: TemplateComponent = (props: TemplateProps): ReactElement => {
   const {
@@ -11,39 +11,33 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
     title,
     company,
     email,
-    phone,
+    mobilePhone,
+    officePhone,
     website,
     address,
     logoData,
-    primaryColor = '#000000',
-    secondaryColor = '#666666',
+    primaryColor = '#ff6b35',
+    secondaryColor = '#999999',
   } = props;
 
-  // Use default values for required fields if not provided
   const displayName = name || 'Your Name';
   const displayEmail = email || 'email@company.com';
-
-  // Handle different combinations of title and company
-  const titleCompanyText = (() => {
-    if (title && company) return `${title} at ${company}`;
-    if (title) return title;
-    if (company) return company;
-    return '';
-  })();
+  const displayPhone = mobilePhone || officePhone || '+27 00 000 0000';
+  const displayWebsite = website || 'yourwebsite.com';
 
   return (
     <section id="modern">
       <div
         style={{
-          padding: '8px',
+          padding: '20px',
           fontFamily: 'Arial, sans-serif',
           width: '100%',
-          maxWidth: '400px',
+          maxWidth: '600px',
+          background: 'white',
         }}
       >
         <table
           style={{
-            color: primaryColor,
             borderCollapse: 'collapse',
             width: '100%',
             background: 'white',
@@ -51,90 +45,198 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
         >
           <tbody>
             <tr>
-              {logoData && (
-                <td
-                  style={{
-                    verticalAlign: 'top',
-                    paddingRight: '12px',
-                    width: 'auto',
-                    paddingTop: '0px',
-                  }}
-                >
-                  <img
-                    src={logoData}
-                    alt="Logo"
-                    style={{ maxWidth: '70px', width: 'auto', height: 'auto', display: 'block' }}
-                  />
-                </td>
-              )}
-              <td style={{ verticalAlign: 'middle' }}>
+              {/* Left side - Name, Title, Company */}
+              <td
+                style={{
+                  verticalAlign: 'top',
+                  width: '50%',
+                  paddingRight: '20px',
+                }}
+              >
                 <div
                   style={{
                     fontWeight: 'bold',
-                    fontSize: '15px',
-                    marginBottom: '2px',
-                    color: primaryColor,
+                    fontSize: '24px',
+                    marginBottom: '8px',
+                    color: '#333333',
+                    lineHeight: '1.2',
                   }}
                 >
                   {displayName}
                 </div>
-                {titleCompanyText && (
-                  <div style={{ color: secondaryColor, fontSize: '13px', marginBottom: '2px' }}>
-                    {titleCompanyText}
+                {title && (
+                  <div
+                    style={{
+                      color: secondaryColor,
+                      fontSize: '16px',
+                      marginBottom: '4px',
+                      lineHeight: '1.3',
+                    }}
+                  >
+                    {title}
+                  </div>
+                )}
+                {company && (
+                  <div
+                    style={{
+                      color: secondaryColor,
+                      fontSize: '16px',
+                      marginBottom: '4px',
+                      lineHeight: '1.3',
+                    }}
+                  >
+                    {company}
                   </div>
                 )}
               </td>
-            </tr>
-            <tr>
+
+              {/* Vertical separator */}
               <td
-                colSpan={logoData ? 2 : 1}
-                style={{ paddingTop: '6px', fontSize: '12px', color: secondaryColor }}
+                style={{
+                  width: '4px',
+                  background: primaryColor,
+                  paddingLeft: '0px',
+                  paddingRight: '0px',
+                }}
               >
-                <div style={{ marginBottom: '2px' }}>
-                  📧{' '}
+                <div
+                  style={{
+                    width: '4px',
+                    height: '120px',
+                    background: primaryColor,
+                  }}
+                />
+              </td>
+
+              {/* Right side - Contact details */}
+              <td
+                style={{
+                  verticalAlign: 'top',
+                  width: '50%',
+                  paddingLeft: '20px',
+                }}
+              >
+                {/* Email */}
+                <div
+                  style={{
+                    marginBottom: '12px',
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <span
+                    style={{
+                      color: primaryColor,
+                      fontSize: '16px',
+                      marginRight: '8px',
+                      width: '20px',
+                    }}
+                  >
+                    ✉
+                  </span>
                   <a
                     href={`mailto:${displayEmail}`}
-                    style={{ color: primaryColor, textDecoration: 'none' }}
+                    style={{
+                      color: primaryColor,
+                      textDecoration: 'underline',
+                      fontSize: '14px',
+                    }}
                   >
                     {displayEmail}
                   </a>
                 </div>
-                {phone && (
-                  <div style={{ marginBottom: '2px' }}>
-                    📞{' '}
-                    <a
-                      href={`tel:${phone}`}
-                      style={{ color: primaryColor, textDecoration: 'none' }}
+
+                {/* Phone */}
+                <div
+                  style={{
+                    marginBottom: '12px',
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <span
+                    style={{
+                      color: primaryColor,
+                      fontSize: '16px',
+                      marginRight: '8px',
+                      width: '20px',
+                    }}
+                  >
+                    📱
+                  </span>
+                  <a
+                    href={`tel:${displayPhone}`}
+                    style={{
+                      color: secondaryColor,
+                      textDecoration: 'none',
+                      fontSize: '14px',
+                    }}
+                  >
+                    {displayPhone}
+                  </a>
+                </div>
+
+                {/* Address */}
+                {address && (
+                  <div
+                    style={{
+                      marginBottom: '12px',
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: primaryColor,
+                        fontSize: '16px',
+                        marginRight: '8px',
+                        width: '20px',
+                        marginTop: '2px',
+                      }}
                     >
-                      {phone}
-                    </a>
-                  </div>
-                )}
-                {website && (
-                  <div style={{ marginBottom: '2px' }}>
-                    🌐{' '}
-                    <a
-                      href={website.startsWith('http') ? website : `https://${website}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ color: primaryColor, textDecoration: 'none' }}
+                      📍
+                    </span>
+                    <div
+                      style={{
+                        color: secondaryColor,
+                        fontSize: '14px',
+                        lineHeight: '1.4',
+                      }}
                     >
-                      {website}
-                    </a>
+                      {address}
+                    </div>
                   </div>
                 )}
               </td>
             </tr>
-            {address && (
-              <tr>
-                <td
-                  colSpan={logoData ? 2 : 1}
-                  style={{ paddingTop: '8px', fontSize: '14px', color: secondaryColor }}
-                >
-                  📍 {address}
-                </td>
-              </tr>
-            )}
+
+            {/* Website row - spans full width */}
+            <tr>
+              <td
+                colSpan={3}
+                style={{
+                  paddingTop: '20px',
+                  borderTop: `2px solid ${primaryColor}`,
+                  textAlign: 'center',
+                }}
+              >
+                {website && (
+                  <a
+                    href={website.startsWith('http') ? website : `https://${website}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      color: primaryColor,
+                      textDecoration: 'none',
+                      fontSize: '16px',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    {displayWebsite}
+                  </a>
+                )}
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -146,10 +248,10 @@ export const Modern: TemplateComponent = (props: TemplateProps): ReactElement =>
 const modernMetadata: TemplateMetadata = {
   id: 'modern',
   name: 'Modern',
-  description: 'A contemporary layout with logo and name side by side',
+  description: 'Professional layout with vertical separator and organized contact details',
   category: 'professional',
-  tags: ['contemporary', 'side-by-side', 'clean'],
-  version: '1.0.0',
+  tags: ['professional', 'organized', 'clean', 'corporate'],
+  version: '2.0.0',
   author: {
     name: 'SignatureCraft Team',
   },

@@ -2,7 +2,7 @@ import { TemplateProps, TemplateComponent, TemplateMetadata } from './types';
 import { ReactElement } from 'react';
 
 /**
- * Classic email signature template
+ * Classic email signature template - modernized with better spacing and typography
  * A traditional signature layout with contact details stacked vertically
  */
 export const Classic: TemplateComponent = (props: TemplateProps): ReactElement => {
@@ -11,98 +11,164 @@ export const Classic: TemplateComponent = (props: TemplateProps): ReactElement =
     title,
     company,
     email,
-    phone,
+    mobilePhone,
+    officePhone,
     website,
     address,
     logoData,
-    primaryColor = '#000000',
-    secondaryColor = '#666666',
+    primaryColor = '#1a202c',
+    secondaryColor = '#4a5568',
   } = props;
-
-  // Use default values for required fields if not provided
   const displayName = name || 'Your Name';
   const displayEmail = email || 'email@company.com';
 
   return (
-    <section id="classic">
-      <div
-        className="text-sm"
-        style={{
-          color: primaryColor,
-          width: '100%',
-          maxWidth: '400px',
-          background: 'white',
-          padding: '8px',
-          fontFamily: 'Arial, sans-serif',
-          lineHeight: '1.4',
-        }}
-      >
-        <div style={{ marginBottom: '3px' }}>
-          <strong style={{ fontSize: '15px', color: primaryColor }}>{displayName}</strong>
-          {title && <span style={{ color: secondaryColor, fontSize: '13px' }}> | {title}</span>}
-        </div>
+    <table
+      cellPadding="0"
+      cellSpacing="0"
+      border={0}
+      style={{
+        fontFamily: 'Arial, sans-serif',
+        fontSize: '16px',
+        lineHeight: '1.6',
+        color: primaryColor,
+        width: '100%',
+        maxWidth: '440px',
+        background: 'white',
+        padding: '18px',
+      }}
+    >
+      <tbody>
+        {/* Name, title, company */}
+        <tr>
+          <td style={{ paddingBottom: '6px' }}>
+            <strong style={{ fontSize: '20px', color: primaryColor, letterSpacing: '0.01em' }}>
+              {displayName}
+            </strong>
+            {title && (
+              <span style={{ color: secondaryColor, fontSize: '15px', fontWeight: 500 }}>
+                {' '}
+                | {title}
+              </span>
+            )}
+          </td>
+        </tr>
         {company && (
-          <div style={{ marginBottom: '3px' }}>
-            <strong style={{ fontSize: '13px' }}>{company}</strong>
-          </div>
+          <tr>
+            <td style={{ paddingBottom: '6px' }}>
+              <strong style={{ fontSize: '15px', color: secondaryColor }}>{company}</strong>
+            </td>
+          </tr>
         )}
-        <div style={{ color: secondaryColor, fontSize: '12px', marginBottom: '3px' }}>
-          📧{' '}
-          <a
-            href={`mailto:${displayEmail}`}
-            style={{ color: primaryColor, textDecoration: 'none' }}
-          >
-            {displayEmail}
-          </a>
-          {phone && (
-            <>
-              {' | '}📞{' '}
-              <a href={`tel:${phone}`} style={{ color: primaryColor, textDecoration: 'none' }}>
-                {phone}
+        {/* Contact info */}
+        <tr>
+          <td style={{ color: secondaryColor, fontSize: '15px', paddingBottom: '6px' }}>
+            <div style={{ marginBottom: '4px' }}>
+              📧{' '}
+              <a
+                href={`mailto:${displayEmail}`}
+                style={{
+                  color: primaryColor,
+                  textDecoration: 'none',
+                  fontSize: '16px',
+                  fontWeight: 500,
+                }}
+              >
+                {displayEmail}
               </a>
-            </>
-          )}
-        </div>
+              {mobilePhone && (
+                <>
+                  {' | '}📞{' '}
+                  <a
+                    href={`tel:${mobilePhone}`}
+                    style={{
+                      color: primaryColor,
+                      textDecoration: 'none',
+                      fontSize: '16px',
+                      fontWeight: 500,
+                    }}
+                  >
+                    {mobilePhone}
+                  </a>
+                </>
+              )}
+              {officePhone && (
+                <>
+                  {' | '}🏢📞{' '}
+                  <a
+                    href={`tel:${officePhone}`}
+                    style={{
+                      color: secondaryColor,
+                      textDecoration: 'none',
+                      fontSize: '16px',
+                      fontWeight: 500,
+                    }}
+                  >
+                    {officePhone}
+                  </a>
+                </>
+              )}
+            </div>
+          </td>
+        </tr>
         {website && (
-          <div style={{ color: secondaryColor, fontSize: '12px', marginBottom: '3px' }}>
-            🌐{' '}
-            <a
-              href={website.startsWith('http') ? website : `https://${website}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: primaryColor, textDecoration: 'none' }}
-            >
-              {website}
-            </a>
-          </div>
+          <tr>
+            <td style={{ color: secondaryColor, fontSize: '15px', paddingBottom: '6px' }}>
+              🌐{' '}
+              <a
+                href={website.startsWith('http') ? website : `https://${website}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: primaryColor,
+                  textDecoration: 'none',
+                  fontSize: '16px',
+                  fontWeight: 500,
+                }}
+              >
+                {website}
+              </a>
+            </td>
+          </tr>
         )}
         {address && (
-          <div style={{ color: secondaryColor, fontSize: '12px', marginBottom: '3px' }}>
-            📍 <span style={{ color: primaryColor }}>{address}</span>
-          </div>
+          <tr>
+            <td style={{ color: secondaryColor, fontSize: '15px', paddingBottom: '6px' }}>
+              📍 <span style={{ color: primaryColor, fontWeight: 500 }}>{address}</span>
+            </td>
+          </tr>
         )}
         {logoData && (
-          <div style={{ marginTop: '6px' }}>
-            <img
-              src={logoData}
-              alt="Logo"
-              style={{ maxWidth: '80px', height: 'auto', display: 'block' }}
-            />
-          </div>
+          <tr>
+            <td style={{ paddingTop: '12px' }}>
+              <img
+                src={logoData}
+                alt="Company Logo"
+                style={{
+                  maxWidth: '48px',
+                  width: '48px',
+                  height: '48px',
+                  objectFit: 'contain',
+                  display: 'block',
+                  borderRadius: '6px',
+                }}
+              />
+            </td>
+          </tr>
         )}
-      </div>
-    </section>
+      </tbody>
+    </table>
   );
 };
 
 // Define comprehensive metadata for the template
 const classicMetadata: TemplateMetadata = {
   id: 'classic',
-  name: 'Classic',
-  description: 'A traditional signature layout with contact details stacked vertically',
+  name: 'Classic Professional',
+  description: 'A modernized traditional layout with clean typography and generous spacing',
   category: 'professional',
-  tags: ['traditional', 'vertical', 'simple'],
-  version: '1.0.0',
+  tags: ['traditional', 'vertical', 'clean', 'modern', 'professional'],
+  version: '2.0.0',
   author: {
     name: 'SignatureCraft Team',
   },

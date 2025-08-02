@@ -1,10 +1,11 @@
-"use client";
+'use client';
 
-import { useState, useRef } from "react";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Upload, X, Image as ImageIcon } from "lucide-react";
+import { useState, useRef } from 'react';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Upload, X, Image as ImageIcon } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface LogoUploadProps {
   logoData?: string;
@@ -82,8 +83,7 @@ export function LogoUpload({ logoData, onLogoChange }: LogoUploadProps) {
       onLogoChange(processedImage);
     } catch (error) {
       console.error('Error processing image:', error);
-      // TODO: Add proper error handling/toast notification
-      alert(error instanceof Error ? error.message : 'Failed to process image');
+      toast.error(error instanceof Error ? error.message : 'Failed to process image');
     } finally {
       setIsProcessing(false);
     }
@@ -102,7 +102,7 @@ export function LogoUpload({ logoData, onLogoChange }: LogoUploadProps) {
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
-    
+
     const files = Array.from(e.dataTransfer.files);
     if (files.length > 0) {
       handleFileSelect(files[0]);
@@ -131,9 +131,9 @@ export function LogoUpload({ logoData, onLogoChange }: LogoUploadProps) {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 relative border rounded overflow-hidden">
-                  <Image 
-                    src={logoData} 
-                    alt="Company Logo" 
+                  <Image
+                    src={logoData}
+                    alt="Company Logo"
                     fill
                     className="object-contain"
                     unoptimized
@@ -164,9 +164,9 @@ export function LogoUpload({ logoData, onLogoChange }: LogoUploadProps) {
           tabIndex={0}
           aria-label="Upload company logo - drag and drop or click to select file"
           className={`border-2 border-dashed transition-all duration-200 cursor-pointer ${
-            isDragging 
-              ? "border-primary bg-primary/5 scale-[1.02]" 
-              : "border-muted-foreground/25 hover:border-primary/50 hover:bg-primary/2"
+            isDragging
+              ? 'border-primary bg-primary/5 scale-[1.02]'
+              : 'border-muted-foreground/25 hover:border-primary/50 hover:bg-primary/2'
           }`}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
@@ -188,22 +188,20 @@ export function LogoUpload({ logoData, onLogoChange }: LogoUploadProps) {
                   <ImageIcon className="h-6 w-6 text-muted-foreground" />
                 )}
               </div>
-              
+
               <div className="space-y-2">
                 <p className="text-sm font-medium">
-                  {isProcessing ? "Processing image..." : "Upload your company logo"}
+                  {isProcessing ? 'Processing image...' : 'Upload your company logo'}
                 </p>
-                <p className="text-xs text-muted-foreground">
-                  Drag and drop or click to select
-                </p>
+                <p className="text-xs text-muted-foreground">Drag and drop or click to select</p>
                 <p className="text-xs text-muted-foreground">
                   PNG, JPG, SVG • Max 2MB • Auto-resized to 150px
                 </p>
               </div>
-              
-              <Button 
-                variant="outline" 
-                size="sm" 
+
+              <Button
+                variant="outline"
+                size="sm"
                 disabled={isProcessing}
                 className="transition-colors duration-200 h-10"
                 onClick={(e) => {

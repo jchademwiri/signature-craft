@@ -9,7 +9,9 @@ interface TestDataConfig {
   testTitle?: string;
   testCompany?: string;
   testEmail: string;
-  testPhone?: string;
+  testMobilePhone?: string;
+  testOfficePhone?: string;
+  testAddress?: string;
   testWebsite?: string;
   testLogoData?: string;
   testPrimaryColor: string;
@@ -27,7 +29,9 @@ export function useTestData() {
     title: 'Senior Product Manager',
     company: 'TechCorp Solutions',
     email: 'sarah.johnson@techcorp.com',
-    phone: '+27 11 123 4567',
+    mobilePhone: '+27 11 123 4567',
+    officePhone: '+27 11 765 4321',
+    address: '123 Main Street, Sandton, Johannesburg',
     website: 'www.techcorp.co.za',
     logoData: '/logo.svg',
     primaryColor: '#4285f4',
@@ -66,11 +70,12 @@ export function useTestData() {
       title: config.testTitle,
       company: config.testCompany,
       email: config.testEmail,
-      phone: config.testPhone,
-      website: config.testWebsite,
-      logoData: config.testLogoData,
-      primaryColor: config.testPrimaryColor,
-      secondaryColor: config.testSecondaryColor,
+      mobilePhone: config.testMobilePhone || '',
+      officePhone: config.testOfficePhone || '',
+      website: config.testWebsite || '',
+      logoData: config.testLogoData || '',
+      primaryColor: config.testPrimaryColor || '',
+      secondaryColor: config.testSecondaryColor || '',
     });
   };
 
@@ -88,7 +93,9 @@ export function useTestData() {
           testTitle: currentData.title,
           testCompany: currentData.company,
           testEmail: currentData.email,
-          testPhone: currentData.phone,
+          testMobilePhone: currentData.mobilePhone,
+          testOfficePhone: currentData.officePhone,
+          testAddress: currentData.address,
           testWebsite: currentData.website,
           testLogoData: currentData.logoData,
           testPrimaryColor: currentData.primaryColor,
@@ -125,7 +132,9 @@ export function useTestData() {
           testTitle: currentData.title,
           testCompany: currentData.company,
           testEmail: currentData.email,
-          testPhone: currentData.phone,
+          testMobilePhone: currentData.mobilePhone,
+          testOfficePhone: currentData.officePhone,
+          testAddress: currentData.address,
           testWebsite: currentData.website,
           testLogoData: currentData.logoData,
           testPrimaryColor: currentData.primaryColor,
@@ -183,7 +192,9 @@ export function useTestData() {
         title: 'Senior Product Manager',
         company: 'TechCorp Solutions',
         email: 'sarah.johnson@techcorp.com',
-        phone: '+27 11 123 4567',
+        mobilePhone: '+27 11 123 4567',
+        officePhone: '+27 11 765 4321',
+        address: '123 Main Street, Sandton, Johannesburg',
         website: 'www.techcorp.co.za',
         logoData: '/logo.svg',
         primaryColor: '#4285f4',
@@ -191,12 +202,14 @@ export function useTestData() {
       },
       minimal: {
         name: 'John Doe',
-        title: undefined,
-        company: undefined,
+        title: '',
+        company: '',
         email: 'john@example.com',
-        phone: undefined,
-        website: undefined,
-        logoData: undefined,
+        mobilePhone: '',
+        officePhone: '',
+        address: '',
+        website: '',
+        logoData: '',
         primaryColor: '#000000',
         secondaryColor: '#666666',
       },
@@ -205,9 +218,11 @@ export function useTestData() {
         title: 'Marketing Manager',
         company: 'ABC Company',
         email: 'jane@abc.com',
-        phone: '+27 21 456 7890',
+        mobilePhone: '+27 21 456 7890',
+        officePhone: '',
+        address: '',
         website: 'www.abc.com',
-        logoData: undefined,
+        logoData: '',
         primaryColor: '#2563eb',
         secondaryColor: '#64748b',
       },

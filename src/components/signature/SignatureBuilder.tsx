@@ -8,13 +8,15 @@ import { FormFields } from './FormFields';
 import { SignaturePreview } from './SignaturePreview';
 import { TemplateSelector } from './TemplateSelector';
 import { BrandColors } from './BrandColors';
+import { toast } from 'sonner';
 
 export interface SignatureData {
   name: string;
   title: string;
   company: string;
   email: string;
-  phone: string;
+  mobilePhone?: string;
+  officePhone?: string;
   website: string;
   logoData?: string;
   templateId: 'classic' | 'modern' | 'minimal' | 'corporate';
@@ -25,12 +27,14 @@ export interface SignatureData {
 
 export function SignatureBuilder({ editId }: { editId?: string }) {
   const router = useRouter();
+
   const [signatureData, setSignatureData] = useState<SignatureData>({
     name: '',
     title: '',
     company: '',
     email: '',
-    phone: '',
+    mobilePhone: '',
+    officePhone: '',
     website: '',
     address: '',
     logoData: '/logo.svg',
@@ -74,14 +78,18 @@ export function SignatureBuilder({ editId }: { editId?: string }) {
 
   const handleSave = async () => {
     if (!signatureData.name || !signatureData.email) {
-      alert('Please fill in your name and email address');
+      toast.error('Please fill in your name and email address.');
       return;
     }
 
     setIsSaving(true);
     try {
-      const response = await fetch('/api/signatures', {
-        method: 'POST',
+      const isEditing = !!editId;
+      const url = isEditing ? `/api/signatures?id=${editId}` : '/api/signatures';
+      const method = isEditing ? 'PUT' : 'POST';
+
+      const response = await fetch(url, {
+        method,
         headers: {
           'Content-Type': 'application/json',
         },
@@ -90,14 +98,15 @@ export function SignatureBuilder({ editId }: { editId?: string }) {
 
       if (response.ok) {
         // Navigate to dashboard with success message
-        router.push('/dashboard?saved=true');
+        const message = isEditing ? 'updated' : 'saved';
+        router.push(`/dashboard?${message}=true`);
       } else {
         const error = await response.json();
-        alert(error.error || 'Failed to save signature');
+        toast.error(error.error || 'Failed to save signature');
       }
     } catch (error) {
       console.error('Error saving signature:', error);
-      alert('Failed to save signature. Please try again.');
+      toast.error('Failed to save signature. Please try again.');
     } finally {
       setIsSaving(false);
     }
@@ -152,7 +161,12 @@ export function SignatureBuilder({ editId }: { editId?: string }) {
             <CardTitle>Live Preview</CardTitle>
           </CardHeader>
           <CardContent className="flex-1 overflow-y-auto">
-            <SignaturePreview data={signatureData} onSave={handleSave} isSaving={isSaving} />
+            <SignaturePreview
+              data={signatureData}
+              onSave={handleSave}
+              isSaving={isSaving}
+              isEditing={!!editId}
+            />
           </CardContent>
         </Card>
       </div>

@@ -5,6 +5,7 @@ import { JSX } from 'react';
  * Contains all fields that can be used in a signature template
  */
 export interface TemplateProps {
+  mobilePhone: string;
   // Required fields
   name: string;
   email: string;
@@ -12,7 +13,7 @@ export interface TemplateProps {
   // Optional fields
   title?: string;
   company?: string;
-  phone?: string;
+  officePhone?: string;
   website?: string;
   address?: string;
 
