@@ -1,16 +1,16 @@
-import Link from "next/link";
-import { Footer } from "@/components/footer";
-import { Container } from "@/components/ui/container";
-import { Button } from "@/components/ui/button";
-import { HeroSection } from "@/components/hero-section";
-import { FeaturesSection } from "@/components/features-section";
-import { PricingSection } from "@/components/pricing-section";
-import { TestimonialsSection } from "@/components/testimonials-section";
-import { FAQSection } from "@/components/faq-section";
+import Link from 'next/link';
+import { Footer } from '@/components/footer';
+import { Container } from '@/components/ui/container';
+import { Button } from '@/components/ui/button';
+import { HeroSection } from '@/components/hero-section';
+import { FeaturesSection } from '@/components/features-section';
+import { PricingSection } from '@/components/pricing-section';
+import { TestimonialsSection } from '@/components/testimonials-section';
+import { FAQSection } from '@/components/faq-section';
 
 export default function Home() {
   return (
-    <>  
+    <>
       <main className="flex flex-col w-full flex-1 pt-16 bg-background">
         {/* Hero Section */}
         <Container>
@@ -31,11 +31,11 @@ export default function Home() {
           </section>
         </Container>
         {/* Pricing Section */}
-        <section id="pricing" className="bg-muted/30 border-t border-border">
+        {/* <section id="pricing" className="bg-muted/30 border-t border-border">
           <Container>
             <PricingSection />
           </Container>
-        </section>
+        </section> */}
         {/* FAQ Section */}
         <Container>
           <section id="faq">
@@ -46,7 +46,9 @@ export default function Home() {
         <section className="py-16 bg-primary/10 border-t border-primary/20">
           <Container>
             <div className="text-center max-w-2xl mx-auto">
-              <h2 className="text-4xl font-bold tracking-tight mb-6 text-primary">Ready to get started?</h2>
+              <h2 className="text-4xl font-bold tracking-tight mb-6 text-primary">
+                Ready to get started?
+              </h2>
               <p className="text-xl text-muted-foreground mb-8">
                 Create your professional email signature in under 5 minutes
               </p>
@@ -59,7 +61,10 @@ export default function Home() {
                 </Button>
               </div>
               <p className="text-sm text-muted-foreground mt-2">
-                Already have an account? <Link href="/login" className="text-primary hover:underline">Sign in here</Link>
+                Already have an account?{' '}
+                <Link href="/login" className="text-primary hover:underline">
+                  Sign in here
+                </Link>
               </p>
               <div className="mt-8">
                 <Button variant="ghost" asChild>
